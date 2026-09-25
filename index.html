@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="World-Vision.Intl — helping children experiencing homelessness, supporting cancer care, and providing Alzheimer's support."
+  >
+
+  <title>World Vision International | Give Hope, insight and Change Lives.</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="header">
+
+    <a href="#home" class="logo">
+      <span class="logo-icon">GH</span>
+
+      <span>
+        <strong>World Vision</strong>
+        <small>International</small>
+      </span>
+    </a>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-label="Open navigation"
+    >
+      ☰
+    </button>
+
+    <nav id="nav">
+
+      <a href="#causes">Causes</a>
+
+      <a href="#impact">Our Impact</a>
+
+      <a href="#about">About</a>
+
+      <a href="#transparency">Transparency</a>
+
+      <button
+        class="nav-donate"
+        onclick="openDonation()"
+      >
+        Donate
+      </button>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <main id="home">
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">
+          ONE WORLD • ONE HUMANITY
+        </span>
+
+        <h1>
+          Give hope where
+          <span>it matters most.</span>
+        </h1>
+
+        <p>
+          Your generosity can help provide safety for children
+          experiencing homelessness, compassionate cancer support,
+          and dignity-centered care for people affected by
+          Alzheimer's.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="primary-btn"
+            onclick="openDonation()"
+          >
+            Make a Donation
+          </button>
+
+          <a
+            href="#causes"
+            class="secondary-btn"
+          >
+            Explore Our Causes
+          </a>
+
+        </div>
+
+        <div class="trust">
+
+          <span>✓ Secure giving</span>
+
+          <span>✓ Card payments</span>
+
+          <span>✓ Bitcoin donations</span>
+
+        </div>
+
+      </div>
+
+
+      <!-- IMPACT CARD -->
+
+      <div class="hero-card">
+
+        <span class="card-label">
+          COMMUNITY IMPACT
+        </span>
+
+        <h2>
+          $428,640
+        </h2>
+
+        <p>
+          Illustrative impact dashboard.
+          Replace with verified organizational
+          statistics before publishing.
+        </p>
+
+        <div class="progress">
+
+          <span></span>
+
+        </div>
+
+        <div class="progress-info">
+
+          <span>2026 Goal</span>
+
+          <strong>$630,000</strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================== -->
+
+    <section class="stats" id="impact">
+
+      <div class="stat">
+
+        <strong>42</strong>
+
+        <span>
+          Community Partners
+        </span>
+
+      </div>
+
+      <div class="stat">
+
+        <strong>18</strong>
+
+        <span>
+          Countries
+        </span>
+
+      </div>
+
+      <div class="stat">
+
+        <strong>7,500+</strong>
+
+        <span>
+          People Reached
+        </span>
+
+      </div>
+
+      <div class="stat">
+
+        <strong>92%</strong>
+
+        <span>
+          Program Allocation Target
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CAUSES
+    ========================== -->
+
+    <section
+      class="section"
+      id="causes"
+    >
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          WHERE YOUR GIFT GOES
+        </span>
+
+        <h2>
+          Three urgent causes.
+          One shared mission.
+        </h2>
+
+        <p>
+          Choose the cause closest to your heart,
+          or allow World Vison to direct your
+          donation toward the highest verified need.
+        </p>
+
+      </div>
+
+
+      <div class="cause-grid">
+
+
+        <!-- CHILDREN -->
+
+        <article class="cause-card">
+
+          <div class="cause-icon">
+            🏠
+          </div>
+
+          <span class="cause-label">
+            CHILDREN
+          </span>
+
+          <h3>
+            Safe nights.
+            Brighter futures.
+          </h3>
+
+          <p>
+            Help provide emergency shelter,
+            nutritious meals, education,
+            school supplies and pathways toward
+            stable care for children experiencing
+            homelessness.
+          </p>
+
+          <button
+            onclick="openDonation('Children')"
+            class="cause-btn"
+          >
+            Support Children →
+          </button>
+
+        </article>
+
+
+        <!-- CANCER -->
+
+        <article class="cause-card featured">
+
+          <div class="cause-icon">
+            🎗️
+          </div>
+
+          <span class="cause-label">
+            CANCER CARE
+          </span>
+
+          <h3>
+            Care beyond
+            the diagnosis.
+          </h3>
+
+          <p>
+            Support patient assistance,
+            transportation, nutrition,
+            family relief and access-to-care
+            programs through verified partners.
+          </p>
+
+          <button
+            onclick="openDonation('Cancer Care')"
+            class="cause-btn"
+          >
+            Support Cancer Care →
+          </button>
+
+        </article>
+
+
+        <!-- ALZHEIMERS -->
+
+        <article class="cause-card">
+
+          <div class="cause-icon">
+            🧠
+          </div>
+
+          <span class="cause-label">
+            ALZHEIMER'S
+          </span>
+
+          <h3>
+            Dignity.
+            Memory. Support.
+          </h3>
+
+          <p>
+            Help families access caregiver
+            support, respite programs,
+            memory resources and community
+            services for people affected
+            by Alzheimer's.
+          </p>
+
+          <button
+            onclick="openDonation('Alzheimer Support')"
+            class="cause-btn"
+          >
+            Support Alzheimer's →
+          </button>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section
+      class="section about"
+      id="about"
+    >
+
+      <div>
+
+        <span class="eyebrow">
+          OUR MISSION
+        </span>
+
+        <h2>
+          Turn generosity
+          into measurable care.
+        </h2>
+
+        <p>
+          Global Hope Foundation is designed
+          around a simple principle:
+          giving should create meaningful,
+          measurable impact.
+        </p>
+
+        <p>
+          Every campaign should clearly explain
+          its purpose, responsible partners,
+          intended beneficiaries and impact.
+        </p>
+
+      </div>
+
+
+      <div class="mission-card">
+
+        <span>
+          OUR PROMISE
+        </span>
+
+        <h3>
+          Compassion with accountability.
+        </h3>
+
+        <ul>
+
+          <li>
+            Transparent campaigns
+          </li>
+
+          <li>
+            Secure payment processing
+          </li>
+
+          <li>
+            Verified impact reporting
+          </li>
+
+          <li>
+            Responsible use of donations
+          </li>
+
+        </ul>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TRANSPARENCY
+    ========================== -->
+
+    <section
+      class="section"
+      id="transparency"
+    >
+
+      <div class="section-heading">
+
+        <span class="eyebrow">
+          TRUST BY DESIGN
+        </span>
+
+        <h2>
+          Transparency should be
+          part of every donation.
+        </h2>
+
+      </div>
+
+
+      <div class="trust-grid">
+
+        <div>
+
+          <strong>01</strong>
+
+          <h3>
+            Clear Campaigns
+          </h3>
+
+          <p>
+            Every fundraising campaign
+            should explain exactly what
+            it is intended to support.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <strong>02</strong>
+
+          <h3>
+            Secure Payments
+          </h3>
+
+          <p>
+            Donor card information should
+            be handled by a dedicated
+            payment provider.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <strong>03</strong>
+
+          <h3>
+            Donation Records
+          </h3>
+
+          <p>
+            Donations should receive
+            unique transaction records
+            and payment statuses.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <strong>04</strong>
+
+          <h3>
+            Impact Reports
+          </h3>
+
+          <p>
+            Publish dated reports showing
+            how funds were used and what
+            programs achieved.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================== -->
+
+    <section class="cta">
+
+      <div>
+
+        <span class="eyebrow">
+          MAKE A DIFFERENCE
+        </span>
+
+        <h2>
+          Someone's next safe day
+          could begin with you.
+        </h2>
+
+      </div>
+
+      <button
+        class="primary-btn"
+        onclick="openDonation()"
+      >
+        Give Hope Today
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="footer-brand">
+
+      <span class="logo-icon">
+        GH
+      </span>
+
+      <div>
+
+        <strong>
+          World Vision International 
+        </strong>
+
+        <p>
+          Give hope. Change lives.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="footer-links">
+
+      <a href="#causes">
+        Causes
+      </a>
+
+      <a href="#impact">
+        Impact
+      </a>
+
+      <a href="#transparency">
+        Transparency
+      </a>
+
+      <a href="mailto:hello@example.org">
+        Contact
+      </a>
+
+    </div>
+
+    <p class="copyright">
+
+      © 2026 World Vision International.
+      Replace placeholder organization,
+      registration and contact information
+      before production.
+
+    </p>
+
+  </footer>
+
+
+  <!-- =========================
+       DONATION MODAL
+  ========================== -->
+
+  <dialog id="donationModal">
+
+    <div class="modal">
+
+      <button
+        class="close-btn"
+        onclick="closeDonation()"
+      >
+        ×
+      </button>
+
+      <span class="eyebrow">
+        MAKE AN IMPACT
+      </span>
+
+      <h2>
+        Choose your donation
+      </h2>
+
+      <label>
+        Cause
+      </label>
+
+      <select id="donationCause">
+
+        <option>
+          Where Most Needed
+        </option>
+
+        <option>
+          Children
+        </option>
+
+        <option>
+          Cancer Care
+        </option>
+
+        <option>
+          Alzheimer's Support
+        </option>
+
+      </select>
+
+
+      <label>
+        Donation Amount
+      </label>
+
+      <div class="amounts">
+
+        <button onclick="selectAmount(25)">
+          $25
+        </button>
+
+        <button onclick="selectAmount(50)">
+          $50
+        </button>
+
+        <button onclick="selectAmount(100)">
+          $100
+        </button>
+
+        <button onclick="selectAmount(250)">
+          $250
+        </button>
+
+      </div>
+
+
+      <input
+        id="customAmount"
+        type="number"
+        min="1"
+        placeholder="Custom amount in USD"
+      >
+
+
+      <div class="payment-options">
+
+        <button
+          class="payment-card"
+          onclick="payWithCard()"
+        >
+
+          <span>💳</span>
+
+          <strong>
+            Credit / Debit Card
+          </strong>
+
+          <small>
+            Secure hosted checkout
+          </small>
+
+        </button>
+
+
+        <button
+          class="payment-card"
+          onclick="payWithBitcoin()"
+        >
+
+          <span>₿</span>
+
+          <strong>
+            Bitcoin
+          </strong>
+
+          <small>
+            BTCPay checkout
+          </small>
+
+        </button>
+
+      </div>
+
+
+      <p class="payment-note">
+
+        Your payment details should be
+        processed by the selected payment
+        provider — never stored directly
+        on this GitHub website.
+
+      </p>
+
+    </div>
+
+  </dialog>
+
+
+  <script src="script.js"></script>
+
+</body>
+  </html>
