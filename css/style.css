@@ -1,6 +1,6 @@
 /* =========================================================
    GLOBAL VISION AID
-   MAIN STYLESHEET
+   CSS MATCHED TO CURRENT index.html
 ========================================================= */
 
 * {
@@ -14,9 +14,9 @@ html {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #fff;
-    color: #1b1b1b;
+    font-family: "DM Sans", sans-serif;
+    color: #17201d;
+    background: #ffffff;
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -27,8 +27,8 @@ img {
 }
 
 a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 }
 
 button,
@@ -43,34 +43,19 @@ button {
 }
 
 :root {
-    --primary: #f4c542;
-    --primary-dark: #dba900;
-    --dark: #111111;
-    --dark-2: #1c1c1c;
+    --gold: #f5c400;
+    --gold-dark: #dcae00;
+    --green: #17352d;
+    --green-dark: #10251f;
+    --text: #17201d;
+    --muted: #6e7773;
+    --light: #f7f8f5;
     --white: #ffffff;
-    --light: #f7f7f4;
-    --gray: #6c6c6c;
-    --border: #e5e5e5;
+    --border: #e5e8e5;
 
-    --container: 1200px;
+    --container: 1180px;
 
-    --shadow-sm: 0 8px 25px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 15px 45px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 25px 70px rgba(0, 0, 0, 0.18);
-
-    --radius-sm: 10px;
-    --radius-md: 18px;
-    --radius-lg: 28px;
-}
-
-
-/* =========================================================
-   CONTAINER
-========================================================= */
-
-.container {
-    width: min(92%, var(--container));
-    margin: 0 auto;
+    --shadow: 0 15px 45px rgba(0, 0, 0, 0.09);
 }
 
 
@@ -84,10 +69,12 @@ button {
     z-index: 99999;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    background: #111;
+    background: var(--green);
+    color: #ffffff;
 
     transition:
         opacity 0.5s ease,
@@ -100,16 +87,41 @@ button {
     pointer-events: none;
 }
 
-.loader {
-    width: 50px;
-    height: 50px;
+.loader-logo {
+    margin-bottom: 25px;
 
-    border: 4px solid rgba(255, 255, 255, 0.15);
-    border-top-color: var(--primary);
+    font-family: "Manrope", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.loader-logo span {
+    display: inline-flex;
+
+    width: 35px;
+    height: 35px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 8px;
+
+    background: var(--gold);
+    color: var(--green);
+
+    border-radius: 50%;
+}
+
+.loader {
+    width: 42px;
+    height: 42px;
+
+    border: 4px solid rgba(255, 255, 255, 0.18);
+    border-top-color: var(--gold);
 
     border-radius: 50%;
 
-    animation: spin 0.9s linear infinite;
+    animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -123,15 +135,23 @@ button {
    HEADER
 ========================================================= */
 
-.site-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
 
     width: 100%;
+    height: 76px;
+
     z-index: 5000;
 
-    background: rgba(17, 17, 17, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5%;
+
+    background: rgba(16, 37, 31, 0.88);
 
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -139,92 +159,107 @@ button {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.header-inner {
-    min-height: 78px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 30px;
-}
-
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
 
-    color: #fff;
-
-    font-size: 1.15rem;
-    font-weight: 800;
+    color: #ffffff;
 }
 
 .logo-mark {
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: var(--primary);
-    color: #111;
+    background: var(--gold);
+    color: var(--green);
 
     border-radius: 50%;
 
-    font-weight: 900;
+    font-size: 1rem;
 }
 
-.nav-links {
+.logo strong {
+    display: block;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: 1rem;
+    line-height: 1.1;
+}
+
+.logo small {
+    display: block;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.7rem;
+}
+
+#nav-links {
     display: flex;
     align-items: center;
-    gap: 28px;
+    gap: 27px;
 }
 
-.nav-links a {
+#nav-links > a {
     position: relative;
 
     color: rgba(255, 255, 255, 0.85);
 
-    font-size: 0.92rem;
+    font-size: 0.87rem;
     font-weight: 600;
-
-    transition: color 0.25s ease;
 }
 
-.nav-links a:hover {
-    color: #fff;
+#nav-links > a:hover {
+    color: #ffffff;
 }
 
-.nav-links a::after {
+#nav-links > a:not(.nav-donate)::after {
     content: "";
 
     position: absolute;
+
     left: 0;
     bottom: -7px;
 
     width: 0;
     height: 2px;
 
-    background: var(--primary);
+    background: var(--gold);
 
     transition: width 0.25s ease;
 }
 
-.nav-links a:hover::after {
+#nav-links > a:not(.nav-donate):hover::after {
     width: 100%;
 }
 
-#menu-toggle {
+.nav-donate {
+    padding: 10px 18px;
+
+    background: var(--gold);
+    color: var(--green) !important;
+
+    border-radius: 50px;
+
+    font-weight: 800 !important;
+}
+
+.menu-toggle {
     display: none;
 
-    border: none;
+    border: 0;
+
     background: transparent;
 
-    color: #fff;
+    color: #ffffff;
 
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 }
 
 
@@ -235,25 +270,27 @@ button {
 .hero {
     position: relative;
 
+    width: 100%;
     height: 100vh;
-    min-height: 700px;
-    max-height: 900px;
+    min-height: 680px;
 
     overflow: hidden;
 
-    background: #111;
+    background: #18221f;
 }
 
-.hero-slider {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
+.hero-slides {
+    position: absolute;
+    inset: 0;
 }
 
 .hero-slide {
     position: absolute;
     inset: 0;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     opacity: 0;
     visibility: hidden;
@@ -268,36 +305,22 @@ button {
     visibility: visible;
 }
 
-.hero-slide > img {
-    position: absolute;
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
 
 /* =========================================================
-   HERO DARK OVERLAY
+   HERO OVERLAY
 ========================================================= */
 
-.hero-slide::after {
-    content: "";
-
+.hero-overlay {
     position: absolute;
     inset: 0;
 
     background:
         linear-gradient(
             90deg,
-            rgba(0, 0, 0, 0.65) 0%,
-            rgba(0, 0, 0, 0.38) 50%,
-            rgba(0, 0, 0, 0.18) 100%
+            rgba(10, 20, 17, 0.76) 0%,
+            rgba(10, 20, 17, 0.48) 46%,
+            rgba(10, 20, 17, 0.20) 100%
         );
-
-    pointer-events: none;
 }
 
 
@@ -305,57 +328,67 @@ button {
    HERO CONTENT
 ========================================================= */
 
-.hero-slide-content {
+.hero-content {
     position: absolute;
 
     left: 6%;
-    bottom: 14%;
+    bottom: 17%;
 
     z-index: 10;
 
     width: min(650px, 82%);
 
-    color: #fff;
+    color: #ffffff;
 }
 
-.hero-slide-content h1 {
+.eyebrow {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 8px;
+
     margin-bottom: 18px;
 
-    color: #fff;
+    color: var(--gold);
 
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: 0.78rem;
+    font-weight: 800;
 
-    line-height: 1.05;
+    letter-spacing: 1.4px;
 
-    letter-spacing: -2px;
+    text-transform: uppercase;
 }
 
-.hero-slide-content p {
+.hero-content h1 {
+    margin-bottom: 20px;
+
+    font-family: "Manrope", sans-serif;
+
+    color: #ffffff;
+
+    font-size: clamp(2.7rem, 5.3vw, 5rem);
+
+    line-height: 1.02;
+
+    letter-spacing: -2.5px;
+}
+
+.hero-content h1 span {
+    display: block;
+
+    color: var(--gold);
+}
+
+.hero-content p {
     max-width: 590px;
 
-    margin-bottom: 25px;
+    margin-bottom: 27px;
 
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.86);
 
     font-size: 1rem;
 
     line-height: 1.75;
-}
-
-.hero-label {
-    display: inline-block;
-
-    margin-bottom: 15px;
-
-    color: var(--primary);
-
-    font-size: 0.78rem;
-
-    font-weight: 800;
-
-    letter-spacing: 1.5px;
-
-    text-transform: uppercase;
 }
 
 
@@ -365,7 +398,6 @@ button {
 
 .hero-buttons {
     display: flex;
-
     align-items: center;
 
     gap: 12px;
@@ -373,19 +405,21 @@ button {
     flex-wrap: wrap;
 }
 
-.hero-buttons .btn {
+.btn {
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
+    gap: 9px;
+
     min-height: 48px;
 
-    padding: 12px 22px;
+    padding: 12px 21px;
 
     border-radius: 50px;
 
-    font-weight: 800;
+    font-weight: 700;
 
     transition:
         transform 0.25s ease,
@@ -393,70 +427,147 @@ button {
         color 0.25s ease;
 }
 
-.hero-buttons .btn:hover {
+.btn:hover {
     transform: translateY(-2px);
 }
 
 .btn-primary {
-    background: var(--primary);
-    color: #111;
+    background: var(--gold);
+    color: var(--green);
 
-    border: 2px solid var(--primary);
+    border: 2px solid var(--gold);
 }
 
 .btn-primary:hover {
-    background: #fff;
-    border-color: #fff;
+    background: #ffffff;
+    border-color: #ffffff;
 }
 
-.btn-secondary {
+.btn-light {
     background: rgba(255, 255, 255, 0.08);
 
-    color: #fff;
+    color: #ffffff;
 
-    border: 2px solid rgba(255, 255, 255, 0.65);
+    border: 2px solid rgba(255, 255, 255, 0.7);
 }
 
-.btn-secondary:hover {
-    background: #fff;
-    color: #111;
+.btn-light:hover {
+    background: #ffffff;
+    color: var(--green);
 }
 
 
 /* =========================================================
-   HERO SLIDESHOW INDICATORS
-   ONLY CHANGE: VERTICAL ON RIGHT
+   SLIDER CONTROLS
 ========================================================= */
 
-.hero-dots {
+/*
+   The whole control group sits on the RIGHT side
+   of the hero.
+
+   This keeps it completely away from:
+   Help a Child / Give Hope / Support a Family
+*/
+
+.slider-controls {
     position: absolute;
 
     top: 50%;
     right: 28px;
 
-    left: auto;
-    bottom: auto;
-
-    z-index: 50;
+    z-index: 30;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-    justify-content: center;
 
-    gap: 12px;
+    gap: 14px;
 
     transform: translateY(-50%);
 }
 
 
-/* Individual dots */
+/* Previous / next buttons */
 
-.hero-dot {
-    width: 10px;
-    height: 10px;
+.slider-controls > button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.28);
+
+    color: #ffffff;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.slider-controls > button:hover {
+    background: var(--gold);
+
+    color: var(--green);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   THE ACTUAL SLIDE INDICATORS
+========================================================= */
+
+/*
+   IMPORTANT:
+
+   Your HTML puts the generated dots inside:
+
+   <div id="slideDots"></div>
+
+   So THIS is what controls their layout.
+*/
+
+#slideDots {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+}
+
+
+/*
+   app.js may generate the dots using
+   different button/class names.
+
+   These rules intentionally target
+   buttons inside #slideDots.
+*/
+
+#slideDots button {
+    width: 9px;
+    height: 9px;
+
+    min-width: 9px;
+    min-height: 9px;
 
     padding: 0;
     margin: 0;
@@ -465,165 +576,213 @@ button {
 
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.3);
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    font-size: 0;
 
     transition:
         background 0.25s ease,
-        transform 0.25s ease,
-        height 0.25s ease;
+        height 0.25s ease,
+        transform 0.25s ease;
 }
 
-.hero-dot:hover {
+#slideDots button:hover {
     transform: scale(1.2);
 }
 
-.hero-dot.active {
-    width: 10px;
-    height: 28px;
+
+/*
+   Active indicator.
+
+   Supports several common active classes
+   so the JS doesn't have to change.
+*/
+
+#slideDots button.active,
+#slideDots button.active-dot,
+#slideDots button.current {
+    width: 9px;
+    height: 26px;
 
     border-radius: 20px;
 
-    background: var(--primary);
+    background: var(--gold);
 
-    border-color: var(--primary);
+    border-color: var(--gold);
 }
 
 
 /* =========================================================
-   TRUST STRIP
+   HERO TRUST
 ========================================================= */
 
-.trust-strip {
-    padding: 20px 0;
+.hero-trust {
+    position: absolute;
 
-    background: var(--primary);
+    left: 0;
+    bottom: 0;
 
-    color: #111;
-}
+    z-index: 20;
 
-.trust-strip-inner {
+    width: 100%;
+
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    gap: 35px;
+    gap: 40px;
 
-    flex-wrap: wrap;
+    padding: 15px 5%;
 
-    text-align: center;
+    background: rgba(10, 20, 17, 0.76);
+
+    backdrop-filter: blur(10px);
+
+    color: rgba(255, 255, 255, 0.82);
 }
 
-.trust-item {
+.hero-trust > div {
     display: flex;
 
     align-items: center;
 
     gap: 8px;
 
-    font-size: 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
 
-    font-weight: 800;
+.hero-trust i {
+    color: var(--gold);
 }
 
 
 /* =========================================================
-   SECTIONS
+   IMPACT STRIP
+========================================================= */
+
+.impact-strip {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    background: var(--gold);
+}
+
+.impact-item {
+    padding: 32px 15px;
+
+    text-align: center;
+
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.impact-item:last-child {
+    border-right: none;
+}
+
+.impact-item strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: 2rem;
+
+    line-height: 1;
+}
+
+.impact-item span {
+    font-size: 0.75rem;
+
+    color: rgba(23, 32, 29, 0.72);
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
 ========================================================= */
 
 .section {
-    padding: 100px 0;
+    width: min(90%, var(--container));
+
+    margin: auto;
+
+    padding: 105px 0;
 }
 
-.section-header {
+.section-heading {
     max-width: 720px;
 
-    margin: 0 auto 55px;
+    margin-bottom: 45px;
+}
+
+.section-heading.center {
+    margin-left: auto;
+    margin-right: auto;
 
     text-align: center;
 }
 
-.section-eyebrow {
+.section-label {
     display: inline-block;
 
-    margin-bottom: 12px;
+    margin-bottom: 13px;
 
-    color: var(--primary-dark);
+    color: var(--gold-dark);
 
-    font-size: 0.8rem;
+    font-size: 0.76rem;
 
-    font-weight: 900;
+    font-weight: 800;
 
     letter-spacing: 1.8px;
 
     text-transform: uppercase;
 }
 
-.section-header h2 {
-    margin-bottom: 16px;
+.section-heading h2,
+.section-top h2,
+.impact-copy h2,
+.donation-heading h2,
+.about-section h2,
+.contact-card h2 {
+    font-family: "Manrope", sans-serif;
 
-    color: #111;
-
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2rem, 4vw, 3.4rem);
 
     line-height: 1.1;
+
+    letter-spacing: -1.5px;
 }
 
-.section-header p {
-    color: var(--gray);
+.section-heading h2 span,
+.section-top h2 span,
+.impact-copy h2 span,
+.donation-heading h2 span,
+.about-section h2 span,
+.contact-card h2 span {
+    color: var(--gold-dark);
+}
+
+.section-heading p {
+    margin-top: 18px;
+
+    color: var(--muted);
+
+    line-height: 1.8;
 }
 
 
 /* =========================================================
-   IMPACT
+   INTRO
 ========================================================= */
 
-.impact-section {
-    background: var(--light);
-}
+.intro-section {
+    max-width: 950px;
 
-.impact-grid {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 20px;
-}
-
-.impact-card {
-    padding: 30px 20px;
-
-    background: #fff;
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius-md);
-
-    text-align: center;
-
-    box-shadow: var(--shadow-sm);
-
-    transition: transform 0.25s ease;
-}
-
-.impact-card:hover {
-    transform: translateY(-6px);
-}
-
-.impact-number {
-    margin-bottom: 5px;
-
-    font-size: 2.4rem;
-
-    font-weight: 900;
-}
-
-.impact-card p {
-    color: var(--gray);
-
-    font-size: 0.9rem;
+    text-align: left;
 }
 
 
@@ -631,24 +790,41 @@ button {
    CAUSES
 ========================================================= */
 
-.causes-grid {
+.section-top {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 40px;
+
+    margin-bottom: 45px;
+}
+
+.section-top > p {
+    max-width: 390px;
+
+    color: var(--muted);
+}
+
+.cause-grid {
     display: grid;
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 25px;
+    gap: 24px;
 }
 
 .cause-card {
     overflow: hidden;
 
-    background: #fff;
+    background: #ffffff;
 
     border: 1px solid var(--border);
 
-    border-radius: var(--radius-md);
+    border-radius: 20px;
 
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow);
 
     transition:
         transform 0.3s ease,
@@ -658,11 +834,13 @@ button {
 .cause-card:hover {
     transform: translateY(-7px);
 
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.13);
 }
 
 .cause-image {
-    height: 240px;
+    position: relative;
+
+    height: 250px;
 
     overflow: hidden;
 }
@@ -680,62 +858,116 @@ button {
     transform: scale(1.05);
 }
 
-.cause-content {
+.cause-tag {
+    position: absolute;
+
+    top: 16px;
+    left: 16px;
+
+    padding: 7px 12px;
+
+    background: var(--gold);
+
+    border-radius: 30px;
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+}
+
+.cause-body {
     padding: 25px;
 }
 
-.cause-content h3 {
+.cause-body h3 {
     margin-bottom: 10px;
 
-    font-size: 1.35rem;
+    font-family: "Manrope", sans-serif;
+
+    font-size: 1.3rem;
 }
 
-.cause-content p {
+.cause-body > p {
     margin-bottom: 20px;
 
-    color: var(--gray);
+    color: var(--muted);
 
-    font-size: 0.93rem;
+    font-size: 0.9rem;
 }
 
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress-wrapper {
+.progress {
     margin-bottom: 20px;
 }
 
-.progress-info {
+.progress-top {
     display: flex;
 
     justify-content: space-between;
 
     margin-bottom: 8px;
 
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+}
 
-    font-weight: 700;
+.progress-top strong {
+    color: var(--green);
 }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: 7px;
 
     overflow: hidden;
 
-    background: #ededed;
+    background: #eceeeb;
 
-    border-radius: 50px;
+    border-radius: 20px;
 }
 
-.progress-fill {
+.progress-bar span {
+    display: block;
+
     height: 100%;
 
-    background: var(--primary);
+    background: var(--gold);
+
+    border-radius: 20px;
+}
+
+.progress small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 0.7rem;
+}
+
+.cause-donate {
+    width: 100%;
+
+    padding: 12px 18px;
+
+    border: 2px solid var(--green);
 
     border-radius: 50px;
+
+    background: var(--green);
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+.cause-donate:hover {
+    background: var(--gold);
+
+    border-color: var(--gold);
+
+    color: var(--green);
 }
 
 
@@ -743,59 +975,103 @@ button {
    FEATURE STORY
 ========================================================= */
 
-.feature-story {
+.story-feature {
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    overflow: hidden;
+    min-height: 570px;
 
+    background: var(--green);
+
+    color: #ffffff;
+}
+
+.story-feature-image {
     min-height: 500px;
-
-    background: #111;
-
-    border-radius: var(--radius-lg);
-
-    box-shadow: var(--shadow-lg);
 }
 
-.feature-story-image {
-    min-height: 450px;
-}
-
-.feature-story-image img {
+.story-feature-image img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 }
 
-.feature-story-content {
+.story-feature-content {
     display: flex;
 
     flex-direction: column;
 
     justify-content: center;
 
-    padding: 60px;
+    padding: 70px;
 }
 
-.feature-story-content h2 {
-    margin-bottom: 18px;
+.story-feature-content h2 {
+    margin-bottom: 20px;
 
-    color: #fff;
+    font-family: "Manrope", sans-serif;
 
-    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-size: clamp(2.2rem, 4vw, 4rem);
 
-    line-height: 1.08;
+    line-height: 1.05;
 }
 
-.feature-story-content p {
+.story-feature-content h2 span {
+    color: var(--gold);
+}
+
+.story-feature-content blockquote {
     margin-bottom: 25px;
 
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 1rem;
 
     line-height: 1.8;
+}
+
+.story-person {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--gold);
+
+    color: var(--green);
+
+    border-radius: 50%;
+
+    font-weight: 900;
+}
+
+.story-person strong {
+    display: block;
+}
+
+.story-person small {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.text-link {
+    color: var(--gold);
+
+    font-weight: 700;
 }
 
 
@@ -803,11 +1079,22 @@ button {
    TESTIMONIALS
 ========================================================= */
 
-.testimonials-section {
+.testimonials {
     background: var(--light);
+
+    max-width: none;
+
+    width: 100%;
+
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
-.testimonials-grid {
+.testimonial-grid {
+    width: min(1100px, 100%);
+
+    margin: auto;
+
     display: grid;
 
     grid-template-columns: repeat(3, 1fr);
@@ -818,17 +1105,35 @@ button {
 .testimonial-card {
     padding: 30px;
 
-    background: #fff;
+    background: #ffffff;
 
     border: 1px solid var(--border);
 
-    border-radius: var(--radius-md);
+    border-radius: 18px;
 
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow);
 }
 
-.testimonial-quote {
-    margin-bottom: 20px;
+.testimonial-card.featured {
+    border-top: 4px solid var(--gold);
+}
+
+.quote {
+    margin-bottom: 10px;
+
+    color: var(--gold);
+
+    font-family: Georgia, serif;
+
+    font-size: 3rem;
+
+    line-height: 1;
+}
+
+.testimonial-card > p {
+    margin-bottom: 25px;
+
+    color: var(--muted);
 
     line-height: 1.8;
 }
@@ -842,82 +1147,136 @@ button {
 }
 
 .testimonial-avatar {
-    width: 46px;
-    height: 46px;
-
-    overflow: hidden;
-
-    border-radius: 50%;
-}
-
-.testimonial-avatar img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.testimonial-author strong {
-    display: block;
-
-    font-size: 0.9rem;
-}
-
-.testimonial-author span {
-    color: var(--gray);
-
-    font-size: 0.78rem;
-}
-
-
-/* =========================================================
-   IMPACT LIST
-========================================================= */
-
-.impact-list {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 20px;
-}
-
-.impact-list-item {
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 15px;
-
-    padding: 22px;
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius-md);
-}
-
-.impact-icon {
-    flex: 0 0 45px;
-
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    background: var(--primary);
+    background: var(--green);
+
+    color: #ffffff;
 
     border-radius: 50%;
 
-    font-weight: 900;
+    font-weight: 800;
 }
 
-.impact-list-item p {
-    color: var(--gray);
+.testimonial-author strong,
+.testimonial-author span {
+    display: block;
+}
 
-    font-size: 0.88rem;
+.testimonial-author span {
+    color: var(--muted);
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   IMPACT
+========================================================= */
+
+.impact-section {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    gap: 70px;
+}
+
+.impact-copy > p {
+    max-width: 580px;
+
+    margin: 20px 0 30px;
+
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+.impact-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.impact-list > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+}
+
+.impact-list i {
+    color: var(--gold-dark);
+}
+
+.impact-visual {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.impact-circle {
+    width: min(380px, 80vw);
+    aspect-ratio: 1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffffff 0 42%,
+            var(--gold) 43% 65%,
+            var(--green) 66% 100%
+        );
+
+    border-radius: 50%;
+
+    text-align: center;
+}
+
+.impact-circle > div {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 42%;
+
+    color: var(--green);
+}
+
+.impact-circle strong {
+    font-family: "Manrope", sans-serif;
+
+    font-size: 2.5rem;
+}
+
+.impact-circle span {
+    font-size: 0.7rem;
 }
 
 
@@ -926,71 +1285,78 @@ button {
 ========================================================= */
 
 .donation-section {
-    background: linear-gradient(135deg, #101010, #222);
+    padding: 100px 5%;
 
-    color: #fff;
+    background: var(--green-dark);
+
+    color: #ffffff;
 }
 
-.donation-container {
+.donation-wrapper {
+    width: min(1100px, 100%);
+
+    margin: auto;
+
     display: grid;
 
     grid-template-columns: 0.85fr 1.15fr;
 
-    gap: 60px;
+    align-items: center;
+
+    gap: 70px;
 }
 
-.donation-info h2 {
-    margin-bottom: 18px;
+.donation-heading h2 {
+    font-family: "Manrope", sans-serif;
 
-    color: #fff;
+    font-size: clamp(2.2rem, 4vw, 3.7rem);
 
-    font-size: clamp(2rem, 4vw, 3.4rem);
-
-    line-height: 1.1;
+    line-height: 1.05;
 }
 
-.donation-info p {
-    margin-bottom: 25px;
+.donation-heading h2 span {
+    display: block;
 
-    color: rgba(255, 255, 255, 0.7);
-
-    line-height: 1.8;
+    color: var(--gold);
 }
 
-.donation-card {
-    padding: 35px;
+.donation-heading p {
+    max-width: 470px;
 
-    background: #fff;
+    margin-top: 20px;
 
-    color: #111;
-
-    border-radius: var(--radius-lg);
-
-    box-shadow: var(--shadow-lg);
+    color: rgba(255, 255, 255, 0.68);
 }
 
+.donation-box {
+    padding: 30px;
 
-/* =========================================================
-   PAYMENT TABS
-========================================================= */
+    background: #ffffff;
 
-.payment-tabs {
+    color: var(--text);
+
+    border-radius: 22px;
+
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.donation-tabs {
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 8px;
-
-    margin-bottom: 25px;
+    gap: 6px;
 
     padding: 5px;
 
-    background: #f0f0f0;
+    margin-bottom: 25px;
+
+    background: #f0f2ef;
 
     border-radius: 50px;
 }
 
-.payment-tab {
+.donation-tab {
     padding: 11px;
 
     border: none;
@@ -999,101 +1365,218 @@ button {
 
     background: transparent;
 
-    color: var(--gray);
-
-    font-weight: 800;
-}
-
-.payment-tab.active {
-    background: #111;
-
-    color: #fff;
-}
-
-
-/* =========================================================
-   FREQUENCY
-========================================================= */
-
-.frequency {
-    display: flex;
-
-    gap: 10px;
-
-    margin-bottom: 20px;
-}
-
-.frequency button {
-    flex: 1;
-
-    padding: 10px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 10px;
-
-    background: #fff;
+    color: var(--muted);
 
     font-weight: 700;
 }
 
-.frequency button.active {
-    background: var(--primary);
+.donation-tab.active {
+    background: var(--green);
 
-    border-color: var(--primary);
+    color: #ffffff;
 }
 
+.donation-box label {
+    display: block;
 
-/* =========================================================
-   AMOUNTS
-========================================================= */
+    margin-bottom: 7px;
 
-.amount-options {
-    display: grid;
+    font-size: 0.78rem;
 
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 10px;
-
-    margin-bottom: 15px;
+    font-weight: 700;
 }
 
-.amount-btn {
-    padding: 12px;
+.donation-box select {
+    width: 100%;
+
+    margin-bottom: 20px;
+
+    padding: 13px;
 
     border: 1px solid var(--border);
 
     border-radius: 10px;
 
-    background: #fff;
+    background: #ffffff;
+}
+
+.frequency {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+.frequency-btn {
+    padding: 11px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    font-weight: 700;
+}
+
+.frequency-btn.active {
+    background: var(--gold);
+
+    border-color: var(--gold);
+}
+
+.amounts {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.amounts button {
+    padding: 11px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    font-weight: 700;
+}
+
+.amounts button.active {
+    background: var(--gold);
+
+    border-color: var(--gold);
+}
+
+.custom-amount {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-bottom: 18px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+.custom-amount input {
+    width: 100%;
+
+    padding: 13px 5px;
+
+    border: none;
+
+    outline: none;
+}
+
+.donate-submit {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background: var(--gold);
+
+    color: var(--green);
 
     font-weight: 800;
 }
 
-.amount-btn.active {
-    background: var(--primary);
+.secure-note {
+    display: block;
 
-    border-color: var(--primary);
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 0.7rem;
+
+    text-align: center;
 }
 
-.custom-amount {
-    width: 100%;
+.btc-payment {
+    text-align: center;
+}
 
-    padding: 13px 15px;
+.btc-payment.hidden {
+    display: none;
+}
 
-    margin-bottom: 18px;
+.btc-icon {
+    margin-bottom: 10px;
 
-    border: 1px solid var(--border);
+    color: #f7931a;
 
-    border-radius: 10px;
+    font-size: 2rem;
+}
 
-    outline: none;
+.btc-payment p {
+    margin: 10px 0;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+}
+
+.btc-address {
+    padding: 12px;
+
+    margin: 15px 0;
+
+    background: #f4f5f3;
+
+    border-radius: 8px;
+
+    font-size: 0.75rem;
+
+    word-break: break-all;
+}
+
+#copyBtc {
+    padding: 10px 15px;
+
+    border: 1px solid var(--green);
+
+    border-radius: 50px;
+
+    background: transparent;
+
+    color: var(--green);
+
+    font-weight: 700;
 }
 
 
 /* =========================================================
    WAYS TO HELP
 ========================================================= */
+
+.ways {
+    text-align: center;
+}
 
 .ways-grid {
     display: grid;
@@ -1103,54 +1586,56 @@ button {
     gap: 22px;
 }
 
-.way-card {
-    padding: 32px;
+.ways-grid article {
+    padding: 35px 25px;
 
-    background: #fff;
+    background: #ffffff;
 
     border: 1px solid var(--border);
 
-    border-radius: var(--radius-md);
+    border-radius: 18px;
 
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    box-shadow: var(--shadow);
 }
 
-.way-card:hover {
-    transform: translateY(-7px);
-
-    box-shadow: var(--shadow-md);
-}
-
-.way-icon {
+.ways-grid article > i {
     width: 55px;
     height: 55px;
 
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 
-    background: var(--primary);
+    background: var(--gold);
 
     border-radius: 50%;
 
-    font-size: 1.3rem;
+    color: var(--green);
 }
 
-.way-card h3 {
+.ways-grid h3 {
     margin-bottom: 10px;
+
+    font-family: "Manrope", sans-serif;
 }
 
-.way-card p {
-    margin-bottom: 18px;
+.ways-grid p {
+    margin-bottom: 17px;
 
-    color: var(--gray);
+    color: var(--muted);
 
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+}
+
+.ways-grid a {
+    color: var(--green);
+
+    font-size: 0.85rem;
+
+    font-weight: 800;
 }
 
 
@@ -1159,27 +1644,62 @@ button {
 ========================================================= */
 
 .about-section {
+    padding: 100px 5%;
+
     background: var(--light);
-}
-
-.about-content {
-    max-width: 850px;
-
-    margin: auto;
 
     text-align: center;
 }
 
-.about-content h2 {
-    margin-bottom: 18px;
+.about-section > div,
+.about-section > p {
+    width: min(800px, 100%);
 
-    font-size: clamp(2rem, 4vw, 3rem);
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.about-content p {
-    color: var(--gray);
+.about-section p {
+    margin-top: 20px;
 
-    line-height: 1.9;
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+    text-align: center;
+}
+
+.contact-card {
+    padding: 70px 30px;
+
+    background: var(--green);
+
+    color: #ffffff;
+
+    border-radius: 25px;
+}
+
+.contact-card h2 {
+    margin-bottom: 20px;
+}
+
+.contact-card h2 span {
+    display: block;
+
+    color: var(--gold);
+}
+
+.contact-card p {
+    margin-bottom: 25px;
+
+    color: rgba(255, 255, 255, 0.68);
 }
 
 
@@ -1187,15 +1707,19 @@ button {
    FOOTER
 ========================================================= */
 
-.site-footer {
-    padding: 70px 0 30px;
+footer {
+    padding: 70px 5% 25px;
 
-    background: #0d0d0d;
+    background: #0d1714;
 
-    color: #fff;
+    color: #ffffff;
 }
 
-.footer-grid {
+.footer-main {
+    width: min(1100px, 100%);
+
+    margin: auto;
+
     display: grid;
 
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -1205,20 +1729,50 @@ button {
     padding-bottom: 50px;
 }
 
-.footer-brand p {
-    max-width: 350px;
+.footer-brand > p {
+    max-width: 320px;
 
-    margin-top: 15px;
+    margin: 18px 0;
 
     color: rgba(255, 255, 255, 0.55);
 
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
-.footer-column h3 {
+.socials {
+    display: flex;
+
+    gap: 9px;
+}
+
+.socials a {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    transition: 0.25s ease;
+}
+
+.socials a:hover {
+    background: var(--gold);
+
+    color: var(--green);
+}
+
+.footer-column h4 {
     margin-bottom: 18px;
 
-    font-size: 0.95rem;
+    font-size: 0.85rem;
 }
 
 .footer-column a {
@@ -1226,25 +1780,33 @@ button {
 
     margin-bottom: 10px;
 
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.5);
 
-    font-size: 0.88rem;
+    font-size: 0.8rem;
 }
 
 .footer-column a:hover {
-    color: var(--primary);
+    color: var(--gold);
 }
 
 .footer-bottom {
-    padding-top: 25px;
+    width: min(1100px, 100%);
+
+    margin: auto;
+
+    padding-top: 20px;
 
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 
-    color: rgba(255, 255, 255, 0.45);
+    display: flex;
 
-    font-size: 0.8rem;
+    justify-content: space-between;
 
-    text-align: center;
+    gap: 20px;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    font-size: 0.7rem;
 }
 
 
@@ -1254,7 +1816,6 @@ button {
 
 .modal {
     position: fixed;
-
     inset: 0;
 
     z-index: 10000;
@@ -1269,7 +1830,6 @@ button {
     background: rgba(0, 0, 0, 0.75);
 
     opacity: 0;
-
     visibility: hidden;
 
     transition:
@@ -1279,81 +1839,67 @@ button {
 
 .modal.active {
     opacity: 1;
-
     visibility: visible;
 }
 
 .modal-content {
     position: relative;
 
-    width: min(550px, 100%);
+    width: min(500px, 100%);
 
-    max-height: 90vh;
+    padding: 40px;
 
-    overflow-y: auto;
+    background: #ffffff;
 
-    padding: 35px;
+    border-radius: 22px;
 
-    background: #fff;
-
-    border-radius: var(--radius-lg);
-
-    box-shadow: var(--shadow-lg);
+    text-align: center;
 }
 
 .modal-close {
     position: absolute;
 
-    top: 15px;
-    right: 18px;
+    top: 14px;
+    right: 14px;
 
-    width: 38px;
-    height: 38px;
+    width: 35px;
+    height: 35px;
 
     border: none;
 
     border-radius: 50%;
 
-    background: #f1f1f1;
+    background: #f0f0f0;
 }
 
+.modal-icon {
+    width: 55px;
+    height: 55px;
 
-/* =========================================================
-   FORMS
-========================================================= */
+    display: flex;
 
-.form-group {
-    margin-bottom: 18px;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    background: var(--gold);
+
+    color: var(--green);
+
+    border-radius: 50%;
 }
 
-.form-group label {
-    display: block;
+.modal-content h2 {
+    margin-bottom: 10px;
 
-    margin-bottom: 7px;
-
-    font-size: 0.85rem;
-
-    font-weight: 700;
+    font-family: "Manrope", sans-serif;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
+.modal-content p {
+    margin-bottom: 22px;
 
-    padding: 13px 14px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 10px;
-
-    outline: none;
-}
-
-.form-group textarea {
-    min-height: 120px;
-
-    resize: vertical;
+    color: var(--muted);
 }
 
 
@@ -1361,21 +1907,17 @@ button {
    TABLET
 ========================================================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 950px) {
 
-    .nav-links {
-        gap: 18px;
+    #nav-links {
+        gap: 16px;
     }
 
-    .impact-grid {
+    .cause-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .causes-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .testimonials-grid {
+    .testimonial-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -1383,11 +1925,15 @@ button {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .donation-container {
+    .impact-section {
         grid-template-columns: 1fr;
     }
 
-    .footer-grid {
+    .donation-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-main {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -1397,20 +1943,22 @@ button {
    MOBILE
 ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 760px) {
 
-    .header-inner {
-        min-height: 70px;
+    .header {
+        height: 68px;
+
+        padding: 0 5%;
     }
 
-    #menu-toggle {
+    .menu-toggle {
         display: block;
     }
 
-    .nav-links {
+    #nav-links {
         position: absolute;
 
-        top: 70px;
+        top: 68px;
         left: 0;
 
         width: 100%;
@@ -1423,39 +1971,37 @@ button {
 
         gap: 0;
 
-        padding: 15px 6% 25px;
+        padding: 10px 5% 20px;
 
-        background: rgba(17, 17, 17, 0.98);
+        background: rgba(16, 37, 31, 0.98);
 
         opacity: 0;
         visibility: hidden;
 
         transform: translateY(-10px);
 
-        transition:
-            opacity 0.25s ease,
-            visibility 0.25s ease,
-            transform 0.25s ease;
+        transition: 0.25s ease;
     }
 
-    .nav-links.active {
+    #nav-links.active {
         opacity: 1;
-
         visibility: visible;
 
         transform: translateY(0);
     }
 
-    .nav-links a {
+    #nav-links > a {
         width: 100%;
 
-        padding: 13px 0;
+        padding: 12px 0;
 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .nav-links a::after {
-        display: none;
+    .nav-donate {
+        margin-top: 10px;
+
+        text-align: center;
     }
 
 
@@ -1463,48 +2009,53 @@ button {
 
     .hero {
         min-height: 680px;
-
-        height: 100svh;
     }
 
-    .hero-slide-content {
+    .hero-content {
         left: 5%;
 
-        bottom: 13%;
+        bottom: 14%;
 
-        width: 88%;
+        width: 82%;
     }
 
-    .hero-slide-content h1 {
-        font-size: clamp(2rem, 9vw, 3rem);
+    .hero-content h1 {
+        font-size: clamp(2.2rem, 10vw, 3.4rem);
 
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
     }
 
-    .hero-slide-content p {
-        font-size: 0.92rem;
-
-        line-height: 1.6;
+    .hero-content p {
+        font-size: 0.9rem;
     }
 
 
-    /* VERTICAL INDICATORS */
+    /*
+       IMPORTANT:
+       Indicators remain on RIGHT,
+       completely separate from buttons.
+    */
 
-    .hero-dots {
-        top: 50%;
+    .slider-controls {
+        top: 48%;
 
         right: 12px;
 
-        bottom: auto;
-
-        left: auto;
-
-        gap: 9px;
-
-        transform: translateY(-50%);
+        gap: 10px;
     }
 
-    .hero-dot {
+    .slider-controls > button {
+        width: 34px;
+        height: 34px;
+
+        font-size: 0.75rem;
+    }
+
+    #slideDots {
+        gap: 8px;
+    }
+
+    #slideDots button {
         width: 8px;
         height: 8px;
 
@@ -1512,46 +2063,87 @@ button {
         min-height: 8px;
     }
 
-    .hero-dot.active {
+    #slideDots button.active,
+    #slideDots button.active-dot,
+    #slideDots button.current {
         width: 8px;
-        height: 22px;
+        height: 23px;
     }
 
 
-    /* OTHER SECTIONS */
+    /* TRUST */
+
+    .hero-trust {
+        gap: 12px;
+
+        padding: 12px 4%;
+
+        justify-content: space-around;
+    }
+
+    .hero-trust > div {
+        font-size: 0.62rem;
+
+        text-align: center;
+    }
+
+    .hero-trust > div span {
+        display: none;
+    }
+
+
+    /* SECTIONS */
 
     .section {
+        width: 90%;
+
         padding: 75px 0;
     }
 
-    .causes-grid,
-    .testimonials-grid,
+    .section-top {
+        display: block;
+    }
+
+    .section-top > p {
+        margin-top: 15px;
+    }
+
+    .cause-grid,
+    .testimonial-grid,
     .ways-grid {
         grid-template-columns: 1fr;
     }
 
-    .impact-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .story-feature {
+        grid-template-columns: 1fr;
+    }
+
+    .story-feature-image {
+        min-height: 320px;
+    }
+
+    .story-feature-content {
+        padding: 45px 7%;
     }
 
     .impact-list {
         grid-template-columns: 1fr;
     }
 
-    .feature-story {
+    .impact-circle {
+        width: 290px;
+    }
+
+    .amounts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-main {
         grid-template-columns: 1fr;
     }
 
-    .feature-story-image {
-        min-height: 300px;
-    }
-
-    .feature-story-content {
-        padding: 35px 25px;
-    }
-
-    .donation-card {
-        padding: 25px;
+    .footer-bottom {
+        flex-direction: column;
     }
 }
 
@@ -1560,80 +2152,62 @@ button {
    SMALL PHONES
 ========================================================= */
 
-@media (max-width: 480px) {
+@media (max-width: 430px) {
 
-    .logo {
-        font-size: 1rem;
+    .hero-content {
+        bottom: 15%;
+
+        width: 80%;
     }
 
-    .logo-mark {
-        width: 34px;
-        height: 34px;
+    .hero-content h1 {
+        font-size: 2.05rem;
     }
 
-    .hero-slide-content {
-        bottom: 11%;
+    .hero-content p {
+        font-size: 0.82rem;
     }
 
     .hero-buttons {
-        gap: 8px;
+        gap: 7px;
     }
 
     .hero-buttons .btn {
-        min-height: 44px;
+        min-height: 43px;
 
-        padding: 10px 15px;
+        padding: 10px 14px;
 
-        font-size: 0.88rem;
+        font-size: 0.78rem;
     }
 
-    .hero-dots {
-        right: 8px;
+    .slider-controls {
+        right: 7px;
     }
 
-    .impact-grid {
-        gap: 10px;
+    .slider-controls > button {
+        width: 30px;
+        height: 30px;
+
+        font-size: 0.65rem;
     }
 
-    .impact-card {
-        padding: 22px 12px;
-    }
-
-    .impact-number {
-        font-size: 1.8rem;
-    }
-
-    .amount-options {
+    .impact-strip {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-:focus-visible {
-    outline: 3px solid var(--primary);
-
-    outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
+    .impact-item {
+        padding: 25px 10px;
     }
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .impact-item strong {
+        font-size: 1.6rem;
+    }
+
+    .impact-item span {
+        font-size: 0.65rem;
+    }
+
+    .donation-box {
+        padding: 22px 17px;
     }
 }
