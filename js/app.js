@@ -1,540 +1,681 @@
-/* =========================
-   PRELOADER
-========================= */
+/* =========================================================
+   GLOBAL VISION AID
+   MAIN JAVASCRIPT
+========================================================= */
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const preloader =
-        document.getElementById("preloader");
+    /* =====================================================
+       PRELOADER
+    ===================================================== */
 
-    setTimeout(() => {
-        preloader.classList.add("loaded");
-    }, 500);
+    const preloader = document.getElementById("preloader");
 
-});
-
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-const menuToggle =
-    document.getElementById("menu-toggle");
-
-const navLinks =
-    document.getElementById("nav-links");
-
-
-menuToggle.addEventListener("click", () => {
-
-    navLinks.classList.toggle("open");
-
-    const icon =
-        menuToggle.querySelector("i");
-
-    if (navLinks.classList.contains("open")) {
-
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-
-    } else {
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
-    }
-
-});
-
-
-document.querySelectorAll("#nav-links a")
-.forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navLinks.classList.remove("open");
-
-        const icon =
-            menuToggle.querySelector("i");
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
-    });
-
-});
-
-
-/* =========================
-   HERO SLIDER
-========================= */
-
-const slides =
-    document.querySelectorAll(".hero-slide");
-
-const dotsContainer =
-    document.getElementById("slideDots");
-
-let currentSlide = 0;
-
-
-slides.forEach((_, index) => {
-
-    const dot =
-        document.createElement("button");
-
-    dot.className = "slide-dot";
-
-    if (index === 0) {
-        dot.classList.add("active");
-    }
-
-    dot.addEventListener("click", () => {
-
-        currentSlide = index;
-
-        updateSlider();
-
-    });
-
-    dotsContainer.appendChild(dot);
-
-});
-
-
-const dots =
-    document.querySelectorAll(".slide-dot");
-
-
-function updateSlider() {
-
-    slides.forEach((slide, index) => {
-
-        slide.classList.toggle(
-            "active",
-            index === currentSlide
-        );
-
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            if (preloader) {
+                preloader.classList.add("loaded");
+            }
+        }, 500);
     });
 
 
-    dots.forEach((dot, index) => {
+    /* =====================================================
+       MOBILE NAVIGATION
+    ===================================================== */
 
-        dot.classList.toggle(
-            "active",
-            index === currentSlide
-        );
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
 
-    });
+    if (menuToggle && navLinks) {
 
-}
+        menuToggle.addEventListener("click", () => {
 
+            navLinks.classList.toggle("open");
 
-document
-    .getElementById("nextSlide")
-    .addEventListener("click", () => {
+            const isOpen = navLinks.classList.contains("open");
 
-        currentSlide =
-            (currentSlide + 1) % slides.length;
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation" : "Open navigation"
+            );
 
-        updateSlider();
+            menuToggle.innerHTML = isOpen
+                ? '<i class="fa-solid fa-xmark"></i>'
+                : '<i class="fa-solid fa-bars"></i>';
 
-    });
-
-
-document
-    .getElementById("prevSlide")
-    .addEventListener("click", () => {
-
-        currentSlide =
-            (currentSlide - 1 + slides.length)
-            % slides.length;
-
-        updateSlider();
-
-    });
+        });
 
 
-setInterval(() => {
+        /* Close menu after clicking a navigation link */
 
-    currentSlide =
-        (currentSlide + 1) % slides.length;
+        navLinks.querySelectorAll("a").forEach(link => {
 
-    updateSlider();
+            link.addEventListener("click", () => {
 
-}, 6000);
+                navLinks.classList.remove("open");
 
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation"
+                );
 
-/* =========================
-   COUNTERS
-========================= */
-
-const counters =
-    document.querySelectorAll("[data-count]");
-
-
-const observer =
-    new IntersectionObserver(
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (!entry.isIntersecting) return;
-
-                const element =
-                    entry.target;
-
-                const target =
-                    Number(element.dataset.count);
-
-                let value = 0;
-
-                const increment =
-                    Math.max(1, Math.ceil(target / 80));
-
-                const timer =
-                    setInterval(() => {
-
-                        value += increment;
-
-                        if (value >= target) {
-
-                            value = target;
-
-                            clearInterval(timer);
-
-                        }
-
-                        element.textContent =
-                            value.toLocaleString();
-
-                    }, 20);
-
-                observer.unobserve(element);
+                menuToggle.innerHTML =
+                    '<i class="fa-solid fa-bars"></i>';
 
             });
 
-        },
-        {
-            threshold: .5
-        }
-    );
+        });
+
+    }
 
 
-counters.forEach(counter =>
-    observer.observe(counter)
-);
+    /* =====================================================
+       HERO SLIDESHOW
+    ===================================================== */
+
+    const slides = document.querySelectorAll(".hero-slide");
+    const slideDots = document.getElementById("slideDots");
+    const prevSlide = document.getElementById("prevSlide");
+    const nextSlide = document.getElementById("nextSlide");
+
+    let currentSlide = 0;
+    let slideTimer;
 
 
-/* =========================
-   DONATION AMOUNTS
-========================= */
+    function showSlide(index) {
 
-const amountButtons =
-    document.querySelectorAll(
-        ".amounts button"
-    );
+        if (!slides.length) return;
 
-const amountInput =
-    document.getElementById("amount");
-
-
-amountButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        amountButtons.forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-        button.classList.add("active");
-
-        amountInput.value =
-            button.dataset.amount;
-
-    });
-
-});
-
-
-amountInput.addEventListener("input", () => {
-
-    amountButtons.forEach(btn =>
-        btn.classList.remove("active")
-    );
-
-});
-
-
-/* =========================
-   FREQUENCY
-========================= */
-
-const frequencyButtons =
-    document.querySelectorAll(
-        ".frequency-btn"
-    );
-
-
-let selectedFrequency = "once";
-
-
-frequencyButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        frequencyButtons.forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-        button.classList.add("active");
-
-        selectedFrequency =
-            button.dataset.frequency;
-
-    });
-
-});
-
-
-/* =========================
-   PAYMENT METHOD
-========================= */
-
-const tabs =
-    document.querySelectorAll(".donation-tab");
-
-const cardPayment =
-    document.getElementById("cardPayment");
-
-const btcPayment =
-    document.getElementById("btcPayment");
-
-
-tabs.forEach(tab => {
-
-    tab.addEventListener("click", () => {
-
-        tabs.forEach(item =>
-            item.classList.remove("active")
-        );
-
-        tab.classList.add("active");
-
-        const method =
-            tab.dataset.method;
-
-        if (method === "btc") {
-
-            cardPayment.classList.add("hidden");
-            btcPayment.classList.remove("hidden");
-
+        if (index >= slides.length) {
+            currentSlide = 0;
+        } else if (index < 0) {
+            currentSlide = slides.length - 1;
         } else {
-
-            btcPayment.classList.add("hidden");
-            cardPayment.classList.remove("hidden");
-
+            currentSlide = index;
         }
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle(
+                "active",
+                i === currentSlide
+            );
+        });
+
+        updateDots();
+    }
+
+
+    function createDots() {
+
+        if (!slideDots || !slides.length) return;
+
+        slideDots.innerHTML = "";
+
+        slides.forEach((_, index) => {
+
+            const dot = document.createElement("button");
+
+            dot.type = "button";
+
+            dot.className = "slide-dot";
+
+            if (index === currentSlide) {
+                dot.classList.add("active");
+            }
+
+            dot.setAttribute(
+                "aria-label",
+                `Go to slide ${index + 1}`
+            );
+
+            dot.addEventListener("click", () => {
+
+                showSlide(index);
+
+                restartSlider();
+
+            });
+
+            slideDots.appendChild(dot);
+
+        });
+
+    }
+
+
+    function updateDots() {
+
+        if (!slideDots) return;
+
+        const dots =
+            slideDots.querySelectorAll(".slide-dot");
+
+        dots.forEach((dot, index) => {
+
+            dot.classList.toggle(
+                "active",
+                index === currentSlide
+            );
+
+        });
+
+    }
+
+
+    function startSlider() {
+
+        if (slides.length <= 1) return;
+
+        slideTimer = setInterval(() => {
+
+            showSlide(currentSlide + 1);
+
+        }, 7000);
+
+    }
+
+
+    function restartSlider() {
+
+        clearInterval(slideTimer);
+
+        startSlider();
+
+    }
+
+
+    if (slides.length) {
+
+        createDots();
+
+        showSlide(0);
+
+        startSlider();
+
+    }
+
+
+    if (nextSlide) {
+
+        nextSlide.addEventListener("click", () => {
+
+            showSlide(currentSlide + 1);
+
+            restartSlider();
+
+        });
+
+    }
+
+
+    if (prevSlide) {
+
+        prevSlide.addEventListener("click", () => {
+
+            showSlide(currentSlide - 1);
+
+            restartSlider();
+
+        });
+
+    }
+
+
+    /* =====================================================
+       IMPACT COUNTERS
+    ===================================================== */
+
+    const counters =
+        document.querySelectorAll("[data-count]");
+
+    const counterObserver =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (!entry.isIntersecting) return;
+
+                    const counter = entry.target;
+
+                    const target =
+                        Number(counter.dataset.count);
+
+                    let current = 0;
+
+                    const duration = 1600;
+
+                    const increment =
+                        target / (duration / 16);
+
+
+                    function updateCounter() {
+
+                        current += increment;
+
+                        if (current < target) {
+
+                            counter.textContent =
+                                Math.floor(current).toLocaleString();
+
+                            requestAnimationFrame(
+                                updateCounter
+                            );
+
+                        } else {
+
+                            counter.textContent =
+                                target.toLocaleString();
+
+                        }
+
+                    }
+
+                    updateCounter();
+
+                    counterObserver.unobserve(counter);
+
+                });
+
+            },
+            {
+                threshold: 0.5
+            }
+        );
+
+
+    counters.forEach(counter => {
+
+        counterObserver.observe(counter);
 
     });
 
-});
+
+    /* =====================================================
+       DONATION TABS
+    ===================================================== */
+
+    const donationTabs =
+        document.querySelectorAll(".donation-tab");
+
+    const cardPayment =
+        document.getElementById("cardPayment");
+
+    const btcPayment =
+        document.getElementById("btcPayment");
 
 
-/* =========================
-   CAUSE BUTTONS
-========================= */
+    donationTabs.forEach(tab => {
 
-const causeSelect =
-    document.getElementById("causeSelect");
+        tab.addEventListener("click", () => {
 
+            donationTabs.forEach(item => {
+                item.classList.remove("active");
+            });
 
-document
-    .querySelectorAll(".cause-donate")
-    .forEach(button => {
+            tab.classList.add("active");
 
-        button.addEventListener("click", () => {
+            const method =
+                tab.dataset.method;
 
-            causeSelect.value =
-                button.dataset.cause;
+            if (method === "btc") {
 
-            document
-                .getElementById("donate")
-                .scrollIntoView({
-                    behavior: "smooth"
-                });
+                if (cardPayment) {
+                    cardPayment.classList.add("hidden");
+                }
+
+                if (btcPayment) {
+                    btcPayment.classList.remove("hidden");
+                }
+
+            } else {
+
+                if (btcPayment) {
+                    btcPayment.classList.add("hidden");
+                }
+
+                if (cardPayment) {
+                    cardPayment.classList.remove("hidden");
+                }
+
+            }
 
         });
 
     });
 
 
-/* =========================
-   MODAL
-========================= */
+    /* =====================================================
+       DONATION FREQUENCY
+    ===================================================== */
 
-const modal =
-    document.getElementById("donationModal");
-
-const closeModal =
-    document.getElementById("closeModal");
-
-const modalMessage =
-    document.getElementById("modalMessage");
+    const frequencyButtons =
+        document.querySelectorAll(".frequency-btn");
 
 
-function openModal(message) {
+    frequencyButtons.forEach(button => {
 
-    modalMessage.textContent =
-        message;
+        button.addEventListener("click", () => {
 
-    modal.classList.add("show");
+            frequencyButtons.forEach(item => {
+                item.classList.remove("active");
+            });
 
-}
+            button.classList.add("active");
 
-
-function closeDonationModal() {
-
-    modal.classList.remove("show");
-
-}
-
-
-closeModal.addEventListener(
-    "click",
-    closeDonationModal
-);
-
-
-modal.addEventListener("click", event => {
-
-    if (event.target === modal) {
-
-        closeDonationModal();
-
-    }
-
-});
-
-
-/* =========================
-   CARD DONATION
-========================= */
-
-const donationForm =
-    document.getElementById("donationForm");
-
-
-donationForm.addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        const amount =
-            Number(amountInput.value);
-
-        const cause =
-            causeSelect.value;
-
-
-        if (!amount || amount < 1) {
-
-            alert(
-                "Please enter a valid donation amount."
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * IMPORTANT:
-         *
-         * This is intentionally a backend
-         * integration point.
-         *
-         * Never put Stripe secret keys,
-         * Paystack secret keys or BTC
-         * private keys inside this file.
-         */
-
-        openModal(
-            `Donation setup ready for $${amount.toFixed(2)} ` +
-            `(${selectedFrequency}) to ${cause}.`
-        );
-
-
-        /*
-         * Production example:
-         *
-         * const response = await fetch(
-         *     "/api/donations/create-checkout",
-         *     {
-         *         method: "POST",
-         *         headers: {
-         *             "Content-Type":
-         *                 "application/json"
-         *         },
-         *         body: JSON.stringify({
-         *             amount,
-         *             cause,
-         *             frequency:
-         *                 selectedFrequency
-         *         })
-         *     }
-         * );
-         *
-         * const data = await response.json();
-         *
-         * window.location.href =
-         *     data.checkoutUrl;
-         */
-
-    }
-);
-
-
-/* =========================
-   BITCOIN COPY
-========================= */
-
-document
-    .getElementById("copyBtc")
-    .addEventListener("click", async () => {
-
-        const address =
-            document.querySelector(
-                ".btc-address"
-            ).textContent.trim();
-
-        try {
-
-            await navigator.clipboard.writeText(
-                address
-            );
-
-            document.getElementById(
-                "copyBtc"
-            ).textContent =
-                "Copied!";
-
-            setTimeout(() => {
-
-                document.getElementById(
-                    "copyBtc"
-                ).textContent =
-                    "Copy wallet address";
-
-            }, 1800);
-
-        } catch {
-
-            alert(
-                "Please copy the wallet address manually."
-            );
-
-        }
+        });
 
     });
+
+
+    /* =====================================================
+       DONATION AMOUNTS
+    ===================================================== */
+
+    const amountButtons =
+        document.querySelectorAll(".amounts button");
+
+    const amountInput =
+        document.getElementById("amount");
+
+
+    amountButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            amountButtons.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            if (amountInput) {
+
+                amountInput.value =
+                    button.dataset.amount;
+
+            }
+
+        });
+
+    });
+
+
+    if (amountInput) {
+
+        amountInput.addEventListener("input", () => {
+
+            amountButtons.forEach(button => {
+                button.classList.remove("active");
+            });
+
+        });
+
+    }
+
+
+    /* =====================================================
+       CAUSE DONATE BUTTONS
+    ===================================================== */
+
+    const causeButtons =
+        document.querySelectorAll(".cause-donate");
+
+    const causeSelect =
+        document.getElementById("causeSelect");
+
+
+    causeButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const cause =
+                button.dataset.cause;
+
+            if (causeSelect) {
+
+                causeSelect.value = cause;
+
+            }
+
+            const donationSection =
+                document.getElementById("donate");
+
+            if (donationSection) {
+
+                donationSection.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+
+        });
+
+    });
+
+
+    /* =====================================================
+       DONATION FORM
+    ===================================================== */
+
+    const donationForm =
+        document.getElementById("donationForm");
+
+    const donationModal =
+        document.getElementById("donationModal");
+
+    const modalMessage =
+        document.getElementById("modalMessage");
+
+
+    if (donationForm) {
+
+        donationForm.addEventListener("submit", event => {
+
+            event.preventDefault();
+
+            const amount =
+                amountInput
+                    ? amountInput.value
+                    : "";
+
+            if (!amount || Number(amount) <= 0) {
+
+                if (amountInput) {
+                    amountInput.focus();
+                }
+
+                return;
+
+            }
+
+
+            const cause =
+                causeSelect
+                    ? causeSelect.value
+                    : "general";
+
+
+            if (modalMessage) {
+
+                modalMessage.textContent =
+                    `Your $${Number(amount).toLocaleString()} donation for ${cause} has been prepared. Secure payment processing will be connected in the next stage.`;
+
+            }
+
+
+            if (donationModal) {
+
+                donationModal.classList.add("active");
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       DONATION MODAL
+    ===================================================== */
+
+    const closeModal =
+        document.getElementById("closeModal");
+
+    const modalContinue =
+        document.getElementById("modalContinue");
+
+
+    function closeDonationModal() {
+
+        if (donationModal) {
+
+            donationModal.classList.remove("active");
+
+        }
+
+    }
+
+
+    if (closeModal) {
+
+        closeModal.addEventListener(
+            "click",
+            closeDonationModal
+        );
+
+    }
+
+
+    if (modalContinue) {
+
+        modalContinue.addEventListener(
+            "click",
+            closeDonationModal
+        );
+
+    }
+
+
+    if (donationModal) {
+
+        donationModal.addEventListener("click", event => {
+
+            if (event.target === donationModal) {
+
+                closeDonationModal();
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       BITCOIN COPY BUTTON
+    ===================================================== */
+
+    const copyBtc =
+        document.getElementById("copyBtc");
+
+
+    if (copyBtc) {
+
+        copyBtc.addEventListener("click", async () => {
+
+            const btcAddress =
+                document.querySelector(".btc-address");
+
+            if (!btcAddress) return;
+
+            const address =
+                btcAddress.textContent.trim();
+
+
+            if (
+                !address ||
+                address === "BTC wallet will appear here"
+            ) {
+
+                copyBtc.textContent =
+                    "Wallet not configured yet";
+
+                setTimeout(() => {
+
+                    copyBtc.textContent =
+                        "Copy wallet address";
+
+                }, 2000);
+
+                return;
+
+            }
+
+
+            try {
+
+                await navigator.clipboard.writeText(address);
+
+                copyBtc.textContent =
+                    "Copied!";
+
+                setTimeout(() => {
+
+                    copyBtc.textContent =
+                        "Copy wallet address";
+
+                }, 2000);
+
+            } catch (error) {
+
+                copyBtc.textContent =
+                    "Copy failed";
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       SMOOTH SCROLL
+    ===================================================== */
+
+    document
+        .querySelectorAll('a[href^="#"]')
+        .forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
+
+
+                const target =
+                    document.querySelector(targetId);
+
+                if (!target) return;
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            });
+
+        });
+
+
+});
