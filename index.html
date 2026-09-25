@@ -1,742 +1,1265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <meta
-    name="description"
-    content="World-Vision.Intl — helping children experiencing homelessness, supporting cancer care, and providing Alzheimer's support."
-  >
+    <title>Global Vision Aid | Every Life Matters</title>
 
-  <title>World Vision International | Give Hope, insight and Change Lives.</title>
+    <meta
+        name="description"
+        content="Support children, families and vulnerable people affected by homelessness, cancer and Alzheimer's disease."
+    >
 
-  <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+<!-- =========================
+     PRELOADER
+========================= -->
 
-  <header class="header">
+<div id="preloader">
+    <div class="loader-logo">
+        <span>G</span>
+        Global Vision Aid
+    </div>
+
+    <div class="loader"></div>
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
 
     <a href="#home" class="logo">
-      <span class="logo-icon">₩♡</span>
+        <span class="logo-mark">
+            <i class="fa-solid fa-hands-holding-child"></i>
+        </span>
 
-      <span>
-        <strong>World Vision</strong>
-        <small>International</small>
-      </span>
+        <span>
+            <strong>Global Vision</strong>
+            <small>Aid</small>
+        </span>
     </a>
 
-    <button
-      class="menu-btn"
-      id="menuBtn"
-      aria-label="Open navigation"
-    >
-      ☰
-    </button>
 
-    <nav id="nav">
+    <nav id="nav-links">
 
-      <a href="#causes">Causes</a>
+        <a href="#home">Home</a>
+        <a href="#causes">Our Causes</a>
+        <a href="#stories">Stories</a>
+        <a href="#impact">Our Impact</a>
+        <a href="#about">About</a>
 
-      <a href="#impact">Our Impact</a>
-
-      <a href="#about">About</a>
-
-      <a href="#transparency">Transparency</a>
-
-      <button
-        class="nav-donate"
-        onclick="openDonation()"
-      >
-        Donate
-      </button>
+        <a href="#donate" class="nav-donate">
+            Donate
+        </a>
 
     </nav>
 
-  </header>
 
-
-  <!-- =========================
-       HERO
-  ========================== -->
-
-  <main id="home">
-
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <span class="eyebrow">
-          ONE WORLD • ONE HUMANITY
-        </span>
-
-        <h1>
-          Give hope where
-          <span>it matters most.</span>
-        </h1>
-
-        <p>
-          Your generosity can help provide safety for children
-          experiencing homelessness, compassionate cancer support,
-          and dignity-centered care for people affected by
-          Alzheimer's.
-        </p>
-
-        <div class="hero-buttons">
-
-          <button
-            class="primary-btn"
-            onclick="openDonation()"
-          >
-            Make a Donation
-          </button>
-
-          <a
-            href="#causes"
-            class="secondary-btn"
-          >
-            Explore Our Causes
-          </a>
-
-        </div>
-
-        <div class="trust">
-
-          <span>✓ Secure giving</span>
-
-          <span>✓ Card payments</span>
-
-          <span>✓ Bitcoin donations</span>
-
-        </div>
-
-      </div>
-
-
-      <!-- IMPACT CARD -->
-
-      <div class="hero-card">
-
-        <span class="card-label">
-          COMMUNITY IMPACT
-        </span>
-
-        <h2>
-          $428,640
-        </h2>
-
-        <p>
-          Illustrative impact dashboard.
-          Replace with verified organizational
-          statistics before publishing.
-        </p>
-
-        <div class="progress">
-
-          <span></span>
-
-        </div>
-
-        <div class="progress-info">
-
-          <span>2026 Goal</span>
-
-          <strong>$630,000</strong>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         STATISTICS
-    ========================== -->
-
-    <section class="stats" id="impact">
-
-      <div class="stat">
-
-        <strong>42</strong>
-
-        <span>
-          Community Partners
-        </span>
-
-      </div>
-
-      <div class="stat">
-
-        <strong>18</strong>
-
-        <span>
-          Countries
-        </span>
-
-      </div>
-
-      <div class="stat">
-
-        <strong>7,500+</strong>
-
-        <span>
-          People Reached
-        </span>
-
-      </div>
-
-      <div class="stat">
-
-        <strong>92%</strong>
-
-        <span>
-          Program Allocation Target
-        </span>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CAUSES
-    ========================== -->
-
-    <section
-      class="section"
-      id="causes"
+    <button
+        id="menu-toggle"
+        class="menu-toggle"
+        aria-label="Open navigation"
     >
+        <i class="fa-solid fa-bars"></i>
+    </button>
 
-      <div class="section-heading">
-
-        <span class="eyebrow">
-          WHERE YOUR GIFT GOES
-        </span>
-
-        <h2>
-          Three urgent causes.
-          One shared mission.
-        </h2>
-
-        <p>
-          Choose the cause closest to your heart,
-          or allow World Vison to direct your
-          donation toward the highest verified need.
-        </p>
-
-      </div>
+</header>
 
 
-      <div class="cause-grid">
+<main>
 
 
-        <!-- CHILDREN -->
+<!-- =========================
+     HERO SLIDESHOW
+========================= -->
 
-        <article class="cause-card">
+<section class="hero" id="home">
 
-          <div class="cause-icon">
-            🏠
-          </div>
+    <div class="hero-slides">
 
-          <span class="cause-label">
-            CHILDREN
-          </span>
+        <article class="hero-slide active"
+            style="background-image:url('images/hero-kids.jpg')">
 
-          <h3>
-            Safe nights.
-            Brighter futures.
-          </h3>
+            <div class="hero-overlay"></div>
 
-          <p>
-            Help provide emergency shelter,
-            nutritious meals, education,
-            school supplies and pathways toward
-            stable care for children experiencing
-            homelessness.
-          </p>
+            <div class="hero-content">
 
-          <button
-            onclick="openDonation('Children')"
-            class="cause-btn"
-          >
-            Support Children →
-          </button>
+                <span class="eyebrow">
+                    <i class="fa-solid fa-heart"></i>
+                    Together we can change a life
+                </span>
+
+                <h1>
+                    Every child deserves
+                    <span>a safe tomorrow.</span>
+                </h1>
+
+                <p>
+                    Your kindness can help provide food,
+                    shelter, education and hope to children
+                    facing homelessness and poverty.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#donate" class="btn btn-primary">
+                        Help a Child
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                    <a href="#stories" class="btn btn-light">
+                        Hear Their Stories
+                    </a>
+
+                </div>
+
+            </div>
 
         </article>
 
 
-        <!-- CANCER -->
+        <article class="hero-slide"
+            style="background-image:url('images/hero-cancer.jpg')">
 
-        <article class="cause-card featured">
+            <div class="hero-overlay"></div>
 
-          <div class="cause-icon">
-            🎗️
-          </div>
+            <div class="hero-content">
 
-          <span class="cause-label">
-            CANCER CARE
-          </span>
+                <span class="eyebrow">
+                    <i class="fa-solid fa-ribbon"></i>
+                    Hope through difficult days
+                </span>
 
-          <h3>
-            Care beyond
-            the diagnosis.
-          </h3>
+                <h1>
+                    No family should
+                    <span>face cancer alone.</span>
+                </h1>
 
-          <p>
-            Support patient assistance,
-            transportation, nutrition,
-            family relief and access-to-care
-            programs through verified partners.
-          </p>
+                <p>
+                    Help vulnerable patients and families
+                    access practical support, essential
+                    resources and compassionate care.
+                </p>
 
-          <button
-            onclick="openDonation('Cancer Care')"
-            class="cause-btn"
-          >
-            Support Cancer Care →
-          </button>
+                <div class="hero-buttons">
 
-        </article>
+                    <a href="#donate" class="btn btn-primary">
+                        Give Hope
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
 
+                    <a href="#causes" class="btn btn-light">
+                        Learn More
+                    </a>
 
-        <!-- ALZHEIMERS -->
+                </div>
 
-        <article class="cause-card">
-
-          <div class="cause-icon">
-            🧠
-          </div>
-
-          <span class="cause-label">
-            ALZHEIMER'S
-          </span>
-
-          <h3>
-            Dignity.
-            Memory. Support.
-          </h3>
-
-          <p>
-            Help families access caregiver
-            support, respite programs,
-            memory resources and community
-            services for people affected
-            by Alzheimer's.
-          </p>
-
-          <button
-            onclick="openDonation('Alzheimer Support')"
-            class="cause-btn"
-          >
-            Support Alzheimer's →
-          </button>
+            </div>
 
         </article>
 
-      </div>
 
-    </section>
+        <article class="hero-slide"
+            style="background-image:url('images/hero-alzheimer.jpg')">
 
+            <div class="hero-overlay"></div>
 
-    <!-- =========================
-         ABOUT
-    ========================== -->
+            <div class="hero-content">
 
-    <section
-      class="section about"
-      id="about"
-    >
+                <span class="eyebrow">
+                    <i class="fa-solid fa-brain"></i>
+                    Care. Dignity. Compassion.
+                </span>
 
-      <div>
+                <h1>
+                    Help families caring
+                    <span>for loved ones.</span>
+                </h1>
 
-        <span class="eyebrow">
-          OUR MISSION
-        </span>
+                <p>
+                    Support people living with Alzheimer's
+                    and the families walking beside them.
+                </p>
 
-        <h2>
-          Turn generosity
-          into measurable care.
-        </h2>
+                <div class="hero-buttons">
 
-        <p>
-          Global Hope Foundation is designed
-          around a simple principle:
-          giving should create meaningful,
-          measurable impact.
-        </p>
+                    <a href="#donate" class="btn btn-primary">
+                        Support a Family
+                    </a>
 
-        <p>
-          Every campaign should clearly explain
-          its purpose, responsible partners,
-          intended beneficiaries and impact.
-        </p>
+                    <a href="#stories" class="btn btn-light">
+                        Discover Stories
+                    </a>
 
-      </div>
+                </div>
 
+            </div>
 
-      <div class="mission-card">
-
-        <span>
-          OUR PROMISE
-        </span>
-
-        <h3>
-          Compassion with accountability.
-        </h3>
-
-        <ul>
-
-          <li>
-            Transparent campaigns
-          </li>
-
-          <li>
-            Secure payment processing
-          </li>
-
-          <li>
-            Verified impact reporting
-          </li>
-
-          <li>
-            Responsible use of donations
-          </li>
-
-        </ul>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         TRANSPARENCY
-    ========================== -->
-
-    <section
-      class="section"
-      id="transparency"
-    >
-
-      <div class="section-heading">
-
-        <span class="eyebrow">
-          TRUST BY DESIGN
-        </span>
-
-        <h2>
-          Transparency should be
-          part of every donation.
-        </h2>
-
-      </div>
-
-
-      <div class="trust-grid">
-
-        <div>
-
-          <strong>01</strong>
-
-          <h3>
-            Clear Campaigns
-          </h3>
-
-          <p>
-            Every fundraising campaign
-            should explain exactly what
-            it is intended to support.
-          </p>
-
-        </div>
-
-
-        <div>
-
-          <strong>02</strong>
-
-          <h3>
-            Secure Payments
-          </h3>
-
-          <p>
-            Donor card information should
-            be handled by a dedicated
-            payment provider.
-          </p>
-
-        </div>
-
-
-        <div>
-
-          <strong>03</strong>
-
-          <h3>
-            Donation Records
-          </h3>
-
-          <p>
-            Donations should receive
-            unique transaction records
-            and payment statuses.
-          </p>
-
-        </div>
-
-
-        <div>
-
-          <strong>04</strong>
-
-          <h3>
-            Impact Reports
-          </h3>
-
-          <p>
-            Publish dated reports showing
-            how funds were used and what
-            programs achieved.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CTA
-    ========================== -->
-
-    <section class="cta">
-
-      <div>
-
-        <span class="eyebrow">
-          MAKE A DIFFERENCE
-        </span>
-
-        <h2>
-          Someone's next safe day
-          could begin with you.
-        </h2>
-
-      </div>
-
-      <button
-        class="primary-btn"
-        onclick="openDonation()"
-      >
-        Give Hope Today
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-
-    <div class="footer-brand">
-
-      <span class="logo-icon">
-        ₩♥︎
-      </span>
-
-      <div>
-
-        <strong>
-          World Vision International 
-        </strong>
-
-        <p>
-          Give hope. Change lives.
-        </p>
-
-      </div>
+        </article>
 
     </div>
 
-    <div class="footer-links">
 
-      <a href="#causes">
-        Causes
-      </a>
+    <div class="slider-controls">
 
-      <a href="#impact">
-        Impact
-      </a>
+        <button id="prevSlide">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-      <a href="#transparency">
-        Transparency
-      </a>
+        <div id="slideDots"></div>
 
-      <a href="mailto:hello@example.org">
-        Contact
-      </a>
+        <button id="nextSlide">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
 
     </div>
 
-    <p class="copyright">
 
-      © 2026 World Vision International.
-      Replace placeholder organization,
-      registration and contact information
-      before production.
+    <div class="hero-trust">
 
+        <div>
+            <i class="fa-solid fa-shield-heart"></i>
+            <span>Purpose-driven giving</span>
+        </div>
+
+        <div>
+            <i class="fa-solid fa-globe"></i>
+            <span>Helping communities worldwide</span>
+        </div>
+
+        <div>
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            <span>Every contribution matters</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     IMPACT NUMBERS
+========================= -->
+
+<section class="impact-strip">
+
+    <div class="impact-item">
+        <strong data-count="125000">0</strong>
+        <span>People supported</span>
+    </div>
+
+    <div class="impact-item">
+        <strong data-count="42">0</strong>
+        <span>Countries reached</span>
+    </div>
+
+    <div class="impact-item">
+        <strong data-count="860">0</strong>
+        <span>Community projects</span>
+    </div>
+
+    <div class="impact-item">
+        <strong data-count="96">0</strong>
+        <span>Partner communities</span>
+    </div>
+
+</section>
+
+
+<!-- =========================
+     INTRO
+========================= -->
+
+<section class="section intro-section">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            WHY WE EXIST
+        </span>
+
+        <h2>
+            A little help can become
+            <span>a new beginning.</span>
+        </h2>
+
+        <p>
+            Millions of vulnerable people face challenges
+            that no one should have to face alone.
+            Our mission is to connect compassionate people
+            with practical opportunities to help.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CAUSES
+========================= -->
+
+<section class="section causes" id="causes">
+
+    <div class="section-top">
+
+        <div>
+
+            <span class="section-label">
+                WAYS TO HELP
+            </span>
+
+            <h2>
+                Choose a cause
+                <span>close to your heart.</span>
+            </h2>
+
+        </div>
+
+        <p>
+            Whether you give once or every month,
+            your support can help create meaningful
+            change.
+        </p>
+
+    </div>
+
+
+    <div class="cause-grid">
+
+        <article class="cause-card">
+
+            <div class="cause-image">
+                <img
+                    src="images/story-1.jpg"
+                    alt="Child receiving community support"
+                >
+
+                <span class="cause-tag">
+                    Children
+                </span>
+            </div>
+
+            <div class="cause-body">
+
+                <h3>
+                    Give a Child a Future
+                </h3>
+
+                <p>
+                    Help provide food, education,
+                    protection and safe spaces for
+                    children experiencing homelessness.
+                </p>
+
+                <div class="progress">
+
+                    <div class="progress-top">
+                        <span>Raised</span>
+                        <strong>$184,250</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <span style="width:72%"></span>
+                    </div>
+
+                    <small>
+                        Goal: $250,000
+                    </small>
+
+                </div>
+
+                <button
+                    class="cause-donate"
+                    data-cause="children"
+                >
+                    Support Children
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article class="cause-card">
+
+            <div class="cause-image">
+
+                <img
+                    src="images/story-2.jpg"
+                    alt="Cancer patient receiving support"
+                >
+
+                <span class="cause-tag">
+                    Cancer Care
+                </span>
+
+            </div>
+
+            <div class="cause-body">
+
+                <h3>
+                    Stand With Cancer Families
+                </h3>
+
+                <p>
+                    Help vulnerable families access
+                    essential resources during
+                    challenging treatment journeys.
+                </p>
+
+                <div class="progress">
+
+                    <div class="progress-top">
+                        <span>Raised</span>
+                        <strong>$96,430</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <span style="width:61%"></span>
+                    </div>
+
+                    <small>
+                        Goal: $158,000
+                    </small>
+
+                </div>
+
+                <button
+                    class="cause-donate"
+                    data-cause="cancer"
+                >
+                    Support Cancer Care
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <article class="cause-card">
+
+            <div class="cause-image">
+
+                <img
+                    src="images/story-3.jpg"
+                    alt="Family caring for an elderly relative"
+                >
+
+                <span class="cause-tag">
+                    Alzheimer's
+                </span>
+
+            </div>
+
+            <div class="cause-body">
+
+                <h3>
+                    Care for Families
+                </h3>
+
+                <p>
+                    Support families caring for loved
+                    ones living with Alzheimer's and
+                    other forms of dementia.
+                </p>
+
+                <div class="progress">
+
+                    <div class="progress-top">
+                        <span>Raised</span>
+                        <strong>$72,800</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <span style="width:48%"></span>
+                    </div>
+
+                    <small>
+                        Goal: $150,000
+                    </small>
+
+                </div>
+
+                <button
+                    class="cause-donate"
+                    data-cause="alzheimer"
+                >
+                    Support Families
+                </button>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEATURE STORY
+========================= -->
+
+<section class="story-feature" id="stories">
+
+    <div class="story-feature-image">
+
+        <img
+            src="images/story-1.jpg"
+            alt="Young child smiling"
+        >
+
+    </div>
+
+    <div class="story-feature-content">
+
+        <span class="section-label">
+            A STORY OF HOPE
+        </span>
+
+        <h2>
+            "Someone believed
+            <span>in me."</span>
+        </h2>
+
+        <blockquote>
+            “Before the community found us, I didn't
+            know what would happen next. Now I can
+            go to school, eat every day and dream
+            about what I want to become.”
+        </blockquote>
+
+        <div class="story-person">
+
+            <div class="avatar">
+                A
+            </div>
+
+            <div>
+                <strong>Amara's story</strong>
+                <small>Community-supported child</small>
+            </div>
+
+        </div>
+
+        <a href="#donate" class="text-link">
+            Help create another story
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TESTIMONIALS
+========================= -->
+
+<section class="section testimonials">
+
+    <div class="section-heading center">
+
+        <span class="section-label">
+            FROM OUR COMMUNITY
+        </span>
+
+        <h2>
+            Real people.
+            <span>Real reasons to care.</span>
+        </h2>
+
+    </div>
+
+
+    <div class="testimonial-grid">
+
+        <article class="testimonial-card">
+
+            <div class="quote">
+                "
+            </div>
+
+            <p>
+                I started by giving a small amount each
+                month. Knowing that something so simple
+                can help another family keeps me going.
+            </p>
+
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">
+                    S
+                </div>
+
+                <div>
+                    <strong>Sarah M.</strong>
+                    <span>Monthly supporter</span>
+                </div>
+            </div>
+
+        </article>
+
+
+        <article class="testimonial-card featured">
+
+            <div class="quote">
+                "
+            </div>
+
+            <p>
+                The support meant more than financial
+                help. It reminded our family that we
+                weren't walking through this alone.
+            </p>
+
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">
+                    J
+                </div>
+
+                <div>
+                    <strong>James' family</strong>
+                    <span>Community participant</span>
+                </div>
+            </div>
+
+        </article>
+
+
+        <article class="testimonial-card">
+
+            <div class="quote">
+                "
+            </div>
+
+            <p>
+                I wanted my children to understand that
+                generosity isn't just something we talk
+                about. It's something we practice.
+            </p>
+
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">
+                    D
+                </div>
+
+                <div>
+                    <strong>David R.</strong>
+                    <span>Community supporter</span>
+                </div>
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     IMPACT
+========================= -->
+
+<section class="section impact-section" id="impact">
+
+    <div class="impact-copy">
+
+        <span class="section-label">
+            YOUR IMPACT
+        </span>
+
+        <h2>
+            Turn compassion
+            <span>into action.</span>
+        </h2>
+
+        <p>
+            Giving isn't only about the amount.
+            It is about connecting resources,
+            people and communities.
+        </p>
+
+        <div class="impact-list">
+
+            <div>
+                <i class="fa-solid fa-utensils"></i>
+                <span>Food & essential supplies</span>
+            </div>
+
+            <div>
+                <i class="fa-solid fa-house"></i>
+                <span>Safe housing & shelter</span>
+            </div>
+
+            <div>
+                <i class="fa-solid fa-book-open"></i>
+                <span>Education opportunities</span>
+            </div>
+
+            <div>
+                <i class="fa-solid fa-people-roof"></i>
+                <span>Family & community support</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="impact-visual">
+
+        <div class="impact-circle">
+
+            <div>
+
+                <strong>
+                    $10
+                </strong>
+
+                <span>
+                    can be part of
+                    something bigger
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     DONATION
+========================= -->
+
+<section class="donation-section" id="donate">
+
+    <div class="donation-wrapper">
+
+        <div class="donation-heading">
+
+            <span class="section-label">
+                MAKE A DIFFERENCE
+            </span>
+
+            <h2>
+                Your kindness
+                <span>can travel far.</span>
+            </h2>
+
+            <p>
+                Choose where you want your contribution
+                to go and how you would like to give.
+            </p>
+
+        </div>
+
+
+        <div class="donation-box">
+
+            <div class="donation-tabs">
+
+                <button
+                    class="donation-tab active"
+                    data-method="card"
+                >
+                    <i class="fa-regular fa-credit-card"></i>
+                    Card
+                </button>
+
+                <button
+                    class="donation-tab"
+                    data-method="btc"
+                >
+                    <i class="fa-brands fa-bitcoin"></i>
+                    Bitcoin
+                </button>
+
+            </div>
+
+
+            <form id="donationForm">
+
+                <label>
+                    I want to support
+                </label>
+
+                <select id="causeSelect">
+
+                    <option value="general">
+                        Where needed most
+                    </option>
+
+                    <option value="children">
+                        Homeless children
+                    </option>
+
+                    <option value="cancer">
+                        Cancer support
+                    </option>
+
+                    <option value="alzheimer">
+                        Alzheimer's families
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Donation frequency
+                </label>
+
+                <div class="frequency">
+
+                    <button
+                        type="button"
+                        class="frequency-btn active"
+                        data-frequency="once"
+                    >
+                        One time
+                    </button>
+
+                    <button
+                        type="button"
+                        class="frequency-btn"
+                        data-frequency="monthly"
+                    >
+                        Monthly
+                    </button>
+
+                </div>
+
+
+                <label>
+                    Select amount
+                </label>
+
+                <div class="amounts">
+
+                    <button
+                        type="button"
+                        data-amount="25"
+                    >
+                        $25
+                    </button>
+
+                    <button
+                        type="button"
+                        data-amount="50"
+                    >
+                        $50
+                    </button>
+
+                    <button
+                        type="button"
+                        data-amount="100"
+                    >
+                        $100
+                    </button>
+
+                    <button
+                        type="button"
+                        data-amount="250"
+                    >
+                        $250
+                    </button>
+
+                </div>
+
+
+                <div class="custom-amount">
+
+                    <span>$</span>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        min="1"
+                        placeholder="Custom amount"
+                        required
+                    >
+
+                </div>
+
+
+                <div id="cardPayment">
+
+                    <button
+                        type="submit"
+                        class="donate-submit"
+                    >
+                        Continue with Card
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <small class="secure-note">
+                        <i class="fa-solid fa-lock"></i>
+                        Secure payment processing
+                    </small>
+
+                </div>
+
+
+                <div
+                    id="btcPayment"
+                    class="btc-payment hidden"
+                >
+
+                    <div class="btc-icon">
+                        <i class="fa-brands fa-bitcoin"></i>
+                    </div>
+
+                    <h3>
+                        Give with Bitcoin
+                    </h3>
+
+                    <p>
+                        Bitcoin donations should be
+                        sent only to the organization's
+                        verified wallet.
+                    </p>
+
+                    <div class="btc-address">
+                        BTC wallet will appear here
+                    </div>
+
+                    <button
+                        type="button"
+                        id="copyBtc"
+                    >
+                        Copy wallet address
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     OTHER WAYS
+========================= -->
+
+<section class="section ways">
+
+    <div class="section-heading center">
+
+        <span class="section-label">
+            BEYOND DONATIONS
+        </span>
+
+        <h2>
+            There are many ways
+            <span>to help.</span>
+        </h2>
+
+    </div>
+
+
+    <div class="ways-grid">
+
+        <article>
+            <i class="fa-solid fa-handshake-angle"></i>
+
+            <h3>
+                Volunteer
+            </h3>
+
+            <p>
+                Share your time, skills and experience
+                with a community that needs support.
+            </p>
+
+            <a href="#contact">
+                Become a volunteer
+            </a>
+        </article>
+
+
+        <article>
+            <i class="fa-solid fa-users"></i>
+
+            <h3>
+                Fundraise
+            </h3>
+
+            <p>
+                Start a personal campaign and invite
+                your community to support a cause.
+            </p>
+
+            <a href="#contact">
+                Start fundraising
+            </a>
+        </article>
+
+
+        <article>
+            <i class="fa-solid fa-building-columns"></i>
+
+            <h3>
+                Partner
+            </h3>
+
+            <p>
+                Organizations can collaborate through
+                programs, sponsorship and resources.
+            </p>
+
+            <a href="#contact">
+                Become a partner
+            </a>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="about-section" id="about">
+
+    <div>
+
+        <span class="section-label">
+            OUR MISSION
+        </span>
+
+        <h2>
+            Building a world where
+            <span>compassion becomes action.</span>
+        </h2>
+
+    </div>
+
+    <p>
+        Global Vision Aid is a development-stage
+        humanitarian platform concept designed to
+        connect donors, volunteers, partners and
+        community programs.
     </p>
 
-  </footer>
+</section>
 
 
-  <!-- =========================
-       DONATION MODAL
-  ========================== -->
+<!-- =========================
+     CONTACT
+========================= -->
 
-  <dialog id="donationModal">
+<section class="section contact" id="contact">
 
-    <div class="modal">
+    <div class="contact-card">
 
-      <button
-        class="close-btn"
-        onclick="closeDonation()"
-      >
-        ×
-      </button>
+        <span class="section-label">
+            GET INVOLVED
+        </span>
 
-      <span class="eyebrow">
-        MAKE AN IMPACT
-      </span>
+        <h2>
+            Let's create
+            <span>something meaningful.</span>
+        </h2>
 
-      <h2>
-        Choose your donation
-      </h2>
+        <p>
+            Interested in volunteering, fundraising,
+            partnering or supporting a campaign?
+        </p>
 
-      <label>
-        Cause
-      </label>
-
-      <select id="donationCause">
-
-        <option>
-          Where Most Needed
-        </option>
-
-        <option>
-          Children
-        </option>
-
-        <option>
-          Cancer Care
-        </option>
-
-        <option>
-          Alzheimer's Support
-        </option>
-
-      </select>
-
-
-      <label>
-        Donation Amount
-      </label>
-
-      <div class="amounts">
-
-        <button onclick="selectAmount(25)">
-          $25
-        </button>
-
-        <button onclick="selectAmount(50)">
-          $50
-        </button>
-
-        <button onclick="selectAmount(100)">
-          $100
-        </button>
-
-        <button onclick="selectAmount(250)">
-          $250
-        </button>
-
-      </div>
-
-
-      <input
-        id="customAmount"
-        type="number"
-        min="1"
-        placeholder="Custom amount in USD"
-      >
-
-
-      <div class="payment-options">
-
-        <button
-          class="payment-card"
-          onclick="payWithCard()"
+        <a
+            href="mailto:hello@example.org"
+            class="btn btn-primary"
         >
-
-          <span>💳</span>
-
-          <strong>
-            Credit / Debit Card
-          </strong>
-
-          <small>
-            Secure hosted checkout
-          </small>
-
-        </button>
-
-
-        <button
-          class="payment-card"
-          onclick="payWithBitcoin()"
-        >
-
-          <span>₿</span>
-
-          <strong>
-            Bitcoin
-          </strong>
-
-          <small>
-            BTCPay checkout
-          </small>
-
-        </button>
-
-      </div>
-
-
-      <p class="payment-note">
-
-        Your payment details should be
-        processed by the selected payment
-        provider — never stored directly
-        on this GitHub website.
-
-      </p>
+            Contact the team
+        </a>
 
     </div>
 
-  </dialog>
+</section>
 
 
-  <script src="script.js"></script>
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-main">
+
+        <div class="footer-brand">
+
+            <a href="#home" class="logo">
+
+                <span class="logo-mark">
+                    <i class="fa-solid fa-hands-holding-child"></i>
+                </span>
+
+                <span>
+                    <strong>Global Vision</strong>
+                    <small>Aid</small>
+                </span>
+
+            </a>
+
+            <p>
+                Helping people turn compassion
+                into meaningful action.
+            </p>
+
+            <div class="socials">
+
+                <a href="#" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="#" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="#" aria-label="X">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+
+                <a href="#" aria-label="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Explore</h4>
+
+            <a href="#causes">Our causes</a>
+            <a href="#stories">Stories</a>
+            <a href="#impact">Our impact</a>
+            <a href="#about">About us</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Get involved</h4>
+
+            <a href="#donate">Donate</a>
+            <a href="#contact">Volunteer</a>
+            <a href="#contact">Fundraise</a>
+            <a href="#contact">Partner</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Transparency</h4>
+
+            <a href="#">Financial reports</a>
+            <a href="#">Privacy policy</a>
+            <a href="#">Terms</a>
+            <a href="#">Safeguarding</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Global Vision Aid.
+            Development-stage platform.
+        </span>
+
+        <span>
+            Built for compassionate giving.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div id="donationModal" class="modal">
+
+    <div class="modal-content">
+
+        <button
+            id="closeModal"
+            class="modal-close"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-icon">
+            <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <h2>
+            Thank you for caring.
+        </h2>
+
+        <p id="modalMessage">
+            Your donation information has been
+            prepared.
+        </p>
+
+        <button
+            id="modalContinue"
+            class="donate-submit"
+        >
+            Continue
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="js/app.js"></script>
 
 </body>
   </html>
