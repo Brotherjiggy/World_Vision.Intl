@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Causes | Global Vision Aid</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .topbar {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e7eaf0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #111827;
+            color: #ffffff;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        .brand-text span {
+            color: #7b8495;
+            font-size: 12px;
+        }
+
+        .back-btn {
+            border: 1px solid #dfe3ea;
+            background: #fff;
+            color: #344054;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px 60px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .page-heading h1 {
+            font-size: 32px;
+            letter-spacing: -0.8px;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: #727b8d;
+            font-size: 15px;
+        }
+
+        .primary-btn {
+            border: 0;
+            background: #111827;
+            color: white;
+            padding: 13px 19px;
+            border-radius: 11px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            background: #202b3f;
+        }
+
+        .toolbar {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(20, 30, 50, 0.03);
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input,
+        .toolbar select {
+            width: 100%;
+            border: 1px solid #dfe4ec;
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 12px 14px;
+            outline: none;
+            color: #172033;
+        }
+
+        .search-box input:focus,
+        .toolbar select:focus {
+            border-color: #8b95a7;
+            background: white;
+        }
+
+        .toolbar select {
+            max-width: 180px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 15px;
+            padding: 19px;
+        }
+
+        .stat-card span {
+            color: #7b8495;
+            font-size: 13px;
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 25px;
+            margin-top: 7px;
+        }
+
+        .table-card {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(20, 30, 50, 0.03);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px 18px;
+            background: #fafbfc;
+            color: #737c8e;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e9ecf1;
+        }
+
+        td {
+            padding: 17px 18px;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .cause-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 250px;
+        }
+
+        .cause-image {
+            width: 52px;
+            height: 52px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #dfe5ed, #f5f7fa);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cause-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cause-name strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .cause-name small {
+            color: #8991a0;
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge.published {
+            background: #e9f8ef;
+            color: #18733b;
+        }
+
+        .badge.draft {
+            background: #fff4df;
+            color: #9a6500;
+        }
+
+        .badge.archived {
+            background: #edf0f4;
+            color: #626b79;
+        }
+
+        .money {
+            font-weight: 700;
+        }
+
+        .progress {
+            width: 120px;
+            height: 6px;
+            border-radius: 20px;
+            background: #edf0f3;
+            overflow: hidden;
+            margin-top: 7px;
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            background: #111827;
+            border-radius: inherit;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .action-btn {
+            border: 1px solid #dfe3ea;
+            background: #fff;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            background: #f5f7fa;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #7d8695;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 55px;
+            color: #7d8695;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            width: min(680px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 18px;
+            padding: 26px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+        }
+
+        .close-btn {
+            border: 0;
+            background: #f1f3f6;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: #344054;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #dfe4ec;
+            border-radius: 10px;
+            padding: 11px 12px;
+            outline: none;
+            background: #fafbfc;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #7b8495;
+            background: white;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .secondary-btn {
+            border: 1px solid #dfe3ea;
+            background: white;
+            padding: 11px 17px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .danger {
+            color: #b42318;
+        }
+
+        .notice {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #111827;
+            color: white;
+            padding: 13px 17px;
+            border-radius: 11px;
+            display: none;
+            z-index: 200;
+            max-width: 350px;
+        }
+
+        .notice.show {
+            display: block;
+        }
+
+        @media (max-width: 800px) {
+            .topbar {
+                padding: 0 16px;
+            }
+
+            .container {
+                padding: 24px 15px 45px;
+            }
+
+            .page-heading {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+
+            .toolbar select {
+                max-width: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">GVA</div>
+
+        <div class="brand-text">
+            <strong>Global Vision Aid</strong>
+            <span>Administration</span>
+        </div>
+    </div>
+
+    <button class="back-btn" onclick="goDashboard()">
+        ← Dashboard
+    </button>
+</header>
+
+<main class="container">
+
+    <section class="page-heading">
+        <div>
+            <h1>Causes</h1>
+            <p>Create, manage and publish humanitarian causes.</p>
+        </div>
+
+        <button class="primary-btn" onclick="openCreateModal()">
+            + Add Cause
+        </button>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <span>Total Causes</span>
+            <strong id="totalCauses">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Published</span>
+            <strong id="publishedCauses">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Total Target</span>
+            <strong id="totalTarget">$0</strong>
+        </div>
+    </section>
+
+    <section class="toolbar">
+        <div class="search-box">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search causes..."
+                oninput="filterCauses()"
+            >
+        </div>
+
+        <select id="statusFilter" onchange="filterCauses()">
+            <option value="all">All statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+            <option value="archived">Archived</option>
+        </select>
+    </section>
+
+    <section class="table-card">
+        <div class="table-wrap">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cause</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Target</th>
+                        <th>Raised</th>
+                        <th>Progress</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="causesTable">
+                    <tr>
+                        <td colspan="7" class="loading">
+                            Loading causes...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="causeModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2 id="modalTitle">Add Cause</h2>
+
+            <button class="close-btn" onclick="closeModal()">
+                ×
+            </button>
+        </div>
+
+        <form id="causeForm">
+
+            <div class="form-grid">
+
+                <div class="form-group full">
+                    <label>Cause Title</label>
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Example: Clean Water for Every Child"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Slug</label>
+                    <input
+                        type="text"
+                        id="slug"
+                        placeholder="clean-water-for-every-child"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <input
+                        type="text"
+                        id="category"
+                        placeholder="Clean Water"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Global"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+
+                    <select id="status">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Amount</label>
+                    <input
+                        type="number"
+                        id="targetAmount"
+                        min="0"
+                        step="0.01"
+                        placeholder="50000"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Raised Amount</label>
+                    <input
+                        type="number"
+                        id="raisedAmount"
+                        min="0"
+                        step="0.01"
+                        placeholder="0"
+                    >
+                </div>
+
+                <div class="form-group full">
+                    <label>Image URL</label>
+                    <input
+                        type="url"
+                        id="imageUrl"
+                        placeholder="https://..."
+                    >
+                </div>
+
+                <div class="form-group full">
+                    <label>Short Description</label>
+                    <textarea
+                        id="shortDescription"
+                        placeholder="A short explanation of this cause..."
+                    ></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Full Description</label>
+                    <textarea
+                        id="description"
+                        placeholder="Tell the full story behind this cause..."
+                    ></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label class="checkbox">
+                        <input type="checkbox" id="featured">
+                        Feature this cause
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Cause
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="notice" id="notice"></div>
+
+<script>
+/* ==========================================
+   SUPABASE CONFIG
+   ========================================== */
+
+const SUPABASE_URL = "PASTE-YOUR-SUPABASE-PROJECT-URL-HERE";
+const SUPABASE_KEY = "PASTE-YOUR-SUPABASE-PUBLISHABLE-KEY-HERE";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* ==========================================
+   STATE
+   ========================================== */
+
+let causes = [];
+let editingCauseId = null;
+
+
+/* ==========================================
+   INITIALIZE
+   ========================================== */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await checkAdmin();
+
+    await loadCauses();
+
+});
+
+
+/* ==========================================
+   ADMIN SECURITY CHECK
+   ========================================== */
+
+async function checkAdmin() {
+
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error || !session) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("admin_profiles")
+        .select("id, role, active")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+    if (
+        profileError ||
+        !profile ||
+        profile.active !== true
+    ) {
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "index.html";
+    }
+
+}
+
+
+/* ==========================================
+   LOAD CAUSES
+   ========================================== */
+
+async function loadCauses() {
+
+    const table = document.getElementById("causesTable");
+
+    table.innerHTML = `
+        <tr>
+            <td colspan="7" class="loading">
+                Loading causes...
+            </td>
+        </tr>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("causes")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    Unable to load causes.
+                </td>
+            </tr>
+        `;
+
+        showNotice(error.message);
+
+        return;
+    }
+
+    causes = data || [];
+
+    updateStats();
+
+    renderCauses(causes);
+}
+
+
+/* ==========================================
+   UPDATE STATISTICS
+   ========================================== */
+
+function updateStats() {
+
+    const total = causes.length;
+
+    const published =
+        causes.filter(
+            cause => cause.status === "published"
+        ).length;
+
+    const target =
+        causes.reduce(
+            (sum, cause) =>
+                sum + Number(cause.target_amount || 0),
+            0
+        );
+
+    document.getElementById("totalCauses").textContent =
+        total;
+
+    document.getElementById("publishedCauses").textContent =
+        published;
+
+    document.getElementById("totalTarget").textContent =
+        formatMoney(target);
+}
+
+
+/* ==========================================
+   RENDER
+   ========================================== */
+
+function renderCauses(list) {
+
+    const table =
+        document.getElementById("causesTable");
+
+    if (!list.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty">
+                    No causes found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML = list.map(cause => {
+
+        const target =
+            Number(cause.target_amount || 0);
+
+        const raised =
+            Number(cause.raised_amount || 0);
+
+        const progress =
+            target > 0
+                ? Math.min(
+                    100,
+                    Math.round(
+                        (raised / target) * 100
+                    )
+                )
+                : 0;
+
+        const image =
+            cause.image_url
+                ? `<img src="${escapeHtml(cause.image_url)}" alt="">`
+                : "❤";
+
+        return `
+            <tr>
+
+                <td>
+                    <div class="cause-cell">
+
+                        <div class="cause-image">
+                            ${image}
+                        </div>
+
+                        <div class="cause-name">
+                            <strong>
+                                ${escapeHtml(cause.title)}
+                            </strong>
+
+                            <small>
+                                ${escapeHtml(cause.location || "Global")}
+                            </small>
+                        </div>
+
+                    </div>
+                </td>
+
+                <td>
+                    ${escapeHtml(cause.category || "—")}
+                </td>
+
+                <td>
+                    <span class="badge ${cause.status}">
+                        ${capitalize(cause.status)}
+                    </span>
+                </td>
+
+                <td class="money">
+                    ${formatMoney(target)}
+                </td>
+
+                <td class="money">
+                    ${formatMoney(raised)}
+                </td>
+
+                <td>
+
+                    <strong>
+                        ${progress}%
+                    </strong>
+
+                    <div class="progress">
+                        <span style="width:${progress}%"></span>
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <div class="actions">
+
+                        <button
+                            class="action-btn"
+                            onclick="editCause('${cause.id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="action-btn danger"
+                            onclick="archiveCause('${cause.id}')"
+                        >
+                            Archive
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        `;
+
+    }).join("");
+}
+
+
+/* ==========================================
+   SEARCH + FILTER
+   ========================================== */
+
+function filterCauses() {
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+    const status =
+        document
+            .getElementById("statusFilter")
+            .value;
+
+    const filtered =
+        causes.filter(cause => {
+
+            const matchesSearch =
+                !search ||
+                cause.title
+                    ?.toLowerCase()
+                    .includes(search) ||
+                cause.category
+                    ?.toLowerCase()
+                    .includes(search) ||
+                cause.location
+                    ?.toLowerCase()
+                    .includes(search);
+
+            const matchesStatus =
+                status === "all" ||
+                cause.status === status;
+
+            return matchesSearch && matchesStatus;
+
+        });
+
+    renderCauses(filtered);
+}
+
+
+/* ==========================================
+   OPEN CREATE MODAL
+   ========================================== */
+
+function openCreateModal() {
+
+    editingCauseId = null;
+
+    document.getElementById("modalTitle").textContent =
+        "Add Cause";
+
+    document.getElementById("causeForm").reset();
+
+    document.getElementById("status").value =
+        "draft";
+
+    document
+        .getElementById("causeModal")
+        .classList.add("show");
+}
+
+
+/* ==========================================
+   EDIT CAUSE
+   ========================================== */
+
+function editCause(id) {
+
+    const cause =
+        causes.find(item => item.id === id);
+
+    if (!cause) return;
+
+    editingCauseId = id;
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Cause";
+
+    document.getElementById("title").value =
+        cause.title || "";
+
+    document.getElementById("slug").value =
+        cause.slug || "";
+
+    document.getElementById("category").value =
+        cause.category || "";
+
+    document.getElementById("location").value =
+        cause.location || "";
+
+    document.getElementById("status").value =
+        cause.status || "draft";
+
+    document.getElementById("targetAmount").value =
+        cause.target_amount || 0;
+
+    document.getElementById("raisedAmount").value =
+        cause.raised_amount || 0;
+
+    document.getElementById("imageUrl").value =
+        cause.image_url || "";
+
+    document.getElementById("shortDescription").value =
+        cause.short_description || "";
+
+    document.getElementById("description").value =
+        cause.description || "";
+
+    document.getElementById("featured").checked =
+        cause.featured === true;
+
+    document
+        .getElementById("causeModal")
+        .classList.add("show");
+}
+
+
+/* ==========================================
+   SAVE CAUSE
+   ========================================== */
+
+document
+    .getElementById("causeForm")
+    .addEventListener("submit", async event => {
+
+        event.preventDefault();
+
+        const payload = {
+
+            title:
+                document.getElementById("title").value.trim(),
+
+            slug:
+                document.getElementById("slug").value.trim(),
+
+            category:
+                document.getElementById("category").value.trim(),
+
+            location:
+                document.getElementById("location").value.trim(),
+
+            status:
+                document.getElementById("status").value,
+
+            target_amount:
+                Number(
+                    document.getElementById("targetAmount").value || 0
+                ),
+
+            raised_amount:
+                Number(
+                    document.getElementById("raisedAmount").value || 0
+                ),
+
+            image_url:
+                document.getElementById("imageUrl").value.trim() || null,
+
+            short_description:
+                document.getElementById("shortDescription").value.trim(),
+
+            description:
+                document.getElementById("description").value.trim(),
+
+            featured:
+                document.getElementById("featured").checked,
+
+            updated_at:
+                new Date().toISOString()
+
+        };
+
+
+        let result;
+
+
+        if (editingCauseId) {
+
+            result =
+                await supabaseClient
+                    .from("causes")
+                    .update(payload)
+                    .eq("id", editingCauseId);
+
+        } else {
+
+            result =
+                await supabaseClient
+                    .from("causes")
+                    .insert(payload);
+
+        }
+
+
+        if (result.error) {
+
+            console.error(result.error);
+
+            showNotice(result.error.message);
+
+            return;
+        }
+
+
+        showNotice(
+            editingCauseId
+                ? "Cause updated successfully."
+                : "Cause created successfully."
+        );
+
+        closeModal();
+
+        await loadCauses();
+
+    });
+
+
+/* ==========================================
+   ARCHIVE
+   ========================================== */
+
+async function archiveCause(id) {
+
+    const confirmed =
+        confirm(
+            "Archive this cause?"
+        );
+
+    if (!confirmed) return;
+
+    const {
+        error
+    } = await supabaseClient
+        .from("causes")
+        .update({
+            status: "archived",
+            updated_at: new Date().toISOString()
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        showNotice(error.message);
+
+        return;
+    }
+
+    showNotice(
+        "Cause archived."
+    );
+
+    await loadCauses();
+}
+
+
+/* ==========================================
+   CLOSE MODAL
+   ========================================== */
+
+function closeModal() {
+
+    document
+        .getElementById("causeModal")
+        .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   DASHBOARD
+   ========================================== */
+
+function goDashboard() {
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+/* ==========================================
+   HELPERS
+   ========================================== */
+
+function formatMoney(value) {
+
+    return new Intl.NumberFormat(
+        "en-US",
+        {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0
+        }
+    ).format(value);
+
+}
+
+
+function capitalize(value) {
+
+    if (!value) return "";
+
+    return value.charAt(0).toUpperCase()
+        + value.slice(1);
+
+}
+
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+function showNotice(message) {
+
+    const notice =
+        document.getElementById("notice");
+
+    notice.textContent = message;
+
+    notice.classList.add("show");
+
+    setTimeout(() => {
+
+        notice.classList.remove("show");
+
+    }, 3500);
+
+}
+
+</script>
+
+</body>
+  </html>
