@@ -1,6 +1,7 @@
 /* =========================================================
    GLOBAL VISION AID
    MAIN JAVASCRIPT
+   FULL UPGRADED VERSION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -23,11 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       GLOBAL ELEMENTS
+    ===================================================== */
+
+    const causeSelect =
+        document.getElementById("causeSelect");
+
+
+    /* =====================================================
        PRELOADER
     ===================================================== */
 
     const preloader =
         document.getElementById("preloader");
+
 
     window.addEventListener("load", () => {
 
@@ -78,23 +88,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-        navLinks.querySelectorAll("a").forEach(link => {
+        navLinks
+            .querySelectorAll("a")
+            .forEach(link => {
 
-            link.addEventListener("click", () => {
+                link.addEventListener("click", () => {
 
-                navLinks.classList.remove("open");
+                    navLinks.classList.remove("open");
 
-                menuToggle.setAttribute(
-                    "aria-label",
-                    "Open navigation"
-                );
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Open navigation"
+                    );
 
-                menuToggle.innerHTML =
-                    '<i class="fa-solid fa-bars"></i>';
+                    menuToggle.innerHTML =
+                        '<i class="fa-solid fa-bars"></i>';
+
+                });
 
             });
-
-        });
 
     }
 
@@ -117,12 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let currentSlide = 0;
+
     let slideTimer;
 
 
     function showSlide(index) {
 
-        if (!slides.length) return;
+        if (!slides.length) {
+            return;
+        }
 
 
         if (index >= slides.length) {
@@ -174,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const dot =
                 document.createElement("button");
 
+
             dot.type = "button";
 
             dot.className = "slide-dot";
@@ -210,7 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateDots() {
 
-        if (!slideDots) return;
+        if (!slideDots) {
+            return;
+        }
 
 
         const dots =
@@ -233,7 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function startSlider() {
 
-        if (slides.length <= 1) return;
+        if (slides.length <= 1) {
+            return;
+        }
 
 
         slideTimer =
@@ -314,83 +334,90 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    const counterObserver =
-        new IntersectionObserver(
-            entries => {
+    if (
+        counters.length &&
+        "IntersectionObserver" in window
+    ) {
 
-                entries.forEach(entry => {
+        const counterObserver =
+            new IntersectionObserver(
+                entries => {
 
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
+                    entries.forEach(entry => {
 
-
-                    const counter =
-                        entry.target;
-
-
-                    const target =
-                        Number(
-                            counter.dataset.count
-                        );
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
 
 
-                    let current = 0;
-
-                    const duration = 1600;
-
-                    const increment =
-                        target /
-                        (duration / 16);
+                        const counter =
+                            entry.target;
 
 
-                    function updateCounter() {
-
-                        current += increment;
-
-
-                        if (current < target) {
-
-                            counter.textContent =
-                                Math.floor(
-                                    current
-                                ).toLocaleString();
-
-
-                            requestAnimationFrame(
-                                updateCounter
+                        const target =
+                            Number(
+                                counter.dataset.count
                             );
 
-                        } else {
 
-                            counter.textContent =
-                                target.toLocaleString();
+                        let current = 0;
+
+                        const duration = 1600;
+
+                        const increment =
+                            target /
+                            (duration / 16);
+
+
+                        function updateCounter() {
+
+                            current += increment;
+
+
+                            if (current < target) {
+
+                                counter.textContent =
+                                    Math.floor(
+                                        current
+                                    ).toLocaleString();
+
+
+                                requestAnimationFrame(
+                                    updateCounter
+                                );
+
+                            } else {
+
+                                counter.textContent =
+                                    target.toLocaleString();
+
+                            }
 
                         }
 
-                    }
+
+                        updateCounter();
+
+                        counterObserver.unobserve(
+                            counter
+                        );
+
+                    });
+
+                },
+                {
+                    threshold: 0.5
+                }
+            );
 
 
-                    updateCounter();
+        counters.forEach(counter => {
 
-                    counterObserver.unobserve(
-                        counter
-                    );
+            counterObserver.observe(counter);
 
-                });
+        });
 
-            },
-            {
-                threshold: 0.5
-            }
-        );
-
-
-    counters.forEach(counter => {
-
-        counterObserver.observe(counter);
-
-    });
+    }
 
 
     /* =====================================================
@@ -418,48 +445,118 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-        const {
-            data: causes,
-            error
-        } = await supabaseClient
-            .from("causes")
-            .select(`
-                id,
-                title,
-                slug,
-                category,
-                location,
-                status,
-                target_amount,
-                raised_amount,
-                image_url,
-                short_description,
-                description,
-                featured,
-                created_at
-            `)
-            .eq(
-                "status",
-                "published"
-            )
-            .order(
-                "featured",
-                {
-                    ascending: false
-                }
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
+        try {
+
+            const {
+                data: causes,
+                error
+            } = await supabaseClient
+                .from("causes")
+                .select(`
+                    id,
+                    title,
+                    slug,
+                    category,
+                    location,
+                    status,
+                    target_amount,
+                    raised_amount,
+                    image_url,
+                    short_description,
+                    description,
+                    featured,
+                    created_at
+                `)
+                .eq(
+                    "status",
+                    "published"
+                )
+                .order(
+                    "featured",
+                    {
+                        ascending: false
+                    }
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Could not load causes:",
+                    error
+                );
+
+
+                causeGrid.innerHTML = `
+                    <div class="cause-loading">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>
+                            We couldn't load our causes right now.
+                            Please try again shortly.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            if (
+                !causes ||
+                !causes.length
+            ) {
+
+                causeGrid.innerHTML = `
+                    <div class="cause-loading">
+                        <i class="fa-solid fa-heart"></i>
+                        <p>
+                            New causes will appear here soon.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            causeGrid.innerHTML = "";
+
+
+            causes.forEach(cause => {
+
+                const card =
+                    createCauseCard(cause);
+
+
+                causeGrid.appendChild(card);
+
+            });
+
+
+            /*
+             * IMPORTANT:
+             * There is intentionally NO
+             * attachCauseButtons() here.
+             *
+             * Cause cards now use normal
+             * HTML links.
+             */
+
+
+            populateCauseSelect(
+                causes
             );
 
-
-        if (error) {
+        } catch (error) {
 
             console.error(
-                "Could not load causes:",
+                "Unexpected causes error:",
                 error
             );
 
@@ -468,50 +565,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="cause-loading">
                     <i class="fa-solid fa-circle-exclamation"></i>
                     <p>
-                        We couldn't load our causes right now.
-                        Please try again shortly.
+                        Something went wrong while loading causes.
+                        Please refresh and try again.
                     </p>
                 </div>
             `;
 
-            return;
         }
-
-
-        if (!causes || !causes.length) {
-
-            causeGrid.innerHTML = `
-                <div class="cause-loading">
-                    <i class="fa-solid fa-heart"></i>
-                    <p>
-                        New causes will appear here soon.
-                    </p>
-                </div>
-            `;
-
-            return;
-        }
-
-
-        causeGrid.innerHTML = "";
-
-
-        causes.forEach(cause => {
-
-            const card =
-                createCauseCard(cause);
-
-
-            causeGrid.appendChild(card);
-
-        });
-
-
-        attachCauseButtons();
-
-        populateCauseSelect(
-            causes
-        );
 
     }
 
@@ -524,6 +584,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const article =
             document.createElement("article");
+
 
         article.className =
             "cause-card";
@@ -611,6 +672,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "";
 
 
+        /*
+         * Use the cause slug for navigation.
+         * If somehow no slug exists, fall back
+         * to the database ID.
+         */
+
+        const causeIdentifier =
+            cause.slug ||
+            cause.id;
+
+
+        const causeUrl =
+            `cause.html?slug=${encodeURIComponent(
+                causeIdentifier
+            )}`;
+
+
         article.innerHTML = `
 
             <div class="cause-image">
@@ -684,15 +762,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 <a
-    class="cause-donate"
-    href="cause.html?slug=${encodeURIComponent(cause.slug)}"
->
-    View & Support
-</a>
+                    class="cause-donate"
+                    href="${escapeAttribute(causeUrl)}"
+                    aria-label="View and support ${escapeAttribute(title)}"
+                >
+                    View &amp; Support
+                </a>
 
             </div>
 
         `;
+
+
+        /*
+         * If an image fails, use the existing
+         * story image as a safe fallback.
+         */
+
+        const cardImage =
+            article.querySelector(
+                ".cause-image img"
+            );
+
+
+        if (cardImage) {
+
+            cardImage.addEventListener(
+                "error",
+                function () {
+
+                    this.onerror = null;
+
+                    this.src =
+                        "images/story-1.jpg";
+
+                }
+            );
+
+        }
 
 
         return article;
@@ -758,60 +865,89 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     /* =====================================================
        POPULATE DONATION CAUSE SELECT
     ===================================================== */
 
-    
-            function populateCauseSelect(causes) {
-    if (!causeSelect) {
-        return;
-    }
+    function populateCauseSelect(causes) {
 
-    causeSelect.innerHTML = `
-        <option value="">
-            Select a cause
-        </option>
-    `;
+        if (!causeSelect) {
+            return;
+        }
 
-    causes.forEach((cause) => {
-        const option = document.createElement("option");
 
-        option.value = cause.slug || cause.id;
+        causeSelect.innerHTML = `
+            <option value="">
+                Select a cause
+            </option>
+        `;
 
-        option.textContent = cause.title;
 
-        causeSelect.appendChild(option);
-    });
+        causes.forEach(cause => {
 
-    // ---------------------------------------------------------
-    // Automatically select a cause from the URL
-    // Example:
-    // index.html?cause=give-a-child-a-future#donate
-    // ---------------------------------------------------------
-
-    const params = new URLSearchParams(
-        window.location.search
-    );
-
-    const requestedCause =
-        params.get("cause");
-
-    if (requestedCause) {
-        const matchingOption =
-            Array.from(causeSelect.options)
-                .find(
-                    (option) =>
-                        option.value === requestedCause
+            const option =
+                document.createElement(
+                    "option"
                 );
 
+
+            option.value =
+                cause.slug ||
+                cause.id;
+
+
+            option.textContent =
+                cause.title;
+
+
+            causeSelect.appendChild(
+                option
+            );
+
+        });
+
+
+        /*
+         * Read the cause from the URL.
+         *
+         * Example:
+         *
+         * index.html?cause=give-a-child-a-future#donate
+         */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const requestedCause =
+            params.get("cause");
+
+
+        if (!requestedCause) {
+            return;
+        }
+
+
+        const matchingOption =
+            Array.from(
+                causeSelect.options
+            ).find(
+                option =>
+                    option.value ===
+                    requestedCause
+            );
+
+
         if (matchingOption) {
+
             causeSelect.value =
                 requestedCause;
+
         }
+
     }
-            }
 
 
     /* =====================================================
@@ -860,7 +996,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     tab.dataset.method;
 
 
-                if (method === "btc") {
+                if (
+                    method === "btc"
+                ) {
 
                     if (cardPayment) {
 
@@ -1063,12 +1201,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
 
-                const causeSelect =
-                    document.getElementById(
-                        "causeSelect"
-                    );
-
-
                 const cause =
                     causeSelect
                         ? causeSelect.value
@@ -1087,6 +1219,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     selectedOption
                         ? selectedOption.textContent
                         : "Where needed most";
+
+
+                console.log(
+                    "Donation prepared:",
+                    {
+                        amount,
+                        cause
+                    }
+                );
 
 
                 if (modalMessage) {
@@ -1255,8 +1396,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 } catch (error) {
 
+                    console.error(
+                        "Clipboard error:",
+                        error
+                    );
+
+
                     copyBtc.textContent =
                         "Copy failed";
+
+
+                    setTimeout(() => {
+
+                        copyBtc.textContent =
+                            "Copy wallet address";
+
+                    }, 2000);
 
                 }
 
@@ -1319,5 +1474,12 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         });
+
+
+    /* =====================================================
+       LOAD PUBLISHED CAUSES
+    ===================================================== */
+
+    loadPublishedCauses();
 
 });
