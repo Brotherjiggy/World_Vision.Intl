@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cause Details | Global Vision Aid</title>
+
+    <meta
+        name="description"
+        content="Learn more about this Global Vision Aid cause and discover how your support can make a difference."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================================================
+           CAUSE DETAILS PAGE
+        ========================================================= */
+
+        .cause-detail-page {
+            min-height: 100vh;
+            background: var(--light);
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .detail-header {
+            position: relative;
+            background: var(--green);
+            color: var(--white);
+            padding: 18px 0;
+        }
+
+        .detail-header-inner {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .detail-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--white);
+            font-family: "Manrope", sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            text-decoration: none;
+        }
+
+        .detail-logo-mark {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            background: var(--gold);
+            color: var(--green);
+
+            border-radius: 50%;
+            font-weight: 900;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: var(--white);
+            text-decoration: none;
+
+            font-size: 0.9rem;
+            font-weight: 700;
+
+            padding: 10px 16px;
+
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50px;
+
+            transition: 0.25s ease;
+        }
+
+        .back-home:hover {
+            background: var(--gold);
+            color: var(--green);
+            border-color: var(--gold);
+        }
+
+        /* Main */
+        .cause-detail-container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+            padding-top: 45px;
+        }
+
+        .cause-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 25px;
+
+            color: var(--green);
+            text-decoration: none;
+
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .cause-back-link:hover {
+            color: var(--gold-dark);
+        }
+
+        /* Loading */
+        .cause-loading {
+            min-height: 400px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: var(--white);
+            border-radius: 24px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+
+            border: 4px solid #e8e9e6;
+            border-top-color: var(--gold);
+
+            border-radius: 50%;
+
+            animation: causeSpin 0.9s linear infinite;
+
+            margin-bottom: 18px;
+        }
+
+        @keyframes causeSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cause-loading p {
+            color: var(--muted);
+        }
+
+        /* Error */
+        .cause-error {
+            display: none;
+
+            text-align: center;
+
+            background: var(--white);
+
+            border-radius: 24px;
+
+            padding: 70px 25px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .cause-error.show {
+            display: block;
+        }
+
+        .cause-error h2 {
+            margin-bottom: 10px;
+            color: var(--green);
+        }
+
+        .cause-error p {
+            max-width: 550px;
+            margin: 0 auto 25px;
+            color: var(--muted);
+        }
+
+        /* Content */
+        .cause-content {
+            display: none;
+        }
+
+        .cause-content.show {
+            display: block;
+        }
+
+        .cause-detail-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Main article */
+        .cause-main-card {
+            overflow: hidden;
+
+            background: var(--white);
+
+            border: 1px solid var(--border);
+            border-radius: 24px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .cause-detail-image {
+            width: 100%;
+            height: 430px;
+
+            object-fit: cover;
+            display: block;
+        }
+
+        .cause-detail-body {
+            padding: 35px;
+        }
+
+        .cause-detail-tag {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 8px 14px;
+
+            background: #fff6c9;
+            color: var(--green);
+
+            border-radius: 50px;
+
+            font-size: 0.75rem;
+            font-weight: 800;
+
+            margin-bottom: 16px;
+        }
+
+        .cause-detail-title {
+            margin-bottom: 14px;
+
+            font-family: "Manrope", sans-serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.1;
+
+            color: var(--green);
+        }
+
+        .cause-location {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 25px;
+
+            color: var(--muted);
+
+            font-size: 0.9rem;
+        }
+
+        .cause-short-description {
+            margin-bottom: 30px;
+
+            color: var(--muted);
+
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .cause-description {
+            color: var(--text);
+            line-height: 1.9;
+            white-space: pre-line;
+        }
+
+        .cause-description h2 {
+            margin: 30px 0 15px;
+            color: var(--green);
+        }
+
+        /* Progress */
+        .cause-progress-section {
+            margin: 30px 0;
+            padding: 25px;
+
+            background: #f8f9f6;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .cause-progress-top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .cause-raised {
+            font-family: "Manrope", sans-serif;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .cause-goal {
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-align: right;
+        }
+
+        .cause-progress-track {
+            width: 100%;
+            height: 10px;
+
+            overflow: hidden;
+
+            background: #e5e8e3;
+            border-radius: 50px;
+        }
+
+        .cause-progress-fill {
+            width: 0;
+            height: 100%;
+
+            background: var(--gold);
+
+            border-radius: 50px;
+
+            transition: width 1s ease;
+        }
+
+        .cause-progress-bottom {
+            display: flex;
+            justify-content: space-between;
+
+            margin-top: 9px;
+
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        /* Donation sidebar */
+        .cause-support-card {
+            position: sticky;
+            top: 25px;
+
+            background: var(--green);
+            color: var(--white);
+
+            padding: 30px;
+
+            border-radius: 24px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .cause-support-card h2 {
+            margin-bottom: 12px;
+
+            font-family: "Manrope", sans-serif;
+            font-size: 1.6rem;
+        }
+
+        .cause-support-card > p {
+            margin-bottom: 25px;
+
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        .support-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+
+            padding: 15px 20px;
+
+            background: var(--gold);
+            color: var(--green);
+
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            transition: 0.25s ease;
+        }
+
+        .support-button:hover {
+            background: var(--white);
+            border-color: var(--white);
+        }
+
+        .support-note {
+            margin-top: 18px;
+
+            color: rgba(255,255,255,0.6);
+
+            font-size: 0.75rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Footer */
+        .detail-footer {
+            margin-top: 45px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .cause-detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cause-support-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .detail-header-inner {
+                width: 90%;
+            }
+
+            .detail-logo span {
+                display: none;
+            }
+
+            .cause-detail-container {
+                width: 92%;
+                padding-top: 30px;
+            }
+
+            .cause-detail-image {
+                height: 270px;
+            }
+
+            .cause-detail-body {
+                padding: 25px;
+            }
+
+            .cause-detail-title {
+                font-size: 2rem;
+            }
+
+            .cause-progress-section {
+                padding: 20px;
+            }
+
+            .cause-progress-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .cause-goal {
+                text-align: left;
+            }
+
+            .cause-support-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="detail-header">
+        <div class="detail-header-inner">
+
+            <a href="index.html" class="detail-logo">
+                <span class="detail-logo-mark">GV</span>
+                <span>Global Vision Aid</span>
+            </a>
+
+            <a href="index.html#causes" class="back-home">
+                ← All Causes
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="cause-detail-page">
+
+        <div class="cause-detail-container">
+
+            <a href="index.html#causes" class="cause-back-link">
+                ← Back to Causes
+            </a>
+
+
+            <!-- Loading -->
+            <div id="causeLoading" class="cause-loading">
+
+                <div class="loading-spinner"></div>
+
+                <p>Loading cause details...</p>
+
+            </div>
+
+
+            <!-- Error -->
+            <div id="causeError" class="cause-error">
+
+                <h2>Cause Not Found</h2>
+
+                <p>
+                    We couldn't find this cause. It may have been unpublished,
+                    archived, or the link may be incorrect.
+                </p>
+
+                <a href="index.html#causes" class="support-button">
+                    View Available Causes
+                </a>
+
+            </div>
+
+
+            <!-- Cause Content -->
+            <section id="causeContent" class="cause-content">
+
+                <div class="cause-detail-grid">
+
+                    <!-- Main Cause -->
+                    <article class="cause-main-card">
+
+                        <img
+                            id="causeImage"
+                            class="cause-detail-image"
+                            src="images/story-1.jpg"
+                            alt="Cause"
+                        >
+
+                        <div class="cause-detail-body">
+
+                            <span
+                                id="causeCategory"
+                                class="cause-detail-tag"
+                            >
+                                Cause
+                            </span>
+
+                            <h1
+                                id="causeTitle"
+                                class="cause-detail-title"
+                            >
+                                Loading...
+                            </h1>
+
+                            <div
+                                id="causeLocation"
+                                class="cause-location"
+                            >
+                                📍 Global
+                            </div>
+
+                            <p
+                                id="causeShortDescription"
+                                class="cause-short-description"
+                            ></p>
+
+
+                            <!-- Progress -->
+                            <div class="cause-progress-section">
+
+                                <div class="cause-progress-top">
+
+                                    <div
+                                        id="causeRaised"
+                                        class="cause-raised"
+                                    >
+                                        $0
+                                    </div>
+
+                                    <div
+                                        id="causeGoal"
+                                        class="cause-goal"
+                                    >
+                                        Goal: $0
+                                    </div>
+
+                                </div>
+
+                                <div class="cause-progress-track">
+
+                                    <div
+                                        id="causeProgress"
+                                        class="cause-progress-fill"
+                                    ></div>
+
+                                </div>
+
+                                <div class="cause-progress-bottom">
+
+                                    <span>Progress</span>
+
+                                    <strong id="causePercent">
+                                        0%
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Full Description -->
+                            <div
+                                id="causeDescription"
+                                class="cause-description"
+                            ></div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Support -->
+                    <aside class="cause-support-card">
+
+                        <h2>Make a Difference</h2>
+
+                        <p>
+                            Your support can help provide meaningful,
+                            practical assistance to people and communities
+                            who need it most.
+                        </p>
+
+                        <a
+                            id="supportCauseButton"
+                            href="index.html#donate"
+                            class="support-button"
+                        >
+                            Support This Cause
+                        </a>
+
+                        <p class="support-note">
+                            Every contribution matters. Together, small acts
+                            of kindness can create lasting change.
+                        </p>
+
+                    </aside>
+
+                </div>
+
+            </section>
+
+
+            <footer class="detail-footer">
+                © 2026 Global Vision Aid. Every act of compassion matters.
+            </footer>
+
+        </div>
+
+    </main>
+
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Cause Details JavaScript -->
+    <script src="js/cause.js"></script>
+
+</body>
+</html>
