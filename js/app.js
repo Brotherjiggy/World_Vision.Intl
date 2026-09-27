@@ -683,14 +683,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
 
-                <button
-                    class="cause-donate"
-                    data-cause="${escapeAttribute(
-                        cause.slug || cause.id
-                    )}"
-                >
-                    Support This Cause
-                </button>
+                <a
+    class="cause-donate"
+    href="cause.html?slug=${encodeURIComponent(cause.slug)}"
+>
+    View & Support
+</a>
 
             </div>
 
