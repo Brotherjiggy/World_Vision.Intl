@@ -758,63 +758,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       CAUSE DONATE BUTTONS
-    ===================================================== */
-
-    function attachCauseButtons() {
-
-        const causeButtons =
-            document.querySelectorAll(
-                ".cause-donate"
-            );
-
-
-        const causeSelect =
-            document.getElementById(
-                "causeSelect"
-            );
-
-
-        causeButtons.forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const cause =
-                        button.dataset.cause;
-
-
-                    if (causeSelect) {
-
-                        causeSelect.value =
-                            cause;
-
-                    }
-
-
-                    const donationSection =
-                        document.getElementById(
-                            "donate"
-                        );
-
-
-                    if (donationSection) {
-
-                        donationSection.scrollIntoView({
-                            behavior: "smooth"
-                        });
-
-                    }
-
-                }
-            );
-
-        });
-
-    }
-
 
     /* =====================================================
        POPULATE DONATION CAUSE SELECT
