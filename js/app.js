@@ -820,70 +820,55 @@ document.addEventListener("DOMContentLoaded", () => {
        POPULATE DONATION CAUSE SELECT
     ===================================================== */
 
-    function populateCauseSelect(causes) {
-
-        const causeSelect =
-            document.getElementById(
-                "causeSelect"
-            );
-
-
-        if (!causeSelect) {
-            return;
-        }
-
-
-        causeSelect.innerHTML = "";
-
-
-        const generalOption =
-            document.createElement("option");
-
-
-        generalOption.value =
-            "general";
-
-
-        generalOption.textContent =
-            "Where needed most";
-
-
-        causeSelect.appendChild(
-            generalOption
-        );
-
-
-        causes.forEach(cause => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                cause.slug ||
-                cause.id;
-
-
-            option.textContent =
-                cause.title;
-
-
-            causeSelect.appendChild(
-                option
-            );
-
-        });
-
+    
+            function populateCauseSelect(causes) {
+    if (!causeSelect) {
+        return;
     }
 
+    causeSelect.innerHTML = `
+        <option value="">
+            Select a cause
+        </option>
+    `;
 
-    /*
-       Load published causes immediately.
-    */
+    causes.forEach((cause) => {
+        const option = document.createElement("option");
 
-    loadPublishedCauses();
+        option.value = cause.slug || cause.id;
+
+        option.textContent = cause.title;
+
+        causeSelect.appendChild(option);
+    });
+
+    // ---------------------------------------------------------
+    // Automatically select a cause from the URL
+    // Example:
+    // index.html?cause=give-a-child-a-future#donate
+    // ---------------------------------------------------------
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const requestedCause =
+        params.get("cause");
+
+    if (requestedCause) {
+        const matchingOption =
+            Array.from(causeSelect.options)
+                .find(
+                    (option) =>
+                        option.value === requestedCause
+                );
+
+        if (matchingOption) {
+            causeSelect.value =
+                requestedCause;
+        }
+    }
+            }
 
 
     /* =====================================================
