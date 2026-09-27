@@ -6,17 +6,39 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
+       SUPABASE
+    ===================================================== */
+
+    const SUPABASE_URL =
+        "https://xhokpjbikxlbxrbjtqit.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_6bJ1WmGEKvDQ1pPafd0TlQ_XIcr0U52";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    /* =====================================================
        PRELOADER
     ===================================================== */
 
-    const preloader = document.getElementById("preloader");
+    const preloader =
+        document.getElementById("preloader");
 
     window.addEventListener("load", () => {
+
         setTimeout(() => {
+
             if (preloader) {
                 preloader.classList.add("loaded");
             }
+
         }, 500);
+
     });
 
 
@@ -24,8 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
        MOBILE NAVIGATION
     ===================================================== */
 
-    const menuToggle = document.getElementById("menu-toggle");
-    const navLinks = document.getElementById("nav-links");
+    const menuToggle =
+        document.getElementById("menu-toggle");
+
+    const navLinks =
+        document.getElementById("nav-links");
+
 
     if (menuToggle && navLinks) {
 
@@ -33,12 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             navLinks.classList.toggle("open");
 
-            const isOpen = navLinks.classList.contains("open");
+            const isOpen =
+                navLinks.classList.contains("open");
+
 
             menuToggle.setAttribute(
                 "aria-label",
-                isOpen ? "Close navigation" : "Open navigation"
+                isOpen
+                    ? "Close navigation"
+                    : "Open navigation"
             );
+
 
             menuToggle.innerHTML = isOpen
                 ? '<i class="fa-solid fa-xmark"></i>'
@@ -46,8 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
-
-        /* Close menu after clicking a navigation link */
 
         navLinks.querySelectorAll("a").forEach(link => {
 
@@ -74,10 +103,18 @@ document.addEventListener("DOMContentLoaded", () => {
        HERO SLIDESHOW
     ===================================================== */
 
-    const slides = document.querySelectorAll(".hero-slide");
-    const slideDots = document.getElementById("slideDots");
-    const prevSlide = document.getElementById("prevSlide");
-    const nextSlide = document.getElementById("nextSlide");
+    const slides =
+        document.querySelectorAll(".hero-slide");
+
+    const slideDots =
+        document.getElementById("slideDots");
+
+    const prevSlide =
+        document.getElementById("prevSlide");
+
+    const nextSlide =
+        document.getElementById("nextSlide");
+
 
     let currentSlide = 0;
     let slideTimer;
@@ -87,47 +124,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!slides.length) return;
 
+
         if (index >= slides.length) {
+
             currentSlide = 0;
+
         } else if (index < 0) {
-            currentSlide = slides.length - 1;
+
+            currentSlide =
+                slides.length - 1;
+
         } else {
+
             currentSlide = index;
+
         }
 
+
         slides.forEach((slide, i) => {
+
             slide.classList.toggle(
                 "active",
                 i === currentSlide
             );
+
         });
 
+
         updateDots();
+
     }
 
 
     function createDots() {
 
-        if (!slideDots || !slides.length) return;
+        if (
+            !slideDots ||
+            !slides.length
+        ) {
+            return;
+        }
+
 
         slideDots.innerHTML = "";
 
+
         slides.forEach((_, index) => {
 
-            const dot = document.createElement("button");
+            const dot =
+                document.createElement("button");
 
             dot.type = "button";
 
             dot.className = "slide-dot";
 
+
             if (index === currentSlide) {
+
                 dot.classList.add("active");
+
             }
+
 
             dot.setAttribute(
                 "aria-label",
                 `Go to slide ${index + 1}`
             );
+
 
             dot.addEventListener("click", () => {
 
@@ -136,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 restartSlider();
 
             });
+
 
             slideDots.appendChild(dot);
 
@@ -148,8 +212,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!slideDots) return;
 
+
         const dots =
-            slideDots.querySelectorAll(".slide-dot");
+            slideDots.querySelectorAll(
+                ".slide-dot"
+            );
+
 
         dots.forEach((dot, index) => {
 
@@ -167,11 +235,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (slides.length <= 1) return;
 
-        slideTimer = setInterval(() => {
 
-            showSlide(currentSlide + 1);
+        slideTimer =
+            setInterval(() => {
 
-        }, 7000);
+                showSlide(
+                    currentSlide + 1
+                );
+
+            }, 7000);
 
     }
 
@@ -198,26 +270,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nextSlide) {
 
-        nextSlide.addEventListener("click", () => {
+        nextSlide.addEventListener(
+            "click",
+            () => {
 
-            showSlide(currentSlide + 1);
+                showSlide(
+                    currentSlide + 1
+                );
 
-            restartSlider();
+                restartSlider();
 
-        });
+            }
+        );
 
     }
 
 
     if (prevSlide) {
 
-        prevSlide.addEventListener("click", () => {
+        prevSlide.addEventListener(
+            "click",
+            () => {
 
-            showSlide(currentSlide - 1);
+                showSlide(
+                    currentSlide - 1
+                );
 
-            restartSlider();
+                restartSlider();
 
-        });
+            }
+        );
 
     }
 
@@ -227,7 +309,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const counters =
-        document.querySelectorAll("[data-count]");
+        document.querySelectorAll(
+            "[data-count]"
+        );
+
 
     const counterObserver =
         new IntersectionObserver(
@@ -235,29 +320,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 entries.forEach(entry => {
 
-                    if (!entry.isIntersecting) return;
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
-                    const counter = entry.target;
+
+                    const counter =
+                        entry.target;
+
 
                     const target =
-                        Number(counter.dataset.count);
+                        Number(
+                            counter.dataset.count
+                        );
+
 
                     let current = 0;
 
                     const duration = 1600;
 
                     const increment =
-                        target / (duration / 16);
+                        target /
+                        (duration / 16);
 
 
                     function updateCounter() {
 
                         current += increment;
 
+
                         if (current < target) {
 
                             counter.textContent =
-                                Math.floor(current).toLocaleString();
+                                Math.floor(
+                                    current
+                                ).toLocaleString();
+
 
                             requestAnimationFrame(
                                 updateCounter
@@ -272,9 +370,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     }
 
+
                     updateCounter();
 
-                    counterObserver.unobserve(counter);
+                    counterObserver.unobserve(
+                        counter
+                    );
 
                 });
 
@@ -293,55 +394,588 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       PUBLIC SUPABASE CAUSES
+    ===================================================== */
+
+    async function loadPublishedCauses() {
+
+        const causeGrid =
+            document.querySelector(
+                ".cause-grid"
+            );
+
+
+        if (!causeGrid) {
+            return;
+        }
+
+
+        causeGrid.innerHTML = `
+            <div class="cause-loading">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Loading causes...</p>
+            </div>
+        `;
+
+
+        const {
+            data: causes,
+            error
+        } = await supabaseClient
+            .from("causes")
+            .select(`
+                id,
+                title,
+                slug,
+                category,
+                location,
+                status,
+                target_amount,
+                raised_amount,
+                image_url,
+                short_description,
+                description,
+                featured,
+                created_at
+            `)
+            .eq(
+                "status",
+                "published"
+            )
+            .order(
+                "featured",
+                {
+                    ascending: false
+                }
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            console.error(
+                "Could not load causes:",
+                error
+            );
+
+
+            causeGrid.innerHTML = `
+                <div class="cause-loading">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p>
+                        We couldn't load our causes right now.
+                        Please try again shortly.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        if (!causes || !causes.length) {
+
+            causeGrid.innerHTML = `
+                <div class="cause-loading">
+                    <i class="fa-solid fa-heart"></i>
+                    <p>
+                        New causes will appear here soon.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        causeGrid.innerHTML = "";
+
+
+        causes.forEach(cause => {
+
+            const card =
+                createCauseCard(cause);
+
+
+            causeGrid.appendChild(card);
+
+        });
+
+
+        attachCauseButtons();
+
+        populateCauseSelect(
+            causes
+        );
+
+    }
+
+
+    /* =====================================================
+       CREATE CAUSE CARD
+    ===================================================== */
+
+    function createCauseCard(cause) {
+
+        const article =
+            document.createElement("article");
+
+        article.className =
+            "cause-card";
+
+
+        const target =
+            Number(
+                cause.target_amount || 0
+            );
+
+
+        const raised =
+            Number(
+                cause.raised_amount || 0
+            );
+
+
+        let percentage = 0;
+
+
+        if (target > 0) {
+
+            percentage =
+                (raised / target) * 100;
+
+        }
+
+
+        percentage =
+            Math.min(
+                Math.max(
+                    percentage,
+                    0
+                ),
+                100
+            );
+
+
+        const formattedRaised =
+            formatCurrency(
+                raised
+            );
+
+
+        const formattedTarget =
+            formatCurrency(
+                target
+            );
+
+
+        const category =
+            escapeHTML(
+                cause.category ||
+                "General"
+            );
+
+
+        const title =
+            escapeHTML(
+                cause.title ||
+                "Untitled Cause"
+            );
+
+
+        const description =
+            escapeHTML(
+                cause.short_description ||
+                cause.description ||
+                "Support this important humanitarian cause."
+            );
+
+
+        const image =
+            cause.image_url &&
+            cause.image_url.trim()
+                ? cause.image_url
+                : "images/story-1.jpg";
+
+
+        const location =
+            cause.location
+                ? escapeHTML(
+                    cause.location
+                )
+                : "";
+
+
+        article.innerHTML = `
+
+            <div class="cause-image">
+
+                <img
+                    src="${escapeAttribute(image)}"
+                    alt="${escapeAttribute(title)}"
+                    loading="lazy"
+                >
+
+                <span class="cause-tag">
+                    ${category}
+                </span>
+
+            </div>
+
+
+            <div class="cause-body">
+
+                <h3>
+                    ${title}
+                </h3>
+
+
+                ${
+                    location
+                        ? `
+                            <small class="cause-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                ${location}
+                            </small>
+                          `
+                        : ""
+                }
+
+
+                <p>
+                    ${description}
+                </p>
+
+
+                <div class="progress">
+
+                    <div class="progress-top">
+
+                        <span>
+                            Raised
+                        </span>
+
+                        <strong>
+                            ${formattedRaised}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <span
+                            style="width:${percentage}%"
+                        ></span>
+
+                    </div>
+
+
+                    <small>
+                        Goal: ${formattedTarget}
+                    </small>
+
+                </div>
+
+
+                <button
+                    class="cause-donate"
+                    data-cause="${escapeAttribute(
+                        cause.slug || cause.id
+                    )}"
+                >
+                    Support This Cause
+                </button>
+
+            </div>
+
+        `;
+
+
+        return article;
+
+    }
+
+
+    /* =====================================================
+       FORMAT CURRENCY
+    ===================================================== */
+
+    function formatCurrency(value) {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0
+            }
+        ).format(
+            Number(value) || 0
+        );
+
+    }
+
+
+    /* =====================================================
+       SAFE HTML HELPERS
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    function escapeAttribute(value) {
+
+        return escapeHTML(value);
+
+    }
+
+
+    /* =====================================================
+       CAUSE DONATE BUTTONS
+    ===================================================== */
+
+    function attachCauseButtons() {
+
+        const causeButtons =
+            document.querySelectorAll(
+                ".cause-donate"
+            );
+
+
+        const causeSelect =
+            document.getElementById(
+                "causeSelect"
+            );
+
+
+        causeButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const cause =
+                        button.dataset.cause;
+
+
+                    if (causeSelect) {
+
+                        causeSelect.value =
+                            cause;
+
+                    }
+
+
+                    const donationSection =
+                        document.getElementById(
+                            "donate"
+                        );
+
+
+                    if (donationSection) {
+
+                        donationSection.scrollIntoView({
+                            behavior: "smooth"
+                        });
+
+                    }
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       POPULATE DONATION CAUSE SELECT
+    ===================================================== */
+
+    function populateCauseSelect(causes) {
+
+        const causeSelect =
+            document.getElementById(
+                "causeSelect"
+            );
+
+
+        if (!causeSelect) {
+            return;
+        }
+
+
+        causeSelect.innerHTML = "";
+
+
+        const generalOption =
+            document.createElement("option");
+
+
+        generalOption.value =
+            "general";
+
+
+        generalOption.textContent =
+            "Where needed most";
+
+
+        causeSelect.appendChild(
+            generalOption
+        );
+
+
+        causes.forEach(cause => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                cause.slug ||
+                cause.id;
+
+
+            option.textContent =
+                cause.title;
+
+
+            causeSelect.appendChild(
+                option
+            );
+
+        });
+
+    }
+
+
+    /*
+       Load published causes immediately.
+    */
+
+    loadPublishedCauses();
+
+
+    /* =====================================================
        DONATION TABS
     ===================================================== */
 
     const donationTabs =
-        document.querySelectorAll(".donation-tab");
+        document.querySelectorAll(
+            ".donation-tab"
+        );
+
 
     const cardPayment =
-        document.getElementById("cardPayment");
+        document.getElementById(
+            "cardPayment"
+        );
+
 
     const btcPayment =
-        document.getElementById("btcPayment");
+        document.getElementById(
+            "btcPayment"
+        );
 
 
     donationTabs.forEach(tab => {
 
-        tab.addEventListener("click", () => {
+        tab.addEventListener(
+            "click",
+            () => {
 
-            donationTabs.forEach(item => {
-                item.classList.remove("active");
-            });
+                donationTabs.forEach(item => {
 
-            tab.classList.add("active");
+                    item.classList.remove(
+                        "active"
+                    );
 
-            const method =
-                tab.dataset.method;
+                });
 
-            if (method === "btc") {
 
-                if (cardPayment) {
-                    cardPayment.classList.add("hidden");
-                }
+                tab.classList.add(
+                    "active"
+                );
 
-                if (btcPayment) {
-                    btcPayment.classList.remove("hidden");
-                }
 
-            } else {
+                const method =
+                    tab.dataset.method;
 
-                if (btcPayment) {
-                    btcPayment.classList.add("hidden");
-                }
 
-                if (cardPayment) {
-                    cardPayment.classList.remove("hidden");
+                if (method === "btc") {
+
+                    if (cardPayment) {
+
+                        cardPayment.classList.add(
+                            "hidden"
+                        );
+
+                    }
+
+
+                    if (btcPayment) {
+
+                        btcPayment.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
+                } else {
+
+                    if (btcPayment) {
+
+                        btcPayment.classList.add(
+                            "hidden"
+                        );
+
+                    }
+
+
+                    if (cardPayment) {
+
+                        cardPayment.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
                 }
 
             }
-
-        });
+        );
 
     });
 
@@ -351,20 +985,32 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const frequencyButtons =
-        document.querySelectorAll(".frequency-btn");
+        document.querySelectorAll(
+            ".frequency-btn"
+        );
 
 
     frequencyButtons.forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            frequencyButtons.forEach(item => {
-                item.classList.remove("active");
-            });
+                frequencyButtons.forEach(item => {
 
-            button.classList.add("active");
+                    item.classList.remove(
+                        "active"
+                    );
 
-        });
+                });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+            }
+        );
 
     });
 
@@ -374,85 +1020,68 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const amountButtons =
-        document.querySelectorAll(".amounts button");
+        document.querySelectorAll(
+            ".amounts button"
+        );
+
 
     const amountInput =
-        document.getElementById("amount");
+        document.getElementById(
+            "amount"
+        );
 
 
     amountButtons.forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            amountButtons.forEach(item => {
-                item.classList.remove("active");
-            });
+                amountButtons.forEach(item => {
 
-            button.classList.add("active");
+                    item.classList.remove(
+                        "active"
+                    );
 
-            if (amountInput) {
+                });
 
-                amountInput.value =
-                    button.dataset.amount;
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                if (amountInput) {
+
+                    amountInput.value =
+                        button.dataset.amount;
+
+                }
 
             }
-
-        });
+        );
 
     });
 
 
     if (amountInput) {
 
-        amountInput.addEventListener("input", () => {
+        amountInput.addEventListener(
+            "input",
+            () => {
 
-            amountButtons.forEach(button => {
-                button.classList.remove("active");
-            });
+                amountButtons.forEach(button => {
 
-        });
+                    button.classList.remove(
+                        "active"
+                    );
 
-    }
-
-
-    /* =====================================================
-       CAUSE DONATE BUTTONS
-    ===================================================== */
-
-    const causeButtons =
-        document.querySelectorAll(".cause-donate");
-
-    const causeSelect =
-        document.getElementById("causeSelect");
-
-
-    causeButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const cause =
-                button.dataset.cause;
-
-            if (causeSelect) {
-
-                causeSelect.value = cause;
-
-            }
-
-            const donationSection =
-                document.getElementById("donate");
-
-            if (donationSection) {
-
-                donationSection.scrollIntoView({
-                    behavior: "smooth"
                 });
 
             }
+        );
 
-        });
-
-    });
+    }
 
 
     /* =====================================================
@@ -460,58 +1089,98 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const donationForm =
-        document.getElementById("donationForm");
+        document.getElementById(
+            "donationForm"
+        );
+
 
     const donationModal =
-        document.getElementById("donationModal");
+        document.getElementById(
+            "donationModal"
+        );
+
 
     const modalMessage =
-        document.getElementById("modalMessage");
+        document.getElementById(
+            "modalMessage"
+        );
 
 
     if (donationForm) {
 
-        donationForm.addEventListener("submit", event => {
+        donationForm.addEventListener(
+            "submit",
+            event => {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            const amount =
-                amountInput
-                    ? amountInput.value
-                    : "";
 
-            if (!amount || Number(amount) <= 0) {
+                const amount =
+                    amountInput
+                        ? amountInput.value
+                        : "";
 
-                if (amountInput) {
-                    amountInput.focus();
+
+                if (
+                    !amount ||
+                    Number(amount) <= 0
+                ) {
+
+                    if (amountInput) {
+
+                        amountInput.focus();
+
+                    }
+
+                    return;
+
                 }
 
-                return;
+
+                const causeSelect =
+                    document.getElementById(
+                        "causeSelect"
+                    );
+
+
+                const cause =
+                    causeSelect
+                        ? causeSelect.value
+                        : "general";
+
+
+                const selectedOption =
+                    causeSelect
+                        ? causeSelect.options[
+                            causeSelect.selectedIndex
+                        ]
+                        : null;
+
+
+                const causeName =
+                    selectedOption
+                        ? selectedOption.textContent
+                        : "Where needed most";
+
+
+                if (modalMessage) {
+
+                    modalMessage.textContent =
+                        `Your $${Number(amount).toLocaleString()} donation for ${causeName} has been prepared. Secure payment processing will be connected in the next stage.`;
+
+                }
+
+
+                if (donationModal) {
+
+                    donationModal.classList.add(
+                        "active"
+                    );
+
+                }
 
             }
-
-
-            const cause =
-                causeSelect
-                    ? causeSelect.value
-                    : "general";
-
-
-            if (modalMessage) {
-
-                modalMessage.textContent =
-                    `Your $${Number(amount).toLocaleString()} donation for ${cause} has been prepared. Secure payment processing will be connected in the next stage.`;
-
-            }
-
-
-            if (donationModal) {
-
-                donationModal.classList.add("active");
-
-            }
-
-        });
+        );
 
     }
 
@@ -521,17 +1190,24 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const closeModal =
-        document.getElementById("closeModal");
+        document.getElementById(
+            "closeModal"
+        );
+
 
     const modalContinue =
-        document.getElementById("modalContinue");
+        document.getElementById(
+            "modalContinue"
+        );
 
 
     function closeDonationModal() {
 
         if (donationModal) {
 
-            donationModal.classList.remove("active");
+            donationModal.classList.remove(
+                "active"
+            );
 
         }
 
@@ -560,15 +1236,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (donationModal) {
 
-        donationModal.addEventListener("click", event => {
+        donationModal.addEventListener(
+            "click",
+            event => {
 
-            if (event.target === donationModal) {
+                if (
+                    event.target ===
+                    donationModal
+                ) {
 
-                closeDonationModal();
+                    closeDonationModal();
+
+                }
 
             }
-
-        });
+        );
 
     }
 
@@ -578,64 +1260,82 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const copyBtc =
-        document.getElementById("copyBtc");
+        document.getElementById(
+            "copyBtc"
+        );
 
 
     if (copyBtc) {
 
-        copyBtc.addEventListener("click", async () => {
+        copyBtc.addEventListener(
+            "click",
+            async () => {
 
-            const btcAddress =
-                document.querySelector(".btc-address");
-
-            if (!btcAddress) return;
-
-            const address =
-                btcAddress.textContent.trim();
-
-
-            if (
-                !address ||
-                address === "BTC wallet will appear here"
-            ) {
-
-                copyBtc.textContent =
-                    "Wallet not configured yet";
-
-                setTimeout(() => {
-
-                    copyBtc.textContent =
-                        "Copy wallet address";
-
-                }, 2000);
-
-                return;
-
-            }
+                const btcAddress =
+                    document.querySelector(
+                        ".btc-address"
+                    );
 
 
-            try {
+                if (!btcAddress) {
+                    return;
+                }
 
-                await navigator.clipboard.writeText(address);
 
-                copyBtc.textContent =
-                    "Copied!";
+                const address =
+                    btcAddress.textContent.trim();
 
-                setTimeout(() => {
+
+                if (
+                    !address ||
+                    address ===
+                    "BTC wallet will appear here"
+                ) {
 
                     copyBtc.textContent =
-                        "Copy wallet address";
+                        "Wallet not configured yet";
 
-                }, 2000);
 
-            } catch (error) {
+                    setTimeout(() => {
 
-                copyBtc.textContent =
-                    "Copy failed";
+                        copyBtc.textContent =
+                            "Copy wallet address";
+
+                    }, 2000);
+
+
+                    return;
+
+                }
+
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        address
+                    );
+
+
+                    copyBtc.textContent =
+                        "Copied!";
+
+
+                    setTimeout(() => {
+
+                        copyBtc.textContent =
+                            "Copy wallet address";
+
+                    }, 2000);
+
+                } catch (error) {
+
+                    copyBtc.textContent =
+                        "Copy failed";
+
+                }
 
             }
-
-        });
+        );
 
     }
 
@@ -645,37 +1345,53 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     document
-        .querySelectorAll('a[href^="#"]')
+        .querySelectorAll(
+            'a[href^="#"]'
+        )
         .forEach(link => {
 
-            link.addEventListener("click", event => {
+            link.addEventListener(
+                "click",
+                event => {
 
-                const targetId =
-                    link.getAttribute("href");
+                    const targetId =
+                        link.getAttribute(
+                            "href"
+                        );
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
+
+                    if (
+                        !targetId ||
+                        targetId === "#"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
                 }
-
-
-                const target =
-                    document.querySelector(targetId);
-
-                if (!target) return;
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            });
+            );
 
         });
-
 
 });
