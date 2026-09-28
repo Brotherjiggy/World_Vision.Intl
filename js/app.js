@@ -1,7 +1,7 @@
 /* =========================================================
    GLOBAL VISION AID
    MAIN JAVASCRIPT
-   FULL UPGRADED VERSION
+   FLUTTERWAVE PAYMENT VERSION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,11 +24,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       CONFIGURATION
+    ===================================================== */
+
+    const PAYMENT_FUNCTION =
+        "create-flutterwave-payment";
+
+
+    /* =====================================================
        GLOBAL ELEMENTS
     ===================================================== */
 
     const causeSelect =
         document.getElementById("causeSelect");
+
+    const donationForm =
+        document.getElementById("donationForm");
+
+    const amountInput =
+        document.getElementById("amount");
 
 
     /* =====================================================
@@ -37,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const preloader =
         document.getElementById("preloader");
-
 
     window.addEventListener("load", () => {
 
@@ -72,14 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const isOpen =
                 navLinks.classList.contains("open");
 
-
             menuToggle.setAttribute(
                 "aria-label",
                 isOpen
                     ? "Close navigation"
                     : "Open navigation"
             );
-
 
             menuToggle.innerHTML = isOpen
                 ? '<i class="fa-solid fa-xmark"></i>'
@@ -189,16 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const dot =
                 document.createElement("button");
 
-
             dot.type = "button";
 
             dot.className = "slide-dot";
 
 
             if (index === currentSlide) {
-
                 dot.classList.add("active");
-
             }
 
 
@@ -533,20 +541,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const card =
                     createCauseCard(cause);
 
-
                 causeGrid.appendChild(card);
 
             });
-
-
-            /*
-             * IMPORTANT:
-             * There is intentionally NO
-             * attachCauseButtons() here.
-             *
-             * Cause cards now use normal
-             * HTML links.
-             */
 
 
             populateCauseSelect(
@@ -672,12 +669,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "";
 
 
-        /*
-         * Use the cause slug for navigation.
-         * If somehow no slug exists, fall back
-         * to the database ID.
-         */
-
         const causeIdentifier =
             cause.slug ||
             cause.id;
@@ -774,11 +765,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-        /*
-         * If an image fails, use the existing
-         * story image as a safe fallback.
-         */
-
         const cardImage =
             article.querySelector(
                 ".cause-image img"
@@ -834,26 +820,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function escapeHTML(value) {
 
         return String(value)
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
     }
 
@@ -877,8 +848,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         causeSelect.innerHTML = `
-            <option value="">
-                Select a cause
+            <option value="general">
+                Where needed most
             </option>
         `;
 
@@ -906,14 +877,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
-
-        /*
-         * Read the cause from the URL.
-         *
-         * Example:
-         *
-         * index.html?cause=give-a-child-a-future#donate
-         */
 
         const params =
             new URLSearchParams(
@@ -996,44 +959,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     tab.dataset.method;
 
 
-                if (
-                    method === "btc"
-                ) {
+                if (method === "btc") {
 
                     if (cardPayment) {
-
                         cardPayment.classList.add(
                             "hidden"
                         );
-
                     }
 
 
                     if (btcPayment) {
-
                         btcPayment.classList.remove(
                             "hidden"
                         );
-
                     }
 
                 } else {
 
                     if (btcPayment) {
-
                         btcPayment.classList.add(
                             "hidden"
                         );
-
                     }
 
 
                     if (cardPayment) {
-
                         cardPayment.classList.remove(
                             "hidden"
                         );
-
                     }
 
                 }
@@ -1086,12 +1039,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const amountButtons =
         document.querySelectorAll(
             ".amounts button"
-        );
-
-
-    const amountInput =
-        document.getElementById(
-            "amount"
         );
 
 
@@ -1149,59 +1096,126 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       DONATION FORM
+       FLUTTERWAVE DONATION PAYMENT
     ===================================================== */
-
-    const donationForm =
-        document.getElementById(
-            "donationForm"
-        );
-
-
-    const donationModal =
-        document.getElementById(
-            "donationModal"
-        );
-
-
-    const modalMessage =
-        document.getElementById(
-            "modalMessage"
-        );
-
 
     if (donationForm) {
 
         donationForm.addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
 
 
-                const amount =
-                    amountInput
-                        ? amountInput.value
+                /* -----------------------------------------
+                   GET DONOR INFORMATION
+                ----------------------------------------- */
+
+                const donorNameInput =
+                    document.getElementById(
+                        "donorName"
+                    );
+
+
+                const donorEmailInput =
+                    document.getElementById(
+                        "donorEmail"
+                    );
+
+
+                const donorPhoneInput =
+                    document.getElementById(
+                        "donorPhone"
+                    );
+
+
+                const donorName =
+                    donorNameInput
+                        ? donorNameInput.value.trim()
                         : "";
 
 
-                if (
-                    !amount ||
-                    Number(amount) <= 0
-                ) {
+                const donorEmail =
+                    donorEmailInput
+                        ? donorEmailInput.value.trim()
+                        : "";
 
-                    if (amountInput) {
 
-                        amountInput.focus();
+                const donorPhone =
+                    donorPhoneInput
+                        ? donorPhoneInput.value.trim()
+                        : "";
 
-                    }
+
+                const amount =
+                    amountInput
+                        ? Number(
+                            amountInput.value
+                        )
+                        : 0;
+
+
+                /* -----------------------------------------
+                   VALIDATE
+                ----------------------------------------- */
+
+                if (!donorName) {
+
+                    showPaymentMessage(
+                        "Please enter your name."
+                    );
+
+                    donorNameInput?.focus();
 
                     return;
 
                 }
 
 
-                const cause =
+                if (!donorEmail) {
+
+                    showPaymentMessage(
+                        "Please enter your email address."
+                    );
+
+                    donorEmailInput?.focus();
+
+                    return;
+
+                }
+
+
+                if (!isValidEmail(donorEmail)) {
+
+                    showPaymentMessage(
+                        "Please enter a valid email address."
+                    );
+
+                    donorEmailInput?.focus();
+
+                    return;
+
+                }
+
+
+                if (
+                    !amount ||
+                    amount <= 0
+                ) {
+
+                    showPaymentMessage(
+                        "Please enter a valid donation amount."
+                    );
+
+                    amountInput?.focus();
+
+                    return;
+
+                }
+
+
+                const selectedCause =
                     causeSelect
                         ? causeSelect.value
                         : "general";
@@ -1217,32 +1231,141 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const causeName =
                     selectedOption
-                        ? selectedOption.textContent
+                        ? selectedOption.textContent.trim()
                         : "Where needed most";
 
 
-                console.log(
-                    "Donation prepared:",
-                    {
-                        amount,
-                        cause
-                    }
-                );
+                const activeFrequency =
+                    document.querySelector(
+                        ".frequency-btn.active"
+                    );
 
 
-                if (modalMessage) {
+                const frequency =
+                    activeFrequency
+                        ? activeFrequency.dataset.frequency
+                        : "once";
 
-                    modalMessage.textContent =
-                        `Your $${Number(amount).toLocaleString()} donation for ${causeName} has been prepared. Secure payment processing will be connected in the next stage.`;
+
+                /* -----------------------------------------
+                   PREPARE BUTTON
+                ----------------------------------------- */
+
+                const submitButton =
+                    donationForm.querySelector(
+                        ".donate-submit"
+                    );
+
+
+                const originalButtonHTML =
+                    submitButton
+                        ? submitButton.innerHTML
+                        : "";
+
+
+                if (submitButton) {
+
+                    submitButton.disabled = true;
+
+                    submitButton.innerHTML = `
+                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+                        Preparing secure checkout...
+                    `;
 
                 }
 
 
-                if (donationModal) {
+                try {
 
-                    donationModal.classList.add(
-                        "active"
+                    /* -------------------------------------
+                       CALL SUPABASE EDGE FUNCTION
+                    ------------------------------------- */
+
+                    const {
+                        data,
+                        error
+                    } = await supabaseClient.functions.invoke(
+                        PAYMENT_FUNCTION,
+                        {
+                            body: {
+                                amount: amount,
+                                currency: "USD",
+                                email: donorEmail,
+                                name: donorName,
+                                phone: donorPhone,
+                                cause: selectedCause,
+                                cause_name: causeName,
+                                frequency: frequency
+                            }
+                        }
                     );
+
+
+                    if (error) {
+
+                        console.error(
+                            "Supabase payment error:",
+                            error
+                        );
+
+                        throw new Error(
+                            error.message ||
+                            "Unable to connect to the payment service."
+                        );
+
+                    }
+
+
+                    if (
+                        !data ||
+                        !data.success ||
+                        !data.payment_link
+                    ) {
+
+                        console.error(
+                            "Invalid payment response:",
+                            data
+                        );
+
+                        throw new Error(
+                            data?.error ||
+                            "Flutterwave did not return a payment link."
+                        );
+
+                    }
+
+
+                    /* -------------------------------------
+                       REDIRECT TO FLUTTERWAVE
+                    ------------------------------------- */
+
+                    window.location.href =
+                        data.payment_link;
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Donation payment error:",
+                        error
+                    );
+
+
+                    showPaymentMessage(
+                        error.message ||
+                        "We couldn't start the secure payment. Please try again."
+                    );
+
+
+                    if (submitButton) {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.innerHTML =
+                            originalButtonHTML;
+
+                    }
 
                 }
 
@@ -1253,8 +1376,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       PAYMENT MESSAGE
+    ===================================================== */
+
+    function showPaymentMessage(message) {
+
+        const modal =
+            document.getElementById(
+                "donationModal"
+            );
+
+
+        const modalMessage =
+            document.getElementById(
+                "modalMessage"
+            );
+
+
+        const modalContinue =
+            document.getElementById(
+                "modalContinue"
+            );
+
+
+        if (modalMessage) {
+
+            modalMessage.textContent =
+                message;
+
+        }
+
+
+        if (modalContinue) {
+
+            modalContinue.textContent =
+                "Close";
+
+        }
+
+
+        if (modal) {
+
+            modal.classList.add(
+                "active"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EMAIL VALIDATION
+    ===================================================== */
+
+    function isValidEmail(email) {
+
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            .test(email);
+
+    }
+
+
+    /* =====================================================
        DONATION MODAL
     ===================================================== */
+
+    const donationModal =
+        document.getElementById(
+            "donationModal"
+        );
+
 
     const closeModal =
         document.getElementById(
@@ -1353,29 +1545,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     btcAddress.textContent.trim();
 
 
-                if (
-                    !address ||
-                    address ===
-                    "BTC wallet will appear here"
-                ) {
-
-                    copyBtc.textContent =
-                        "Wallet not configured yet";
-
-
-                    setTimeout(() => {
-
-                        copyBtc.textContent =
-                            "Copy wallet address";
-
-                    }, 2000);
-
-
-                    return;
-
-                }
-
-
                 try {
 
                     await navigator.clipboard.writeText(
@@ -1401,17 +1570,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         error
                     );
 
-
                     copyBtc.textContent =
                         "Copy failed";
-
-
-                    setTimeout(() => {
-
-                        copyBtc.textContent =
-                            "Copy wallet address";
-
-                    }, 2000);
 
                 }
 
