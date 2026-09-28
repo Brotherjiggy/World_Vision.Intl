@@ -1,7 +1,6 @@
 /* =========================================================
    GLOBAL VISION AID
    MAIN JAVASCRIPT
-   FLUTTERWAVE PAYMENT VERSION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,43 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       CONFIGURATION
+       ELEMENT HELPERS
     ===================================================== */
 
-    const PAYMENT_FUNCTION =
-        "create-flutterwave-payment";
+    const get = (selector) =>
+        document.querySelector(selector);
 
-
-    /* =====================================================
-       GLOBAL ELEMENTS
-    ===================================================== */
-
-    const causeSelect =
-        document.getElementById("causeSelect");
-
-    const donationForm =
-        document.getElementById("donationForm");
-
-    const amountInput =
-        document.getElementById("amount");
+    const getAll = (selector) =>
+        document.querySelectorAll(selector);
 
 
     /* =====================================================
        PRELOADER
     ===================================================== */
 
-    const preloader =
-        document.getElementById("preloader");
-
     window.addEventListener("load", () => {
 
-        setTimeout(() => {
+        const preloader =
+            get("#preloader");
 
-            if (preloader) {
+        if (preloader) {
+            setTimeout(() => {
                 preloader.classList.add("loaded");
-            }
-
-        }, 500);
+            }, 400);
+        }
 
     });
 
@@ -70,52 +56,45 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const menuToggle =
-        document.getElementById("menu-toggle");
+        get("#menu-toggle");
 
     const navLinks =
-        document.getElementById("nav-links");
-
+        get("#nav-links");
 
     if (menuToggle && navLinks) {
 
-        menuToggle.addEventListener("click", () => {
+        menuToggle.addEventListener(
+            "click",
+            () => {
 
-            navLinks.classList.toggle("open");
+                navLinks.classList.toggle(
+                    "active"
+                );
 
-            const isOpen =
-                navLinks.classList.contains("open");
+                menuToggle.classList.toggle(
+                    "active"
+                );
 
-            menuToggle.setAttribute(
-                "aria-label",
-                isOpen
-                    ? "Close navigation"
-                    : "Open navigation"
-            );
+            }
+        );
 
-            menuToggle.innerHTML = isOpen
-                ? '<i class="fa-solid fa-xmark"></i>'
-                : '<i class="fa-solid fa-bars"></i>';
+        getAll("#nav-links a")
+            .forEach((link) => {
 
-        });
+                link.addEventListener(
+                    "click",
+                    () => {
 
+                        navLinks.classList.remove(
+                            "active"
+                        );
 
-        navLinks
-            .querySelectorAll("a")
-            .forEach(link => {
+                        menuToggle.classList.remove(
+                            "active"
+                        );
 
-                link.addEventListener("click", () => {
-
-                    navLinks.classList.remove("open");
-
-                    menuToggle.setAttribute(
-                        "aria-label",
-                        "Open navigation"
-                    );
-
-                    menuToggle.innerHTML =
-                        '<i class="fa-solid fa-bars"></i>';
-
-                });
+                    }
+                );
 
             });
 
@@ -126,208 +105,39 @@ document.addEventListener("DOMContentLoaded", () => {
        HERO SLIDESHOW
     ===================================================== */
 
-    const slides =
-        document.querySelectorAll(".hero-slide");
+    const heroSlides =
+        getAll(".hero-slide");
 
-    const slideDots =
-        document.getElementById("slideDots");
+    let currentHeroSlide = 0;
 
-    const prevSlide =
-        document.getElementById("prevSlide");
+    if (heroSlides.length > 1) {
 
-    const nextSlide =
-        document.getElementById("nextSlide");
+        heroSlides.forEach(
+            (slide, index) => {
 
-
-    let currentSlide = 0;
-
-    let slideTimer;
-
-
-    function showSlide(index) {
-
-        if (!slides.length) {
-            return;
-        }
-
-
-        if (index >= slides.length) {
-
-            currentSlide = 0;
-
-        } else if (index < 0) {
-
-            currentSlide =
-                slides.length - 1;
-
-        } else {
-
-            currentSlide = index;
-
-        }
-
-
-        slides.forEach((slide, i) => {
-
-            slide.classList.toggle(
-                "active",
-                i === currentSlide
-            );
-
-        });
-
-
-        updateDots();
-
-    }
-
-
-    function createDots() {
-
-        if (
-            !slideDots ||
-            !slides.length
-        ) {
-            return;
-        }
-
-
-        slideDots.innerHTML = "";
-
-
-        slides.forEach((_, index) => {
-
-            const dot =
-                document.createElement("button");
-
-            dot.type = "button";
-
-            dot.className = "slide-dot";
-
-
-            if (index === currentSlide) {
-                dot.classList.add("active");
-            }
-
-
-            dot.setAttribute(
-                "aria-label",
-                `Go to slide ${index + 1}`
-            );
-
-
-            dot.addEventListener("click", () => {
-
-                showSlide(index);
-
-                restartSlider();
-
-            });
-
-
-            slideDots.appendChild(dot);
-
-        });
-
-    }
-
-
-    function updateDots() {
-
-        if (!slideDots) {
-            return;
-        }
-
-
-        const dots =
-            slideDots.querySelectorAll(
-                ".slide-dot"
-            );
-
-
-        dots.forEach((dot, index) => {
-
-            dot.classList.toggle(
-                "active",
-                index === currentSlide
-            );
-
-        });
-
-    }
-
-
-    function startSlider() {
-
-        if (slides.length <= 1) {
-            return;
-        }
-
-
-        slideTimer =
-            setInterval(() => {
-
-                showSlide(
-                    currentSlide + 1
+                slide.classList.toggle(
+                    "active",
+                    index === 0
                 );
-
-            }, 7000);
-
-    }
-
-
-    function restartSlider() {
-
-        clearInterval(slideTimer);
-
-        startSlider();
-
-    }
-
-
-    if (slides.length) {
-
-        createDots();
-
-        showSlide(0);
-
-        startSlider();
-
-    }
-
-
-    if (nextSlide) {
-
-        nextSlide.addEventListener(
-            "click",
-            () => {
-
-                showSlide(
-                    currentSlide + 1
-                );
-
-                restartSlider();
 
             }
         );
 
-    }
+        setInterval(() => {
 
+            heroSlides[
+                currentHeroSlide
+            ].classList.remove("active");
 
-    if (prevSlide) {
+            currentHeroSlide =
+                (currentHeroSlide + 1) %
+                heroSlides.length;
 
-        prevSlide.addEventListener(
-            "click",
-            () => {
+            heroSlides[
+                currentHeroSlide
+            ].classList.add("active");
 
-                showSlide(
-                    currentSlide - 1
-                );
-
-                restartSlider();
-
-            }
-        );
+        }, 6000);
 
     }
 
@@ -337,144 +147,123 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     const counters =
-        document.querySelectorAll(
-            "[data-count]"
-        );
+        getAll("[data-counter]");
+
+    const animateCounter =
+        (element) => {
+
+            const target =
+                Number(
+                    element.dataset.counter
+                );
+
+            if (!Number.isFinite(target)) {
+                return;
+            }
+
+            const duration = 1600;
+            const startTime = performance.now();
+
+            const update = (currentTime) => {
+
+                const progress =
+                    Math.min(
+                        (currentTime - startTime) /
+                        duration,
+                        1
+                    );
+
+                const eased =
+                    1 -
+                    Math.pow(
+                        1 - progress,
+                        3
+                    );
+
+                element.textContent =
+                    Math.floor(
+                        target * eased
+                    ).toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+
+            };
+
+            requestAnimationFrame(update);
+
+        };
 
 
-    if (
-        counters.length &&
-        "IntersectionObserver" in window
-    ) {
+    if (counters.length) {
 
         const counterObserver =
             new IntersectionObserver(
-                entries => {
+                (entries, observer) => {
 
-                    entries.forEach(entry => {
+                    entries.forEach(
+                        (entry) => {
 
-                        if (!entry.isIntersecting) {
-                            return;
-                        }
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-
-                        const counter =
-                            entry.target;
-
-
-                        const target =
-                            Number(
-                                counter.dataset.count
-                            );
-
-
-                        let current = 0;
-
-                        const duration = 1600;
-
-                        const increment =
-                            target /
-                            (duration / 16);
-
-
-                        function updateCounter() {
-
-                            current += increment;
-
-
-                            if (current < target) {
-
-                                counter.textContent =
-                                    Math.floor(
-                                        current
-                                    ).toLocaleString();
-
-
-                                requestAnimationFrame(
-                                    updateCounter
+                                animateCounter(
+                                    entry.target
                                 );
 
-                            } else {
-
-                                counter.textContent =
-                                    target.toLocaleString();
+                                observer.unobserve(
+                                    entry.target
+                                );
 
                             }
 
                         }
-
-
-                        updateCounter();
-
-                        counterObserver.unobserve(
-                            counter
-                        );
-
-                    });
+                    );
 
                 },
                 {
-                    threshold: 0.5
+                    threshold: 0.3
                 }
             );
 
-
-        counters.forEach(counter => {
-
-            counterObserver.observe(counter);
-
-        });
+        counters.forEach(
+            (counter) => {
+                counterObserver.observe(counter);
+            }
+        );
 
     }
 
 
     /* =====================================================
-       PUBLIC SUPABASE CAUSES
+       PUBLISHED CAUSES
     ===================================================== */
+
+    const causesGrid =
+        get("#causesGrid");
+
+    const causeSelect =
+        get("#causeSelect");
+
 
     async function loadPublishedCauses() {
 
-        const causeGrid =
-            document.querySelector(
-                ".cause-grid"
-            );
-
-
-        if (!causeGrid) {
+        if (!causesGrid && !causeSelect) {
             return;
         }
-
-
-        causeGrid.innerHTML = `
-            <div class="cause-loading">
-                <i class="fa-solid fa-circle-notch fa-spin"></i>
-                <p>Loading causes...</p>
-            </div>
-        `;
-
 
         try {
 
             const {
-                data: causes,
+                data,
                 error
             } = await supabaseClient
                 .from("causes")
-                .select(`
-                    id,
-                    title,
-                    slug,
-                    category,
-                    location,
-                    status,
-                    target_amount,
-                    raised_amount,
-                    image_url,
-                    short_description,
-                    description,
-                    featured,
-                    created_at
-                `)
+                .select(
+                    "id,title,slug,category,location,status,target_amount,raised_amount,image_url,short_description,description,featured,created_at"
+                )
                 .eq(
                     "status",
                     "published"
@@ -492,421 +281,198 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 );
 
-
             if (error) {
+                throw error;
+            }
 
-                console.error(
-                    "Could not load causes:",
-                    error
-                );
-
-
-                causeGrid.innerHTML = `
-                    <div class="cause-loading">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <p>
-                            We couldn't load our causes right now.
-                            Please try again shortly.
-                        </p>
-                    </div>
-                `;
-
+            if (!data || !data.length) {
                 return;
             }
 
 
-            if (
-                !causes ||
-                !causes.length
-            ) {
+            /* =============================================
+               CAUSE CARDS
+            ============================================= */
 
-                causeGrid.innerHTML = `
-                    <div class="cause-loading">
-                        <i class="fa-solid fa-heart"></i>
-                        <p>
-                            New causes will appear here soon.
-                        </p>
-                    </div>
-                `;
+            if (causesGrid) {
 
-                return;
+                causesGrid.innerHTML =
+                    data.map((cause) => {
+
+                        const target =
+                            Number(
+                                cause.target_amount || 0
+                            );
+
+                        const raised =
+                            Number(
+                                cause.raised_amount || 0
+                            );
+
+                        const percentage =
+                            target > 0
+                                ? Math.min(
+                                    100,
+                                    Math.round(
+                                        (
+                                            raised /
+                                            target
+                                        ) * 100
+                                    )
+                                )
+                                : 0;
+
+                        const image =
+                            cause.image_url ||
+                            "images/hero-1.jpg";
+
+                        return `
+                            <article class="cause-card">
+
+                                <div class="cause-image">
+                                    <img
+                                        src="${image}"
+                                        alt="${escapeHtml(
+                                            cause.title || "Cause"
+                                        )}"
+                                        loading="lazy"
+                                    >
+                                </div>
+
+                                <div class="cause-content">
+
+                                    ${
+                                        cause.category
+                                            ? `<span class="cause-category">
+                                                ${escapeHtml(
+                                                    cause.category
+                                                )}
+                                            </span>`
+                                            : ""
+                                    }
+
+                                    <h3>
+                                        ${escapeHtml(
+                                            cause.title || ""
+                                        )}
+                                    </h3>
+
+                                    ${
+                                        cause.location
+                                            ? `<p class="cause-location">
+                                                ${escapeHtml(
+                                                    cause.location
+                                                )}
+                                            </p>`
+                                            : ""
+                                    }
+
+                                    <p>
+                                        ${escapeHtml(
+                                            cause.short_description ||
+                                            cause.description ||
+                                            ""
+                                        )}
+                                    </p>
+
+                                    <div class="cause-progress">
+
+                                        <div class="progress-bar">
+
+                                            <span
+                                                style="width:${percentage}%"
+                                            ></span>
+
+                                        </div>
+
+                                        <div class="progress-info">
+
+                                            <strong>
+                                                ${percentage}%
+                                            </strong>
+
+                                            <span>
+                                                $${raised.toLocaleString()}
+                                                raised
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <a
+                                        href="cause.html?slug=${encodeURIComponent(
+                                            cause.slug || ""
+                                        )}"
+                                        class="cause-btn"
+                                    >
+                                        Learn More
+                                    </a>
+
+                                </div>
+
+                            </article>
+                        `;
+
+                    }).join("");
+
             }
 
 
-            causeGrid.innerHTML = "";
+            /* =============================================
+               DONATION CAUSE SELECT
+            ============================================= */
 
+            if (causeSelect) {
 
-            causes.forEach(cause => {
+                const currentValue =
+                    causeSelect.value;
 
-                const card =
-                    createCauseCard(cause);
+                causeSelect.innerHTML =
+                    `
+                    <option value="">
+                        Select a cause
+                    </option>
+                    `;
 
-                causeGrid.appendChild(card);
+                data.forEach((cause) => {
 
-            });
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
 
+                    option.value =
+                        cause.id;
 
-            populateCauseSelect(
-                causes
-            );
+                    option.textContent =
+                        cause.title;
+
+                    option.dataset.slug =
+                        cause.slug || "";
+
+                    option.dataset.name =
+                        cause.title || "";
+
+                    causeSelect.appendChild(
+                        option
+                    );
+
+                });
+
+                if (currentValue) {
+                    causeSelect.value =
+                        currentValue;
+                }
+
+            }
 
         } catch (error) {
 
             console.error(
-                "Unexpected causes error:",
+                "Unable to load causes:",
                 error
             );
-
-
-            causeGrid.innerHTML = `
-                <div class="cause-loading">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <p>
-                        Something went wrong while loading causes.
-                        Please refresh and try again.
-                    </p>
-                </div>
-            `;
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CREATE CAUSE CARD
-    ===================================================== */
-
-    function createCauseCard(cause) {
-
-        const article =
-            document.createElement("article");
-
-
-        article.className =
-            "cause-card";
-
-
-        const target =
-            Number(
-                cause.target_amount || 0
-            );
-
-
-        const raised =
-            Number(
-                cause.raised_amount || 0
-            );
-
-
-        let percentage = 0;
-
-
-        if (target > 0) {
-
-            percentage =
-                (raised / target) * 100;
-
-        }
-
-
-        percentage =
-            Math.min(
-                Math.max(
-                    percentage,
-                    0
-                ),
-                100
-            );
-
-
-        const formattedRaised =
-            formatCurrency(
-                raised
-            );
-
-
-        const formattedTarget =
-            formatCurrency(
-                target
-            );
-
-
-        const category =
-            escapeHTML(
-                cause.category ||
-                "General"
-            );
-
-
-        const title =
-            escapeHTML(
-                cause.title ||
-                "Untitled Cause"
-            );
-
-
-        const description =
-            escapeHTML(
-                cause.short_description ||
-                cause.description ||
-                "Support this important humanitarian cause."
-            );
-
-
-        const image =
-            cause.image_url &&
-            cause.image_url.trim()
-                ? cause.image_url
-                : "images/story-1.jpg";
-
-
-        const location =
-            cause.location
-                ? escapeHTML(
-                    cause.location
-                )
-                : "";
-
-
-        const causeIdentifier =
-            cause.slug ||
-            cause.id;
-
-
-        const causeUrl =
-            `cause.html?slug=${encodeURIComponent(
-                causeIdentifier
-            )}`;
-
-
-        article.innerHTML = `
-
-            <div class="cause-image">
-
-                <img
-                    src="${escapeAttribute(image)}"
-                    alt="${escapeAttribute(title)}"
-                    loading="lazy"
-                >
-
-                <span class="cause-tag">
-                    ${category}
-                </span>
-
-            </div>
-
-
-            <div class="cause-body">
-
-                <h3>
-                    ${title}
-                </h3>
-
-
-                ${
-                    location
-                        ? `
-                            <small class="cause-location">
-                                <i class="fa-solid fa-location-dot"></i>
-                                ${location}
-                            </small>
-                          `
-                        : ""
-                }
-
-
-                <p>
-                    ${description}
-                </p>
-
-
-                <div class="progress">
-
-                    <div class="progress-top">
-
-                        <span>
-                            Raised
-                        </span>
-
-                        <strong>
-                            ${formattedRaised}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="progress-bar">
-
-                        <span
-                            style="width:${percentage}%"
-                        ></span>
-
-                    </div>
-
-
-                    <small>
-                        Goal: ${formattedTarget}
-                    </small>
-
-                </div>
-
-
-                <a
-                    class="cause-donate"
-                    href="${escapeAttribute(causeUrl)}"
-                    aria-label="View and support ${escapeAttribute(title)}"
-                >
-                    View &amp; Support
-                </a>
-
-            </div>
-
-        `;
-
-
-        const cardImage =
-            article.querySelector(
-                ".cause-image img"
-            );
-
-
-        if (cardImage) {
-
-            cardImage.addEventListener(
-                "error",
-                function () {
-
-                    this.onerror = null;
-
-                    this.src =
-                        "images/story-1.jpg";
-
-                }
-            );
-
-        }
-
-
-        return article;
-
-    }
-
-
-    /* =====================================================
-       FORMAT CURRENCY
-    ===================================================== */
-
-    function formatCurrency(value) {
-
-        return new Intl.NumberFormat(
-            "en-US",
-            {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0
-            }
-        ).format(
-            Number(value) || 0
-        );
-
-    }
-
-
-    /* =====================================================
-       SAFE HTML HELPERS
-    ===================================================== */
-
-    function escapeHTML(value) {
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-
-    }
-
-
-    function escapeAttribute(value) {
-
-        return escapeHTML(value);
-
-    }
-
-
-    /* =====================================================
-       POPULATE DONATION CAUSE SELECT
-    ===================================================== */
-
-    function populateCauseSelect(causes) {
-
-        if (!causeSelect) {
-            return;
-        }
-
-
-        causeSelect.innerHTML = `
-            <option value="general">
-                Where needed most
-            </option>
-        `;
-
-
-        causes.forEach(cause => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                cause.slug ||
-                cause.id;
-
-
-            option.textContent =
-                cause.title;
-
-
-            causeSelect.appendChild(
-                option
-            );
-
-        });
-
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-
-        const requestedCause =
-            params.get("cause");
-
-
-        if (!requestedCause) {
-            return;
-        }
-
-
-        const matchingOption =
-            Array.from(
-                causeSelect.options
-            ).find(
-                option =>
-                    option.value ===
-                    requestedCause
-            );
-
-
-        if (matchingOption) {
-
-            causeSelect.value =
-                requestedCause;
 
         }
 
@@ -917,162 +483,163 @@ document.addEventListener("DOMContentLoaded", () => {
        DONATION TABS
     ===================================================== */
 
-    const donationTabs =
-        document.querySelectorAll(
-            ".donation-tab"
-        );
+    const cardTab =
+        get("#cardTab");
 
+    const btcTab =
+        get("#btcTab");
 
     const cardPayment =
-        document.getElementById(
-            "cardPayment"
-        );
-
+        get("#cardPayment");
 
     const btcPayment =
-        document.getElementById(
-            "btcPayment"
-        );
+        get("#btcPayment");
 
 
-    donationTabs.forEach(tab => {
+    function showCardPayment() {
 
-        tab.addEventListener(
+        if (cardPayment) {
+            cardPayment.style.display =
+                "block";
+        }
+
+        if (btcPayment) {
+            btcPayment.style.display =
+                "none";
+        }
+
+        if (cardTab) {
+            cardTab.classList.add("active");
+        }
+
+        if (btcTab) {
+            btcTab.classList.remove("active");
+        }
+
+    }
+
+
+    function showBitcoinPayment() {
+
+        if (cardPayment) {
+            cardPayment.style.display =
+                "none";
+        }
+
+        if (btcPayment) {
+            btcPayment.style.display =
+                "block";
+        }
+
+        if (cardTab) {
+            cardTab.classList.remove("active");
+        }
+
+        if (btcTab) {
+            btcTab.classList.add("active");
+        }
+
+    }
+
+
+    if (cardTab) {
+        cardTab.addEventListener(
             "click",
-            () => {
+            showCardPayment
+        );
+    }
 
-                donationTabs.forEach(item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                });
-
-
-                tab.classList.add(
-                    "active"
-                );
-
-
-                const method =
-                    tab.dataset.method;
-
-
-                if (method === "btc") {
-
-                    if (cardPayment) {
-                        cardPayment.classList.add(
-                            "hidden"
-                        );
-                    }
-
-
-                    if (btcPayment) {
-                        btcPayment.classList.remove(
-                            "hidden"
-                        );
-                    }
-
-                } else {
-
-                    if (btcPayment) {
-                        btcPayment.classList.add(
-                            "hidden"
-                        );
-                    }
-
-
-                    if (cardPayment) {
-                        cardPayment.classList.remove(
-                            "hidden"
-                        );
-                    }
-
-                }
-
-            }
+    if (btcTab) {
+        btcTab.addEventListener(
+            "click",
+            showBitcoinPayment
         );
 
-    });
+
+    }
 
 
     /* =====================================================
-       DONATION FREQUENCY
+       FREQUENCY BUTTONS
     ===================================================== */
 
     const frequencyButtons =
-        document.querySelectorAll(
-            ".frequency-btn"
-        );
+        getAll(".frequency-btn");
 
+    let selectedFrequency = "once";
 
-    frequencyButtons.forEach(button => {
+    frequencyButtons.forEach(
+        (button) => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                frequencyButtons.forEach(item => {
+                    frequencyButtons.forEach(
+                        (item) => {
+                            item.classList.remove(
+                                "active"
+                            );
+                        }
+                    );
 
-                    item.classList.remove(
+                    button.classList.add(
                         "active"
                     );
 
-                });
+                    selectedFrequency =
+                        button.dataset.frequency ||
+                        "once";
 
+                }
+            );
 
-                button.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-    });
+        }
+    );
 
 
     /* =====================================================
-       DONATION AMOUNTS
+       AMOUNT BUTTONS
     ===================================================== */
 
     const amountButtons =
-        document.querySelectorAll(
-            ".amounts button"
-        );
+        getAll(".amounts button");
 
+    const amountInput =
+        get("#amount");
 
-    amountButtons.forEach(button => {
+    amountButtons.forEach(
+        (button) => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                amountButtons.forEach(item => {
+                    amountButtons.forEach(
+                        (item) => {
+                            item.classList.remove(
+                                "active"
+                            );
+                        }
+                    );
 
-                    item.classList.remove(
+                    button.classList.add(
                         "active"
                     );
 
-                });
-
-
-                button.classList.add(
-                    "active"
-                );
-
-
-                if (amountInput) {
-
-                    amountInput.value =
+                    const amount =
                         button.dataset.amount;
 
+                    if (amountInput) {
+                        amountInput.value =
+                            amount || "";
+                    }
+
                 }
+            );
 
-            }
-        );
-
-    });
+        }
+    );
 
 
     if (amountInput) {
@@ -1081,13 +648,15 @@ document.addEventListener("DOMContentLoaded", () => {
             "input",
             () => {
 
-                amountButtons.forEach(button => {
+                amountButtons.forEach(
+                    (button) => {
 
-                    button.classList.remove(
-                        "active"
-                    );
+                        button.classList.remove(
+                            "active"
+                        );
 
-                });
+                    }
+                );
 
             }
         );
@@ -1096,389 +665,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FLUTTERWAVE DONATION PAYMENT
-    ===================================================== */
-
-    if (donationForm) {
-
-        donationForm.addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-
-                /* -----------------------------------------
-                   GET DONOR INFORMATION
-                ----------------------------------------- */
-
-                const donorNameInput =
-                    document.getElementById(
-                        "donorName"
-                    );
-
-
-                const donorEmailInput =
-                    document.getElementById(
-                        "donorEmail"
-                    );
-
-
-                const donorPhoneInput =
-                    document.getElementById(
-                        "donorPhone"
-                    );
-
-
-                const donorName =
-                    donorNameInput
-                        ? donorNameInput.value.trim()
-                        : "";
-
-
-                const donorEmail =
-                    donorEmailInput
-                        ? donorEmailInput.value.trim()
-                        : "";
-
-
-                const donorPhone =
-                    donorPhoneInput
-                        ? donorPhoneInput.value.trim()
-                        : "";
-
-
-                const amount =
-                    amountInput
-                        ? Number(
-                            amountInput.value
-                        )
-                        : 0;
-
-
-                /* -----------------------------------------
-                   VALIDATE
-                ----------------------------------------- */
-
-                if (!donorName) {
-
-                    showPaymentMessage(
-                        "Please enter your name."
-                    );
-
-                    donorNameInput?.focus();
-
-                    return;
-
-                }
-
-
-                if (!donorEmail) {
-
-                    showPaymentMessage(
-                        "Please enter your email address."
-                    );
-
-                    donorEmailInput?.focus();
-
-                    return;
-
-                }
-
-
-                if (!isValidEmail(donorEmail)) {
-
-                    showPaymentMessage(
-                        "Please enter a valid email address."
-                    );
-
-                    donorEmailInput?.focus();
-
-                    return;
-
-                }
-
-
-                if (
-                    !amount ||
-                    amount <= 0
-                ) {
-
-                    showPaymentMessage(
-                        "Please enter a valid donation amount."
-                    );
-
-                    amountInput?.focus();
-
-                    return;
-
-                }
-
-
-                const selectedCause =
-                    causeSelect
-                        ? causeSelect.value
-                        : "general";
-
-
-                const selectedOption =
-                    causeSelect
-                        ? causeSelect.options[
-                            causeSelect.selectedIndex
-                        ]
-                        : null;
-
-
-                const causeName =
-                    selectedOption
-                        ? selectedOption.textContent.trim()
-                        : "Where needed most";
-
-
-                const activeFrequency =
-                    document.querySelector(
-                        ".frequency-btn.active"
-                    );
-
-
-                const frequency =
-                    activeFrequency
-                        ? activeFrequency.dataset.frequency
-                        : "once";
-
-
-                /* -----------------------------------------
-                   PREPARE BUTTON
-                ----------------------------------------- */
-
-                const submitButton =
-                    donationForm.querySelector(
-                        ".donate-submit"
-                    );
-
-
-                const originalButtonHTML =
-                    submitButton
-                        ? submitButton.innerHTML
-                        : "";
-
-
-                if (submitButton) {
-
-                    submitButton.disabled = true;
-
-                    submitButton.innerHTML = `
-                        <i class="fa-solid fa-circle-notch fa-spin"></i>
-                        Preparing secure checkout...
-                    `;
-
-                }
-
-
-                try {
-
-                    /* -------------------------------------
-                       CALL SUPABASE EDGE FUNCTION
-                    ------------------------------------- */
-
-                    const {
-                        data,
-                        error
-                    } = await supabaseClient.functions.invoke(
-                        PAYMENT_FUNCTION,
-                        {
-                            body: {
-                                amount: amount,
-                                currency: "USD",
-                                email: donorEmail,
-                                name: donorName,
-                                phone: donorPhone,
-                                cause: selectedCause,
-                                cause_name: causeName,
-                                frequency: frequency
-                            }
-                        }
-                    );
-
-
-                    if (error) {
-
-                        console.error(
-                            "Supabase payment error:",
-                            error
-                        );
-
-                        throw new Error(
-                            error.message ||
-                            "Unable to connect to the payment service."
-                        );
-
-                    }
-
-
-                    if (
-                        !data ||
-                        !data.success ||
-                        !data.payment_link
-                    ) {
-
-                        console.error(
-                            "Invalid payment response:",
-                            data
-                        );
-
-                        throw new Error(
-                            data?.error ||
-                            "Flutterwave did not return a payment link."
-                        );
-
-                    }
-
-
-                    /* -------------------------------------
-                       REDIRECT TO FLUTTERWAVE
-                    ------------------------------------- */
-
-                    window.location.href =
-                        data.payment_link;
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Donation payment error:",
-                        error
-                    );
-
-
-                    showPaymentMessage(
-                        error.message ||
-                        "We couldn't start the secure payment. Please try again."
-                    );
-
-
-                    if (submitButton) {
-
-                        submitButton.disabled =
-                            false;
-
-                        submitButton.innerHTML =
-                            originalButtonHTML;
-
-                    }
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       PAYMENT MESSAGE
-    ===================================================== */
-
-    function showPaymentMessage(message) {
-
-        const modal =
-            document.getElementById(
-                "donationModal"
-            );
-
-
-        const modalMessage =
-            document.getElementById(
-                "modalMessage"
-            );
-
-
-        const modalContinue =
-            document.getElementById(
-                "modalContinue"
-            );
-
-
-        if (modalMessage) {
-
-            modalMessage.textContent =
-                message;
-
-        }
-
-
-        if (modalContinue) {
-
-            modalContinue.textContent =
-                "Close";
-
-        }
-
-
-        if (modal) {
-
-            modal.classList.add(
-                "active"
-            );
-
-        }
-
-    }
-
-
-    /* =====================================================
-       EMAIL VALIDATION
-    ===================================================== */
-
-    function isValidEmail(email) {
-
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            .test(email);
-
-    }
-
-
-    /* =====================================================
-       DONATION MODAL
+       MODAL
     ===================================================== */
 
     const donationModal =
-        document.getElementById(
-            "donationModal"
-        );
+        get("#donationModal");
 
-
-    const closeModal =
-        document.getElementById(
-            "closeModal"
-        );
-
+    const modalMessage =
+        get("#modalMessage");
 
     const modalContinue =
-        document.getElementById(
-            "modalContinue"
-        );
+        get("#modalContinue");
 
 
-    function closeDonationModal() {
+    function showModal(message) {
+
+        if (modalMessage) {
+            modalMessage.innerHTML =
+                message;
+        }
 
         if (donationModal) {
-
-            donationModal.classList.remove(
+            donationModal.classList.add(
                 "active"
             );
-
         }
 
     }
 
 
-    if (closeModal) {
+    function closeModal() {
 
-        closeModal.addEventListener(
-            "click",
-            closeDonationModal
-        );
+        if (donationModal) {
+            donationModal.classList.remove(
+                "active"
+            );
+        }
 
     }
 
@@ -1487,7 +709,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         modalContinue.addEventListener(
             "click",
-            closeDonationModal
+            closeModal
         );
 
     }
@@ -1497,14 +719,662 @@ document.addEventListener("DOMContentLoaded", () => {
 
         donationModal.addEventListener(
             "click",
-            event => {
+            (event) => {
 
                 if (
                     event.target ===
                     donationModal
                 ) {
+                    closeModal();
+                }
 
-                    closeDonationModal();
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FLUTTERWAVE RETURN / VERIFICATION
+    ===================================================== */
+
+    async function handleFlutterwaveReturn() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const status =
+            params.get("status");
+
+        const transactionId =
+            params.get("transaction_id");
+
+        const txRef =
+            params.get("tx_ref");
+
+
+        /*
+         * If there are no Flutterwave parameters,
+         * this is a normal page visit.
+         */
+
+        if (
+            !status &&
+            !transactionId &&
+            !txRef
+        ) {
+            return;
+        }
+
+
+        /* =============================================
+           READ PENDING DONATION
+        ============================================= */
+
+        let pendingDonation = null;
+
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    "gva_pending_donation"
+                );
+
+            if (stored) {
+
+                pendingDonation =
+                    JSON.parse(stored);
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Unable to read pending donation:",
+                error
+            );
+
+        }
+
+
+        /* =============================================
+           FAILED / CANCELLED PAYMENT
+        ============================================= */
+
+        if (
+            status !== "successful" ||
+            !transactionId
+        ) {
+
+            localStorage.removeItem(
+                "gva_pending_donation"
+            );
+
+            showModal(
+                `
+                <h3>Payment not completed</h3>
+
+                <p>
+                    Your donation payment was not
+                    completed or was cancelled.
+                </p>
+
+                <p>
+                    No donation has been recorded.
+                </p>
+                `
+            );
+
+            cleanFlutterwaveUrl();
+
+            return;
+        }
+
+
+        /* =============================================
+           MISSING LOCAL DONATION DATA
+        ============================================= */
+
+        if (!pendingDonation) {
+
+            showModal(
+                `
+                <h3>Payment received</h3>
+
+                <p>
+                    We received the payment return
+                    from Flutterwave, but the original
+                    donation details are no longer
+                    available on this device.
+                </p>
+
+                <p>
+                    Transaction ID:
+                    <strong>${escapeHtml(
+                        transactionId
+                    )}</strong>
+                </p>
+                `
+            );
+
+            cleanFlutterwaveUrl();
+
+            return;
+        }
+
+
+        /* =============================================
+           VERIFY WITH SUPABASE
+        ============================================= */
+
+        showModal(
+            `
+            <h3>Verifying your donation...</h3>
+
+            <p>
+                Please wait while we securely confirm
+                your payment with Flutterwave.
+            </p>
+            `
+        );
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .functions
+                .invoke(
+                    "verify-flutterwave-payment",
+                    {
+                        body: {
+
+                            transaction_id:
+                                transactionId,
+
+                            tx_ref:
+                                txRef ||
+                                pendingDonation.tx_ref,
+
+                            expected_amount:
+                                pendingDonation.amount,
+
+                            expected_currency:
+                                pendingDonation.currency ||
+                                "USD"
+
+                        }
+                    }
+                );
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            /* =========================================
+               VERIFICATION FAILED
+            ========================================= */
+
+            if (
+                !data ||
+                data.verified !== true
+            ) {
+
+                throw new Error(
+                    data?.message ||
+                    data?.error ||
+                    "Payment could not be verified."
+                );
+
+            }
+
+
+            /* =========================================
+               VERIFIED SUCCESS
+            ========================================= */
+
+            showModal(
+                `
+                <h3>Thank you for your donation! ❤️</h3>
+
+                <p>
+                    Your payment has been successfully
+                    verified.
+                </p>
+
+                <p>
+                    <strong>
+                        $${Number(
+                            data.transaction?.amount ||
+                            pendingDonation.amount ||
+                            0
+                        ).toLocaleString()}
+                        USD
+                    </strong>
+                    has been confirmed.
+                </p>
+
+                <p>
+                    Transaction reference:
+                    <strong>
+                        ${escapeHtml(
+                            data.transaction?.tx_ref ||
+                            txRef ||
+                            ""
+                        )}
+                    </strong>
+                </p>
+
+                <p>
+                    Your support helps Global Vision Aid
+                    continue its humanitarian work.
+                </p>
+                `
+            );
+
+
+            /*
+             * Keep the verified transaction information
+             * temporarily available for the next step.
+             */
+
+            localStorage.setItem(
+                "gva_verified_donation",
+                JSON.stringify({
+                    ...pendingDonation,
+                    transaction_id:
+                        data.transaction?.id ||
+                        transactionId,
+                    tx_ref:
+                        data.transaction?.tx_ref ||
+                        txRef,
+                    flw_ref:
+                        data.transaction?.flw_ref ||
+                        null,
+                    verified_amount:
+                        data.transaction?.amount ||
+                        pendingDonation.amount,
+                    verified_currency:
+                        data.transaction?.currency ||
+                        pendingDonation.currency ||
+                        "USD",
+                    verified_at:
+                        new Date().toISOString()
+                })
+            );
+
+            localStorage.removeItem(
+                "gva_pending_donation"
+            );
+
+            cleanFlutterwaveUrl();
+
+        } catch (error) {
+
+            console.error(
+                "Flutterwave verification failed:",
+                error
+            );
+
+            showModal(
+                `
+                <h3>We couldn't confirm the payment yet</h3>
+
+                <p>
+                    Flutterwave returned your payment,
+                    but our verification check did not
+                    complete successfully.
+                </p>
+
+                <p>
+                    Please do not pay again immediately.
+                    Your transaction can be checked using
+                    this reference:
+                </p>
+
+                <strong>
+                    ${escapeHtml(
+                        txRef || transactionId || ""
+                    )}
+                </strong>
+                `
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLEAN FLUTTERWAVE URL
+    ===================================================== */
+
+    function cleanFlutterwaveUrl() {
+
+        try {
+
+            const cleanUrl =
+                window.location.origin +
+                window.location.pathname;
+
+            window.history.replaceState(
+                {},
+                document.title,
+                cleanUrl
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Unable to clean payment URL:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DONATION FORM
+    ===================================================== */
+
+    const donationForm =
+        get("#donationForm");
+
+    if (donationForm) {
+
+        donationForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                /* =========================================
+                   DONOR INFORMATION
+                ========================================= */
+
+                const donorName =
+                    get("#donorName")?.value.trim();
+
+                const donorEmail =
+                    get("#donorEmail")?.value.trim();
+
+                const donorPhone =
+                    get("#donorPhone")?.value.trim();
+
+
+                /* =========================================
+                   AMOUNT
+                ========================================= */
+
+                const amount =
+                    Number(
+                        amountInput?.value
+                    );
+
+
+                /* =========================================
+                   CAUSE
+                ========================================= */
+
+                const selectedCause =
+                    causeSelect?.selectedOptions?.[0];
+
+                const causeId =
+                    causeSelect?.value || null;
+
+                const causeName =
+                    selectedCause?.dataset?.name ||
+                    selectedCause?.textContent?.trim() ||
+                    "";
+
+
+                /* =========================================
+                   VALIDATION
+                ========================================= */
+
+                if (!donorName) {
+
+                    showModal(
+                        `
+                        <h3>Name required</h3>
+
+                        <p>
+                            Please enter your full name
+                            before continuing.
+                        </p>
+                        `
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !donorEmail ||
+                    !donorEmail.includes("@")
+                ) {
+
+                    showModal(
+                        `
+                        <h3>Email required</h3>
+
+                        <p>
+                            Please enter a valid email
+                            address before continuing.
+                        </p>
+                        `
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Number.isFinite(amount) ||
+                    amount <= 0
+                ) {
+
+                    showModal(
+                        `
+                        <h3>Donation amount required</h3>
+
+                        <p>
+                            Please select or enter a
+                            valid donation amount.
+                        </p>
+                        `
+                    );
+
+                    return;
+                }
+
+
+                /* =========================================
+                   DISABLE SUBMIT BUTTON
+                ========================================= */
+
+                const submitButton =
+                    donationForm.querySelector(
+                        ".donate-submit"
+                    );
+
+                const originalText =
+                    submitButton?.textContent ||
+                    "Continue with Card";
+
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        true;
+
+                    submitButton.textContent =
+                        "Connecting to Flutterwave...";
+
+                }
+
+
+                try {
+
+                    /* =====================================
+                       CREATE PAYMENT
+                    ===================================== */
+
+                    const {
+                        data,
+                        error
+                    } = await supabaseClient
+                        .functions
+                        .invoke(
+                            "create-flutterwave-payment",
+                            {
+                                body: {
+
+                                    amount:
+                                        amount,
+
+                                    currency:
+                                        "USD",
+
+                                    email:
+                                        donorEmail,
+
+                                    name:
+                                        donorName,
+
+                                    phone:
+                                        donorPhone,
+
+                                    donation_id:
+                                        causeId,
+
+                                    cause:
+                                        causeId,
+
+                                    cause_name:
+                                        causeName,
+
+                                    frequency:
+                                        selectedFrequency
+
+                                }
+                            }
+                        );
+
+
+                    if (error) {
+                        throw error;
+                    }
+
+
+                    if (
+                        !data ||
+                        !data.success ||
+                        !data.payment_link
+                    ) {
+
+                        throw new Error(
+                            data?.error ||
+                            "Flutterwave did not return a payment link."
+                        );
+
+                    }
+
+
+                    /* =====================================
+                       SAVE PENDING PAYMENT
+                    ===================================== */
+
+                    localStorage.setItem(
+                        "gva_pending_donation",
+                        JSON.stringify({
+
+                            amount:
+                                amount,
+
+                            currency:
+                                "USD",
+
+                            donor_name:
+                                donorName,
+
+                            donor_email:
+                                donorEmail,
+
+                            donor_phone:
+                                donorPhone,
+
+                            cause_id:
+                                causeId,
+
+                            cause_name:
+                                causeName,
+
+                            frequency:
+                                selectedFrequency,
+
+                            tx_ref:
+                                data.tx_ref ||
+                                null,
+
+                            created_at:
+                                new Date().toISOString()
+
+                        })
+                    );
+
+
+                    /* =====================================
+                       REDIRECT TO FLUTTERWAVE
+                    ===================================== */
+
+                    window.location.href =
+                        data.payment_link;
+
+                } catch (error) {
+
+                    console.error(
+                        "Payment initialization failed:",
+                        error
+                    );
+
+                    showModal(
+                        `
+                        <h3>Payment could not start</h3>
+
+                        <p>
+                            We couldn't connect to the
+                            payment service.
+                        </p>
+
+                        <p>
+                            ${escapeHtml(
+                                error?.message ||
+                                "Please try again."
+                            )}
+                        </p>
+                        `
+                    );
+
+
+                    if (submitButton) {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.textContent =
+                            originalText;
+
+                    }
 
                 }
 
@@ -1515,14 +1385,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       BITCOIN COPY BUTTON
+       BITCOIN COPY
     ===================================================== */
 
     const copyBtc =
-        document.getElementById(
-            "copyBtc"
-        );
-
+        get("#copyBtc");
 
     if (copyBtc) {
 
@@ -1530,20 +1397,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             async () => {
 
-                const btcAddress =
-                    document.querySelector(
-                        ".btc-address"
-                    );
-
-
-                if (!btcAddress) {
-                    return;
-                }
-
-
                 const address =
-                    btcAddress.textContent.trim();
-
+                    "bc1q3dpschks6nq3dfmefezsuzzm8ryy09kp0nznee";
 
                 try {
 
@@ -1551,27 +1406,25 @@ document.addEventListener("DOMContentLoaded", () => {
                         address
                     );
 
+                    const original =
+                        copyBtc.textContent;
 
                     copyBtc.textContent =
                         "Copied!";
 
-
                     setTimeout(() => {
 
                         copyBtc.textContent =
-                            "Copy wallet address";
+                            original;
 
-                    }, 2000);
+                    }, 1800);
 
                 } catch (error) {
 
                     console.error(
-                        "Clipboard error:",
+                        "Unable to copy Bitcoin address:",
                         error
                     );
-
-                    copyBtc.textContent =
-                        "Copy failed";
 
                 }
 
@@ -1585,45 +1438,31 @@ document.addEventListener("DOMContentLoaded", () => {
        SMOOTH SCROLL
     ===================================================== */
 
-    document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(link => {
+    getAll('a[href^="#"]')
+        .forEach((link) => {
 
             link.addEventListener(
                 "click",
-                event => {
+                (event) => {
 
                     const targetId =
-                        link.getAttribute(
-                            "href"
-                        );
-
+                        link.getAttribute("href");
 
                     if (
                         !targetId ||
                         targetId === "#"
                     ) {
-
                         return;
-
                     }
 
-
                     const target =
-                        document.querySelector(
-                            targetId
-                        );
-
+                        get(targetId);
 
                     if (!target) {
                         return;
                     }
 
-
                     event.preventDefault();
-
 
                     target.scrollIntoView({
                         behavior: "smooth",
@@ -1637,9 +1476,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOAD PUBLISHED CAUSES
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       START
     ===================================================== */
 
     loadPublishedCauses();
+
+    /*
+     * Run this after the page has loaded so that a
+     * Flutterwave redirect can be detected.
+     */
+
+    handleFlutterwaveReturn();
 
 });
