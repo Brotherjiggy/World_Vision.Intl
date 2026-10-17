@@ -784,25 +784,41 @@
 
         <div class="donation-box">
 
-            <div class="donation-tabs">
+            <!-- DONATION PAYMENT METHODS -->
 
-                <button
-                    class="donation-tab active"
-                    data-method="card"
-                >
-                    <i class="fa-regular fa-credit-card"></i>
-                    Card
-                </button>
+<div class="donation-tabs">
 
-                <button
-                    class="donation-tab"
-                    data-method="btc"
-                >
-                    <i class="fa-brands fa-bitcoin"></i>
-                    Bitcoin
-                </button>
+    <button
+        type="button"
+        class="donation-tab active"
+        data-method="card"
+        aria-label="Pay by debit or credit card"
+    >
+        <i class="fa-regular fa-credit-card"></i>
+        Card
+    </button>
 
-            </div>
+    <button
+        type="button"
+        class="donation-tab"
+        data-method="btc"
+        aria-label="Donate with Bitcoin"
+    >
+        <i class="fa-brands fa-bitcoin"></i>
+        Bitcoin
+    </button>
+
+    <button
+        type="button"
+        class="donation-tab"
+        data-method="cashapp"
+        aria-label="Contact management for Cash App details"
+    >
+        <i class="fa-solid fa-hand-holding-heart"></i>
+        Cash App
+    </button>
+
+</div>
 
 
             <form id="donationForm">
@@ -974,37 +990,55 @@
 
 
                 <div
-                    id="btcPayment"
-                    class="btc-payment hidden"
-                >
+                
+<!-- CASH APP INFORMATION -->
 
-                    <div class="btc-icon">
-                        <i class="fa-brands fa-bitcoin"></i>
-                    </div>
+<div
+    id="cashappPayment"
+    class="cashapp-payment hidden"
+>
 
-                    <h3>
-                        Give with Bitcoin
-                    </h3>
+    <div class="cashapp-icon">
+        <i class="fa-solid fa-hand-holding-heart"></i>
+    </div>
 
-                    <p>
-                        Bitcoin donations should be
-                        sent only to the organization's
-                        verified wallet.
-                    </p>
+    <h3>
+        Donate with Cash App
+    </h3>
 
-                    <div class="btc-address">
-                        bc1q3dpschks6nq3dfmefezsuzzm8ryy09kp0nznee
-                    </div>
+    <p>
+        Thank you for supporting Global Vision Aid.
+        To receive our official Cash App payment
+        details, please contact our management team.
+    </p>
 
-                    <button
-                        type="button"
-                        id="copyBtc"
-                    >
-                        Copy wallet address
-                    </button>
+    <div class="cashapp-notice">
 
-                </div>
+        <i class="fa-solid fa-circle-info"></i>
 
+        <span>
+            Our management team will provide the
+            appropriate payment details and
+            instructions.
+        </span>
+
+    </div>
+
+    <a
+        href="#contact"
+        class="donate-submit cashapp-contact-button"
+    >
+        Contact Management
+
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+
+    <small class="secure-note">
+        Please verify payment details with
+        management before sending funds.
+    </small>
+
+</div>
             </form>
 
         </div>
