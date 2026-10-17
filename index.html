@@ -826,6 +826,54 @@
     </button>
 
 </div>
+            <!-- BITCOIN DONATION PANEL -->
+<div id="btcPayment" class="btc-payment hidden">
+
+    <div class="btc-icon">
+        <i class="fa-brands fa-bitcoin"></i>
+    </div>
+
+    <h3>Donate with Bitcoin</h3>
+
+    <p>
+        Support Global Vision Aid by making a donation using Bitcoin.
+        Every contribution helps us support vulnerable children,
+        families affected by cancer, and people living with Alzheimer's.
+    </p>
+
+    <div class="btc-wallet-box">
+        <label for="btcWalletAddress">Our Bitcoin Wallet Address</label>
+
+        <div class="btc-address-wrapper">
+            <input
+                type="text"
+                id="btcWalletAddress"
+                value="bc1q3dpschks6nq3dfmefezsuzzm8ryy09kp0nznee"
+                readonly
+                aria-label="Bitcoin wallet address"
+            >
+
+            <button type="button" id="copyBtc">
+                <i class="fa-regular fa-copy"></i>
+                Copy Address
+            </button>
+        </div>
+    </div>
+
+    <div class="btc-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>
+            Please verify the wallet address with Global Vision Aid
+            management before sending any funds. Bitcoin transactions
+            generally cannot be reversed.
+        </span>
+    </div>
+
+    <small class="secure-note">
+        Bitcoin donations are processed on the Bitcoin network.
+    </small>
+
+</div>
 
 
             <form id="donationForm">
