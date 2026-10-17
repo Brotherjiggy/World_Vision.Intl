@@ -2692,3 +2692,117 @@ footer {
         font-size: 0.78rem;
     }
 }
+/* =========================================
+   GLOBAL VISION AID FOOTER
+========================================= */
+
+.site-footer {
+    padding: 55px 6% 20px;
+    background: #102f28;
+    color: #ffffff;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 45px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 35px;
+}
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.footer-logo-image {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.footer-description {
+    max-width: 500px;
+    margin-top: 18px;
+    color: #d1e0da;
+    font-size: 0.92rem;
+    line-height: 1.8;
+}
+
+.footer-contact h3 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-family: "Manrope", sans-serif;
+    font-size: 1.1rem;
+}
+
+.footer-contact a,
+.footer-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: #d1e0da;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.footer-contact a:hover {
+    color: #ffffff;
+}
+
+.footer-contact i {
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    color: #d1e0da;
+    font-size: 0.82rem;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.footer-tagline {
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+    .site-footer {
+        padding: 40px 6% 20px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.7;
+    }
+
+    .footer-contact a {
+        font-size: 0.82rem;
+    }
+}
