@@ -1037,26 +1037,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       DONATION TABS
-    ===================================================== */
+
 /* =====================================================
    DONATION PAYMENT METHODS
 ===================================================== */
 
 const donationTabs = $$(".donation-tab");
-
 const cardPayment = $("cardPayment");
-
 const btcPayment = $("btcPayment");
-
 const cashappPayment = $("cashappPayment");
 
-
 function selectPaymentMethod(method) {
-
     // Hide all payment panels first.
-
     if (cardPayment) {
         cardPayment.classList.add("hidden");
     }
@@ -1069,83 +1061,45 @@ function selectPaymentMethod(method) {
         cashappPayment.classList.add("hidden");
     }
 
-
-    // Remove the active state from every button.
-
+    // Update the selected payment tab.
     donationTabs.forEach(tab => {
-
         tab.classList.remove("active");
-
-        tab.setAttribute(
-            "aria-pressed",
-            "false"
-        );
-
+        tab.setAttribute("aria-pressed", "false");
     });
-
-
-    // Activate the selected payment button.
 
     const selectedTab = document.querySelector(
         '.donation-tab[data-method="' + method + '"]'
     );
 
     if (selectedTab) {
-
         selectedTab.classList.add("active");
-
-        selectedTab.setAttribute(
-            "aria-pressed",
-            "true"
-        );
-
+        selectedTab.setAttribute("aria-pressed", "true");
     }
 
-
-    // Display the selected payment panel.
-
+    // Display the correct payment panel.
     if (method === "card" && cardPayment) {
-
         cardPayment.classList.remove("hidden");
-
     }
 
-    else if (method === "btc" && btcPayment) {
-
+    if (method === "btc" && btcPayment) {
         btcPayment.classList.remove("hidden");
-
     }
 
-    else if (
-        method === "cashapp" &&
-        cashappPayment
-    ) {
-
+    if (method === "cashapp" && cashappPayment) {
         cashappPayment.classList.remove("hidden");
-
     }
-
 }
 
-
-// Attach the click event to each payment button.
-
+// Connect each payment tab to its panel.
 donationTabs.forEach(tab => {
-
-    tab.addEventListener("click", () => {
-
-        const method = tab.dataset.method;
-
-        selectPaymentMethod(method);
-
+    tab.addEventListener("click", function () {
+        selectPaymentMethod(this.dataset.method);
     });
-
 });
 
-
-// Start with Card selected.
-
+// Show card payment by default.
 selectPaymentMethod("card");
+         
     /* =====================================================
        FREQUENCY
     ===================================================== */
