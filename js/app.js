@@ -2161,3 +2161,9 @@ selectPaymentMethod("card");
     handleFlutterwaveReturn();
 
 });
+// Automatically update the footer copyright year.
+const footerYear = document.getElementById("footerYear");
+
+if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
+}
