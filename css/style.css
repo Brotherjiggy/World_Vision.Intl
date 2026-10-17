@@ -2357,3 +2357,219 @@ footer {
     }
 
 }
+/* =========================================================
+   CASH APP DONATION PANEL
+========================================================= */
+
+.cashapp-payment {
+    text-align: center;
+}
+
+.cashapp-payment.hidden {
+    display: none;
+}
+
+.cashapp-icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    background: #e9f8ee;
+
+    color: #168344;
+
+    font-size: 1.8rem;
+}
+
+.cashapp-payment h3 {
+    margin-bottom: 12px;
+
+    font-family: "Manrope", sans-serif;
+
+    font-size: 1.35rem;
+}
+
+.cashapp-payment p {
+    margin-bottom: 18px;
+
+    color: var(--muted);
+
+    font-size: 0.92rem;
+
+    line-height: 1.7;
+}
+
+.cashapp-notice {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin: 20px 0;
+
+    padding: 16px;
+
+    border: 1px solid #dcebe0;
+
+    border-radius: 12px;
+
+    background: #f2faf4;
+
+    color: #285b39;
+
+    text-align: left;
+
+    font-size: 0.84rem;
+
+    line-height: 1.6;
+}
+
+.cashapp-notice i {
+    margin-top: 4px;
+
+    flex-shrink: 0;
+}
+
+.cashapp-contact-button {
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.cashapp-contact-button:hover {
+    background: var(--gold-dark);
+
+    transform: translateY(-2px);
+}
+
+.donation-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.donation-tab {
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    font-size: 0.88rem;
+}
+
+.donation-tab i {
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   MOBILE PAYMENT BUTTONS
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .donation-tabs {
+        gap: 4px;
+
+        padding: 4px;
+    }
+
+    .donation-tab {
+        gap: 5px;
+
+        padding: 11px 4px;
+
+        font-size: 0.76rem;
+    }
+
+    .donation-tab i {
+        font-size: 0.9rem;
+    }
+
+    .cashapp-notice {
+        padding: 13px;
+
+        font-size: 0.8rem;
+    }
+
+}
+/* =========================================================
+   LANGUAGE SELECTOR
+========================================================= */
+
+.language-selector {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    max-width: 150px;
+
+    min-width: 110px;
+
+    padding: 5px;
+
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.language-selector select {
+    max-width: 100%;
+
+    padding: 7px 8px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #17352d;
+
+    font-family: "DM Sans", sans-serif;
+
+    font-size: 0.78rem;
+
+    cursor: pointer;
+}
+
+
+/* Keep the selector usable on mobile screens. */
+
+@media (max-width: 768px) {
+
+    .header {
+        gap: 10px;
+    }
+
+    .language-selector {
+        min-width: 90px;
+
+        max-width: 115px;
+
+        margin-left: auto;
+    }
+
+    .language-selector select {
+        width: 100%;
+
+        padding: 6px 4px;
+
+        font-size: 0.72rem;
+    }
+
+}
