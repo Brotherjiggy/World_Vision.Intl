@@ -1040,94 +1040,112 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        DONATION TABS
     ===================================================== */
+/* =====================================================
+   DONATION PAYMENT METHODS
+===================================================== */
 
-    const donationTabs =
-        $$(".donation-tab");
+const donationTabs = $$(".donation-tab");
 
-    const cardPayment =
-        $("cardPayment");
+const cardPayment = $("cardPayment");
 
-    const btcPayment =
-        $("btcPayment");
+const btcPayment = $("btcPayment");
 
-
-    donationTabs.forEach(
-        tab => {
-
-            tab.addEventListener(
-                "click",
-                () => {
-
-                    donationTabs.forEach(
-                        item => {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
+const cashappPayment = $("cashappPayment");
 
 
-                    tab.classList.add(
-                        "active"
-                    );
+function selectPaymentMethod(method) {
+
+    // Hide all payment panels first.
+
+    if (cardPayment) {
+        cardPayment.classList.add("hidden");
+    }
+
+    if (btcPayment) {
+        btcPayment.classList.add("hidden");
+    }
+
+    if (cashappPayment) {
+        cashappPayment.classList.add("hidden");
+    }
 
 
-                    const method =
-                        tab.dataset.method;
+    // Remove the active state from every button.
+
+    donationTabs.forEach(tab => {
+
+        tab.classList.remove("active");
+
+        tab.setAttribute(
+            "aria-pressed",
+            "false"
+        );
+
+    });
 
 
-                    if (
-                        method ===
-                        "btc"
-                    ) {
+    // Activate the selected payment button.
 
-                        if (cardPayment) {
-
-                            cardPayment.classList.add(
-                                "hidden"
-                            );
-
-                        }
-
-
-                        if (btcPayment) {
-
-                            btcPayment.classList.remove(
-                                "hidden"
-                            );
-
-                        }
-
-                    } else {
-
-                        if (btcPayment) {
-
-                            btcPayment.classList.add(
-                                "hidden"
-                            );
-
-                        }
-
-
-                        if (cardPayment) {
-
-                            cardPayment.classList.remove(
-                                "hidden"
-                            );
-
-                        }
-
-                    }
-
-                }
-            );
-
-        }
+    const selectedTab = document.querySelector(
+        '.donation-tab[data-method="' + method + '"]'
     );
 
+    if (selectedTab) {
 
+        selectedTab.classList.add("active");
+
+        selectedTab.setAttribute(
+            "aria-pressed",
+            "true"
+        );
+
+    }
+
+
+    // Display the selected payment panel.
+
+    if (method === "card" && cardPayment) {
+
+        cardPayment.classList.remove("hidden");
+
+    }
+
+    else if (method === "btc" && btcPayment) {
+
+        btcPayment.classList.remove("hidden");
+
+    }
+
+    else if (
+        method === "cashapp" &&
+        cashappPayment
+    ) {
+
+        cashappPayment.classList.remove("hidden");
+
+    }
+
+}
+
+
+// Attach the click event to each payment button.
+
+donationTabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        const method = tab.dataset.method;
+
+        selectPaymentMethod(method);
+
+    });
+
+});
+
+
+// Start with Card selected.
+
+selectPaymentMethod("card");
     /* =====================================================
        FREQUENCY
     ===================================================== */
